@@ -12,6 +12,7 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -91,7 +92,9 @@ public class Tab1Fragment extends Fragment{
                 AdapterDatos adapter = new AdapterDatos(listDatos);
                 recycler.setAdapter(adapter);
             }
+
         });
+
         alertDialogBuilder.setNegativeButton("Cancelar", null);
 
         alertDialogBuilder.show();

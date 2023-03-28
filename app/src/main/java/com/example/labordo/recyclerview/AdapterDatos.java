@@ -1,10 +1,13 @@
 package com.example.labordo.recyclerview;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,8 +30,16 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
     @Override
     public ViewHolderDatos onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.actividades_asignadas_item, null, false);
-
         view.setOnClickListener(this);
+
+        /*itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    Toast.makeText(view.getContext(), "Holiwiws", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+            });*/
+
         return new ViewHolderDatos(view);
     }
 
@@ -37,6 +48,7 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
         holder.nombreActividad.setText(listDatos.get(position).getNombreTarea());
         holder.descripcion.setText(listDatos.get(position).getDescripcion());
         holder.avatar.setImageResource(listDatos.get(position).getImagenId());
+
     }
 
     @Override
@@ -55,6 +67,7 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
         }
     }
 
+
     public class ViewHolderDatos extends RecyclerView.ViewHolder {
 
         TextView nombreActividad;
@@ -66,6 +79,14 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
             nombreActividad = (TextView) itemView.findViewById(R.id.nombreTarea);
             descripcion = (TextView) itemView.findViewById(R.id.informacionTarea);
             avatar = (ImageView) itemView.findViewById(R.id.imageView);
+            itemView.setBackgroundColor(Color.RED);
+            itemView.findViewById(R.id.layout_actividades_asignadas).setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    Toast.makeText(view.getContext(), "Holiwiws", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+            });
         }
     }
 }
