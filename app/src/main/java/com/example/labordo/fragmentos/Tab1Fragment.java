@@ -1,14 +1,20 @@
 package com.example.labordo.fragmentos;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.example.labordo.R;
 import com.example.labordo.objetos.ActividadesVo;
@@ -21,6 +27,9 @@ public class Tab1Fragment extends Fragment{
     ArrayList<ActividadesVo> listDatos;
     RecyclerView recycler;
     Button add;
+
+    String nombreTarea;
+    String descripcion;
 
     int i = 0;
 
@@ -41,13 +50,50 @@ public class Tab1Fragment extends Fragment{
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listDatos.add(new ActividadesVo("Goku", "Este es goku y es un poco tonto", R.drawable.goku_prueba));
-                AdapterDatos adapter = new AdapterDatos(listDatos);
-                recycler.setAdapter(adapter);
+                pedirInformacion();
             }
         });
 
 
         return vista;
+    }
+
+
+
+    private void pedirInformacion() {
+
+        LinearLayout linearLayout = new LinearLayout(this.getContext());
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this.getContext());
+        alertDialogBuilder.setTitle("Meta informoacion:");
+
+        EditText editTextNombreActividad = new EditText(this.getContext());
+        editTextNombreActividad.setHint("Nombre de la Actividad");
+        editTextNombreActividad.setInputType(InputType.TYPE_CLASS_TEXT);
+
+
+        EditText editTextDescripcion = new EditText(this.getContext());
+        editTextDescripcion.setHint("Descripción de la Actividad");
+        editTextDescripcion.setInputType(InputType.TYPE_CLASS_TEXT);
+
+        linearLayout.addView(editTextNombreActividad);
+        linearLayout.addView(editTextDescripcion);
+
+        alertDialogBuilder.setView(linearLayout);
+        alertDialogBuilder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                nombreTarea = editTextNombreActividad.getText().toString();
+                descripcion = editTextDescripcion.getText().toString();
+
+                listDatos.add(new ActividadesVo(nombreTarea, descripcion, R.drawable.goku_prueba));
+                AdapterDatos adapter = new AdapterDatos(listDatos);
+                recycler.setAdapter(adapter);
+            }
+        });
+        alertDialogBuilder.setNegativeButton("Cancelar", null);
+
+        alertDialogBuilder.show();
     }
 }
