@@ -1,5 +1,6 @@
 package com.example.labordo.fragmentos;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
@@ -16,6 +17,9 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.example.labordo.R;
 import com.example.labordo.objetos.ActividadesVo;
@@ -33,6 +37,7 @@ public class Tab1Fragment extends Fragment{
     String descripcion;
     String precio;
     String fecha;
+    int actividad;
 
     int i = 0;
 
@@ -63,6 +68,7 @@ public class Tab1Fragment extends Fragment{
 
 
 
+    @SuppressLint("ResourceType")
     private void pedirInformacion() {
 
         LinearLayout linearLayout = new LinearLayout(this.getContext());
@@ -75,25 +81,40 @@ public class Tab1Fragment extends Fragment{
         editTextNombreActividad.setHint("Nombre de la Actividad");
         editTextNombreActividad.setInputType(InputType.TYPE_CLASS_TEXT);
 
-
         EditText editTextDescripcion = new EditText(this.getContext());
         editTextDescripcion.setHint("Descripción de la Actividad");
         editTextDescripcion.setInputType(InputType.TYPE_CLASS_TEXT);
-
 
         EditText editTextPrecioActividad = new EditText(this.getContext());
         editTextPrecioActividad.setHint("Precio de la Actividad");
         editTextPrecioActividad.setInputType(InputType.TYPE_CLASS_NUMBER);
 
-
         EditText editTextFechaLimite = new EditText(this.getContext());
         editTextFechaLimite.setHint("Fecha limite para la entrega");
         editTextFechaLimite.setInputType(InputType.TYPE_CLASS_DATETIME);
+
+        RadioGroup radioGroupActividad = new RadioGroup(this.getContext());
+
+        RadioButton radioActiva = new RadioButton(radioGroupActividad.getContext());
+        radioActiva.setText("Asignada");
+        radioActiva.setId(0);
+
+        RadioButton radioInactiva = new RadioButton(radioGroupActividad.getContext());
+        radioInactiva.setText("Inactiva");
+        radioInactiva.setId(1);
+
+        RadioButton radioSinAsignar = new RadioButton(radioGroupActividad.getContext());
+        radioSinAsignar.setText("Sin asignar");
+        radioSinAsignar.setId(2);
 
         linearLayout.addView(editTextNombreActividad);
         linearLayout.addView(editTextDescripcion);
         linearLayout.addView(editTextPrecioActividad);
         linearLayout.addView(editTextFechaLimite);
+        linearLayout.addView(radioGroupActividad);
+        radioGroupActividad.addView(radioActiva);
+        radioGroupActividad.addView(radioInactiva);
+        radioGroupActividad.addView(radioSinAsignar);
 
         alertDialogBuilder.setView(linearLayout);
         alertDialogBuilder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
@@ -103,10 +124,33 @@ public class Tab1Fragment extends Fragment{
                 descripcion = editTextDescripcion.getText().toString();
                 precio = editTextPrecioActividad.getText().toString();
                 fecha = editTextFechaLimite.getText().toString();
+                actividad = radioGroupActividad.getCheckedRadioButtonId();
 
-                listDatos.add(new ActividadesVo(nombreTarea, descripcion, R.drawable.goku_prueba, precio,fecha, R.drawable.asignada));
-                AdapterDatos adapter = new AdapterDatos(listDatos);
-                recycler.setAdapter(adapter);
+                int circulo;
+                switch (actividad){
+                    case 0:
+                        circulo = R.drawable.asignada;
+                        break;
+                    case 1:
+                        circulo = R.drawable.inactivo;
+                        break;
+                    case 2:
+                        circulo = R.drawable.pendiente;
+                        break;
+                    default:
+                        circulo = R.drawable.inactivo;
+                        break;
+                }
+
+                if(!nombreTarea.equals("") && !descripcion.equals("") && !precio.equals("") && !fecha.equals("")) {
+                    listDatos.add(new ActividadesVo(nombreTarea, descripcion, R.drawable.goku_prueba, precio,fecha, circulo));
+                    AdapterDatos adapter = new AdapterDatos(listDatos);
+                    recycler.setAdapter(adapter);
+                } else if (nombreTarea.equals("") || descripcion.equals("") || precio.equals("") || fecha.equals("")) {
+                    Toast.makeText(getContext(), "Introduce todos los datos", Toast.LENGTH_SHORT).show();
+                }
+
+
             }
 
         });

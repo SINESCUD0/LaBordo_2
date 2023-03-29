@@ -33,7 +33,6 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:id="@+id/actividad"
-                    android:src="@drawable/asignada"
                     android:layout_marginTop="18dp"/>
 
                 <TextView
@@ -42,6 +41,7 @@
                     android:text="Nombre Tarea"
                     android:id="@+id/nombreTarea"
                     android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
                     android:textSize="25sp"
                     android:textStyle="bold"/>
             </LinearLayout>

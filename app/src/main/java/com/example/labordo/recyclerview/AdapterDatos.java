@@ -87,7 +87,7 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
             precio = (TextView) itemView.findViewById(R.id.precio);
             fecha = (TextView) itemView.findViewById(R.id.fechaLimite);
             actividad = (ImageView) itemView.findViewById(R.id.actividad);
-            itemView.setBackgroundColor(Color.RED);
+            //itemView.setBackgroundColor(Color.RED);
             itemView.findViewById(R.id.layout_actividades_asignadas).setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
