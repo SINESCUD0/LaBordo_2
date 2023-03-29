@@ -47,8 +47,10 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
     public void onBindViewHolder(@NonNull ViewHolderDatos holder, int position) {
         holder.nombreActividad.setText(listDatos.get(position).getNombreTarea());
         holder.descripcion.setText(listDatos.get(position).getDescripcion());
-        holder.avatar.setImageResource(listDatos.get(position).getImagenId());
-
+        holder.imagenTarea.setImageResource(listDatos.get(position).getImagenTarea());
+        holder.precio.setText(listDatos.get(position).getPrecio());
+        holder.fecha.setText(listDatos.get(position).getFecha());
+        holder.actividad.setImageResource(listDatos.get(position).getImagenActividad());
     }
 
     @Override
@@ -72,13 +74,19 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
 
         TextView nombreActividad;
         TextView descripcion;
-        ImageView avatar;
+        ImageView imagenTarea;
+        TextView precio;
+        TextView fecha;
+        ImageView actividad;
 
         public ViewHolderDatos(@NonNull View itemView) {
             super(itemView);
             nombreActividad = (TextView) itemView.findViewById(R.id.nombreTarea);
             descripcion = (TextView) itemView.findViewById(R.id.informacionTarea);
-            avatar = (ImageView) itemView.findViewById(R.id.imageView);
+            imagenTarea = (ImageView) itemView.findViewById(R.id.imageView);
+            precio = (TextView) itemView.findViewById(R.id.precio);
+            fecha = (TextView) itemView.findViewById(R.id.fechaLimite);
+            actividad = (ImageView) itemView.findViewById(R.id.actividad);
             itemView.setBackgroundColor(Color.RED);
             itemView.findViewById(R.id.layout_actividades_asignadas).setOnLongClickListener(new View.OnLongClickListener() {
                 @Override

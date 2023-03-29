@@ -31,6 +31,8 @@ public class Tab1Fragment extends Fragment{
 
     String nombreTarea;
     String descripcion;
+    String precio;
+    String fecha;
 
     int i = 0;
 
@@ -67,7 +69,7 @@ public class Tab1Fragment extends Fragment{
         linearLayout.setOrientation(LinearLayout.VERTICAL);
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this.getContext());
-        alertDialogBuilder.setTitle("Meta informoacion:");
+        alertDialogBuilder.setTitle("Introduce la información:");
 
         EditText editTextNombreActividad = new EditText(this.getContext());
         editTextNombreActividad.setHint("Nombre de la Actividad");
@@ -78,8 +80,20 @@ public class Tab1Fragment extends Fragment{
         editTextDescripcion.setHint("Descripción de la Actividad");
         editTextDescripcion.setInputType(InputType.TYPE_CLASS_TEXT);
 
+
+        EditText editTextPrecioActividad = new EditText(this.getContext());
+        editTextPrecioActividad.setHint("Precio de la Actividad");
+        editTextPrecioActividad.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+
+        EditText editTextFechaLimite = new EditText(this.getContext());
+        editTextFechaLimite.setHint("Fecha limite para la entrega");
+        editTextFechaLimite.setInputType(InputType.TYPE_CLASS_DATETIME);
+
         linearLayout.addView(editTextNombreActividad);
         linearLayout.addView(editTextDescripcion);
+        linearLayout.addView(editTextPrecioActividad);
+        linearLayout.addView(editTextFechaLimite);
 
         alertDialogBuilder.setView(linearLayout);
         alertDialogBuilder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
@@ -87,8 +101,10 @@ public class Tab1Fragment extends Fragment{
             public void onClick(DialogInterface dialogInterface, int i) {
                 nombreTarea = editTextNombreActividad.getText().toString();
                 descripcion = editTextDescripcion.getText().toString();
+                precio = editTextPrecioActividad.getText().toString();
+                fecha = editTextFechaLimite.getText().toString();
 
-                listDatos.add(new ActividadesVo(nombreTarea, descripcion, R.drawable.goku_prueba));
+                listDatos.add(new ActividadesVo(nombreTarea, descripcion, R.drawable.goku_prueba, precio,fecha, R.drawable.asignada));
                 AdapterDatos adapter = new AdapterDatos(listDatos);
                 recycler.setAdapter(adapter);
             }
