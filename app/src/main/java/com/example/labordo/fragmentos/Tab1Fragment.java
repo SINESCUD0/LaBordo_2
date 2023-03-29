@@ -15,10 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.labordo.R;
@@ -32,12 +34,12 @@ public class Tab1Fragment extends Fragment{
     ArrayList<ActividadesVo> listDatos;
     RecyclerView recycler;
     Button add;
-
     String nombreTarea;
     String descripcion;
     String precio;
-    String fecha;
+    String fecha = "";
     int actividad;
+    String fechaElegida;
 
     int i = 0;
 
@@ -69,7 +71,7 @@ public class Tab1Fragment extends Fragment{
 
 
     @SuppressLint("ResourceType")
-    private void pedirInformacion() {
+    public void pedirInformacion() {
 
         LinearLayout linearLayout = new LinearLayout(this.getContext());
         linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -89,9 +91,16 @@ public class Tab1Fragment extends Fragment{
         editTextPrecioActividad.setHint("Precio de la Actividad");
         editTextPrecioActividad.setInputType(InputType.TYPE_CLASS_NUMBER);
 
-        EditText editTextFechaLimite = new EditText(this.getContext());
-        editTextFechaLimite.setHint("Fecha limite para la entrega");
-        editTextFechaLimite.setInputType(InputType.TYPE_CLASS_DATETIME);
+        LinearLayout horizontal = new LinearLayout(this.getContext());
+        horizontal.setOrientation(LinearLayout.HORIZONTAL);
+
+        TextView addFecha = new TextView(this.getContext());
+        addFecha.setText("Añade la fecha limite:");
+
+        Button botonFecha = new Button(this.getContext());
+        botonFecha.setText("Añade la fecha");
+
+        TextView fechaFinal = new TextView(this.getContext());
 
         RadioGroup radioGroupActividad = new RadioGroup(this.getContext());
 
@@ -110,20 +119,30 @@ public class Tab1Fragment extends Fragment{
         linearLayout.addView(editTextNombreActividad);
         linearLayout.addView(editTextDescripcion);
         linearLayout.addView(editTextPrecioActividad);
-        linearLayout.addView(editTextFechaLimite);
+        linearLayout.addView(horizontal);
+        horizontal.addView(addFecha);
+        horizontal.addView(botonFecha);
+        linearLayout.addView(fechaFinal);
         linearLayout.addView(radioGroupActividad);
         radioGroupActividad.addView(radioActiva);
         radioGroupActividad.addView(radioInactiva);
         radioGroupActividad.addView(radioSinAsignar);
 
+
         alertDialogBuilder.setView(linearLayout);
+
+        botonFecha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pedirFecha();
+            }
+        });
         alertDialogBuilder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 nombreTarea = editTextNombreActividad.getText().toString();
                 descripcion = editTextDescripcion.getText().toString();
                 precio = editTextPrecioActividad.getText().toString();
-                fecha = editTextFechaLimite.getText().toString();
                 actividad = radioGroupActividad.getCheckedRadioButtonId();
 
                 int circulo;
@@ -142,11 +161,11 @@ public class Tab1Fragment extends Fragment{
                         break;
                 }
 
-                if(!nombreTarea.equals("") && !descripcion.equals("") && !precio.equals("") && !fecha.equals("")) {
+                if(!nombreTarea.equals("") && !descripcion.equals("") && !precio.equals("") /* && !fecha.equals("")*/) {
                     listDatos.add(new ActividadesVo(nombreTarea, descripcion, R.drawable.goku_prueba, precio,fecha, circulo));
                     AdapterDatos adapter = new AdapterDatos(listDatos);
                     recycler.setAdapter(adapter);
-                } else if (nombreTarea.equals("") || descripcion.equals("") || precio.equals("") || fecha.equals("")) {
+                } else if (nombreTarea.equals("") || descripcion.equals("") || precio.equals("") /*|| fecha.equals("")*/) {
                     Toast.makeText(getContext(), "Introduce todos los datos", Toast.LENGTH_SHORT).show();
                 }
 
@@ -158,5 +177,38 @@ public class Tab1Fragment extends Fragment{
         alertDialogBuilder.setNegativeButton("Cancelar", null);
 
         alertDialogBuilder.show();
+    }
+    @SuppressLint("ResourceType")
+    private void pedirFecha() {
+        LinearLayout linearLayout2 = new LinearLayout(this.getContext());
+        linearLayout2.setOrientation(LinearLayout.VERTICAL);
+
+        AlertDialog.Builder alertDialogBuilder2 = new AlertDialog.Builder(this.getContext());
+        alertDialogBuilder2.setTitle("Introduce la fecha:");
+
+        CalendarView calendarViewPrueba = new CalendarView(this.getContext());
+
+        linearLayout2.addView(calendarViewPrueba);
+        alertDialogBuilder2.setView(linearLayout2);
+
+        calendarViewPrueba.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+
+                String dia = dayOfMonth + "/" + month + "/" + year;
+
+                fechaElegida = dia;
+            }
+        });
+        alertDialogBuilder2.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                fecha = fechaElegida;
+                Toast.makeText(getContext(), "Fecha cambiada", Toast.LENGTH_SHORT).show();
+            }
+        });
+        alertDialogBuilder2.setNegativeButton("Cancelar", null);
+
+        alertDialogBuilder2.show();
     }
 }
