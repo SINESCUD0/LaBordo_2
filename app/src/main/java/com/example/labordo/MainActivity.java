@@ -4,14 +4,19 @@ package com.example.labordo;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.Manifest;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.labordo.fragmentos.Tab1Fragment;
 import com.google.android.material.tabs.TabLayout;
@@ -27,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        verificarPermisos();
 
         tabLayout = findViewById(R.id.Tab_Layout);
         viewPager2 = findViewById(R.id.Vista_Pagina);
@@ -57,5 +64,18 @@ public class MainActivity extends AppCompatActivity {
                 tabLayout.getTabAt(position).select();
             }
         });
+    }
+    //SOLICITUD DE PERMISOS POR PANTALLA
+    public void verificarPermisos(){
+        int permisosAlmacenamiento = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_MEDIA_LOCATION);
+
+        if(permisosAlmacenamiento == PackageManager.PERMISSION_GRANTED){
+            Toast.makeText(this, "Permisos Concedidos", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, "Acepta los permisos", Toast.LENGTH_SHORT).show();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_MEDIA_LOCATION}, 200);
+            }
+        }
     }
 }

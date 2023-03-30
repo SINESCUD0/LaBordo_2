@@ -1,14 +1,22 @@
 package com.example.labordo.fragmentos;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.MediaStore;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +25,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -34,12 +43,13 @@ public class Tab1Fragment extends Fragment{
     ArrayList<ActividadesVo> listDatos;
     RecyclerView recycler;
     Button add;
-    String nombreTarea;
+    String nombre;
     String descripcion;
     String precio;
     String fecha = "";
     int actividad;
     String fechaElegida;
+    Button botonFecha;
 
     int i = 0;
 
@@ -47,6 +57,16 @@ public class Tab1Fragment extends Fragment{
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
     }
+
+    @SuppressLint("MissingPermission")
+    ActivityResultLauncher<Intent> mStartForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_MEDIA_LOCATION}, 200);
+                    }
+                }
+            });
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,142 +93,100 @@ public class Tab1Fragment extends Fragment{
     @SuppressLint("ResourceType")
     public void pedirInformacion() {
 
-        LinearLayout linearLayout = new LinearLayout(this.getContext());
-        linearLayout.setOrientation(LinearLayout.VERTICAL);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this.getContext());
 
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this.getContext());
-        alertDialogBuilder.setTitle("Introduce la información:");
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.ventana_alerta, null);
+        dialogBuilder.setView(dialogView);
 
-        EditText editTextNombreActividad = new EditText(this.getContext());
-        editTextNombreActividad.setHint("Nombre de la Actividad");
-        editTextNombreActividad.setInputType(InputType.TYPE_CLASS_TEXT);
+        Button botonFecha = (Button) dialogView.findViewById(R.id.botonFecha);
+        EditText nombreTarea = (EditText) dialogView.findViewById(R.id.editTextNombreTarea);
+        EditText descripcionTarea = (EditText) dialogView.findViewById(R.id.editTextDescripcionTarea);
+        EditText precioTarea = (EditText) dialogView.findViewById(R.id.editTextPrecio);
+        TextView fechaFinal = (TextView) dialogView.findViewById(R.id.fecha);
+        ImageView fotoTarea = (ImageView) dialogView.findViewById(R.id.imagenTarea);
+        Button botonFoto = (Button) dialogView.findViewById(R.id.botonImagen);
+        RadioGroup grupo = (RadioGroup) dialogView.findViewById(R.id.radioGroup);
+        RadioButton asignada1 = (RadioButton) dialogView.findViewById(R.id.asignada);
+        RadioButton inactiva1 = (RadioButton) dialogView.findViewById(R.id.inactiva);
+        RadioButton sinAsignar1 = (RadioButton) dialogView.findViewById(R.id.sinAsignar);
+        dialogBuilder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                nombre = nombreTarea.getText().toString();
+                descripcion = descripcionTarea.getText().toString();
+                precio = precioTarea.getText().toString();
+                actividad = grupo.getCheckedRadioButtonId();
+                fechaElegida = fechaFinal.toString();
 
-        EditText editTextDescripcion = new EditText(this.getContext());
-        editTextDescripcion.setHint("Descripción de la Actividad");
-        editTextDescripcion.setInputType(InputType.TYPE_CLASS_TEXT);
+                boolean asignada = asignada1.isChecked();
+                boolean inactiva = inactiva1.isChecked();
+                boolean sinAsignar = sinAsignar1.isChecked();
+                int circulo = 0;
 
-        EditText editTextPrecioActividad = new EditText(this.getContext());
-        editTextPrecioActividad.setHint("Precio de la Actividad");
-        editTextPrecioActividad.setInputType(InputType.TYPE_CLASS_NUMBER);
+                if(asignada!=false){
+                    circulo = R.drawable.asignada;
+                } else if (inactiva!=false) {
+                    circulo = R.drawable.inactivo;
+                } else if (sinAsignar!=false) {
+                    circulo = R.drawable.pendiente;
+                }
 
-        LinearLayout horizontal = new LinearLayout(this.getContext());
-        horizontal.setOrientation(LinearLayout.HORIZONTAL);
-
-        TextView addFecha = new TextView(this.getContext());
-        addFecha.setText("Añade la fecha limite:");
-
-        Button botonFecha = new Button(this.getContext());
-        botonFecha.setText("Añade la fecha");
-
-        TextView fechaFinal = new TextView(this.getContext());
-
-        RadioGroup radioGroupActividad = new RadioGroup(this.getContext());
-
-        RadioButton radioActiva = new RadioButton(radioGroupActividad.getContext());
-        radioActiva.setText("Asignada");
-        radioActiva.setId(0);
-
-        RadioButton radioInactiva = new RadioButton(radioGroupActividad.getContext());
-        radioInactiva.setText("Inactiva");
-        radioInactiva.setId(1);
-
-        RadioButton radioSinAsignar = new RadioButton(radioGroupActividad.getContext());
-        radioSinAsignar.setText("Sin asignar");
-        radioSinAsignar.setId(2);
-
-        linearLayout.addView(editTextNombreActividad);
-        linearLayout.addView(editTextDescripcion);
-        linearLayout.addView(editTextPrecioActividad);
-        linearLayout.addView(horizontal);
-        horizontal.addView(addFecha);
-        horizontal.addView(botonFecha);
-        linearLayout.addView(fechaFinal);
-        linearLayout.addView(radioGroupActividad);
-        radioGroupActividad.addView(radioActiva);
-        radioGroupActividad.addView(radioInactiva);
-        radioGroupActividad.addView(radioSinAsignar);
-
-
-        alertDialogBuilder.setView(linearLayout);
-
+                if(!nombre.equals("") && !descripcion.equals("") && !precio.equals("") && !fechaElegida.equals("")) {
+                    listDatos.add(new ActividadesVo(nombre, descripcion, R.drawable.goku_prueba, precio,fecha, circulo));
+                    AdapterDatos adapter = new AdapterDatos(listDatos);
+                    recycler.setAdapter(adapter);
+                } else if (nombre.equals("") || descripcion.equals("") || precio.equals("") || fechaElegida.equals("")) {
+                    Toast.makeText(getContext(), "Introduce todos los datos", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        dialogBuilder.setNegativeButton("Cancelar",null);
         botonFecha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pedirFecha();
+                LinearLayout linearLayout2 = new LinearLayout(getContext());
+                linearLayout2.setOrientation(LinearLayout.VERTICAL);
+
+                AlertDialog.Builder alertDialogBuilder2 = new AlertDialog.Builder(getContext());
+                alertDialogBuilder2.setTitle("Introduce la fecha:");
+
+                CalendarView calendarViewPrueba = new CalendarView(getContext());
+
+                linearLayout2.addView(calendarViewPrueba);
+                alertDialogBuilder2.setView(linearLayout2);
+
+                calendarViewPrueba.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+                    @Override
+                    public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+
+                        String dia = dayOfMonth + "/" + month + "/" + year;
+
+                        fecha = dia;
+                    }
+                });
+                alertDialogBuilder2.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        fechaFinal.setText(fecha);
+                        Toast.makeText(getContext(), "Fecha cambiada", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                alertDialogBuilder2.setNegativeButton("Cancelar", null);
+
+                alertDialogBuilder2.show();
             }
         });
-        alertDialogBuilder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+        botonFoto.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                nombreTarea = editTextNombreActividad.getText().toString();
-                descripcion = editTextDescripcion.getText().toString();
-                precio = editTextPrecioActividad.getText().toString();
-                actividad = radioGroupActividad.getCheckedRadioButtonId();
-
-                int circulo;
-                switch (actividad){
-                    case 0:
-                        circulo = R.drawable.asignada;
-                        break;
-                    case 1:
-                        circulo = R.drawable.inactivo;
-                        break;
-                    case 2:
-                        circulo = R.drawable.pendiente;
-                        break;
-                    default:
-                        circulo = R.drawable.inactivo;
-                        break;
-                }
-
-                if(!nombreTarea.equals("") && !descripcion.equals("") && !precio.equals("") /* && !fecha.equals("")*/) {
-                    listDatos.add(new ActividadesVo(nombreTarea, descripcion, R.drawable.goku_prueba, precio,fecha, circulo));
-                    AdapterDatos adapter = new AdapterDatos(listDatos);
-                    recycler.setAdapter(adapter);
-                } else if (nombreTarea.equals("") || descripcion.equals("") || precio.equals("") /*|| fecha.equals("")*/) {
-                    Toast.makeText(getContext(), "Introduce todos los datos", Toast.LENGTH_SHORT).show();
-                }
-
-
-            }
-
-        });
-
-        alertDialogBuilder.setNegativeButton("Cancelar", null);
-
-        alertDialogBuilder.show();
-    }
-    @SuppressLint("ResourceType")
-    private void pedirFecha() {
-        LinearLayout linearLayout2 = new LinearLayout(this.getContext());
-        linearLayout2.setOrientation(LinearLayout.VERTICAL);
-
-        AlertDialog.Builder alertDialogBuilder2 = new AlertDialog.Builder(this.getContext());
-        alertDialogBuilder2.setTitle("Introduce la fecha:");
-
-        CalendarView calendarViewPrueba = new CalendarView(this.getContext());
-
-        linearLayout2.addView(calendarViewPrueba);
-        alertDialogBuilder2.setView(linearLayout2);
-
-        calendarViewPrueba.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-
-                String dia = dayOfMonth + "/" + month + "/" + year;
-
-                fechaElegida = dia;
+            public void onClick(View v) {
+                Intent permisosMultimedia = new Intent(MediaStore.ACTION_PICK_IMAGES);
+                mStartForResult.launch(permisosMultimedia);
             }
         });
-        alertDialogBuilder2.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                fecha = fechaElegida;
-                Toast.makeText(getContext(), "Fecha cambiada", Toast.LENGTH_SHORT).show();
-            }
-        });
-        alertDialogBuilder2.setNegativeButton("Cancelar", null);
 
-        alertDialogBuilder2.show();
+        AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.show();
+
     }
 }

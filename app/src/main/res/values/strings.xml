@@ -8,6 +8,16 @@
     <string name="actividades">ACTIVIDADES</string>
     <string name="alumnado">ALUMNADO</string>
     <string name="add">Añadir Tarea</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hintNombreTarea">Nombre de la TAREA/ACTIVIDAD</string>
+    <string name="hintDescripcionTarea">Descripción de la TAREA/ACTIVIDAD</string>
+    <string name="hintPrecioTarea">Precio de la TAREA/ACTIVIDAD</string>
+    <string name="fechaLimite">Fecha de entrega: </string>
+    <string name="seleccionFoto">Seleccionar imagen de la TAREA/ACTIVIDAD</string>
+    <string name="botonAsignada">Asignada</string>
+    <string name="botonInactiva">Inactiva</string>
+    <string name="botonSinAsignar">Sin Asignar</string>
+    <string name="asignacion">Selecciona el estado de la TAREA/ACTIVIDAD</string>
+    <string name="tituloAlertView">Introduce los datos:</string>
+    <string name="aceptar">ACEPTAR</string>
+    <string name="cancelar">CANCELAR</string>
 </resources>
