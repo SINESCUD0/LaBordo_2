@@ -18,11 +18,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+<ScrollView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
+        android:scrollbars="vertical"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
         android:id="@+id/layoutGeneral">
 
         <EditText
@@ -154,6 +159,7 @@
             android:text="@string/seleccionFoto"/>
 
     </LinearLayout>
+</ScrollView>
 
 
 </RelativeLayout>

@@ -12,7 +12,7 @@
     <string name="hintDescripcionTarea">Descripción de la TAREA/ACTIVIDAD</string>
     <string name="hintPrecioTarea">Precio de la TAREA/ACTIVIDAD</string>
     <string name="fechaLimite">Fecha de entrega: </string>
-    <string name="seleccionFoto">Seleccionar imagen de la TAREA/ACTIVIDAD</string>
+    <string name="seleccionFoto">Selecciona imagen</string>
     <string name="botonAsignada">Asignada</string>
     <string name="botonInactiva">Inactiva</string>
     <string name="botonSinAsignar">Sin Asignar</string>

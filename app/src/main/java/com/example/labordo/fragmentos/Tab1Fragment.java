@@ -5,10 +5,12 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
@@ -18,6 +20,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.MediaStore;
 import android.text.InputType;
+import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +33,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Scroller;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +45,7 @@ import java.util.ArrayList;
 
 public class Tab1Fragment extends Fragment{
 
+    ActivityResultContracts.PickVisualMedia selectorImagen;
     ArrayList<ActividadesVo> listDatos;
     RecyclerView recycler;
     Button add;
@@ -49,9 +55,17 @@ public class Tab1Fragment extends Fragment{
     String fecha = "";
     int actividad;
     String fechaElegida;
-    Button botonFecha;
 
     int i = 0;
+
+    Uri imagenUri;
+    Button botonFecha, botonFoto;
+    EditText nombreTarea, descripcionTarea, precioTarea;
+    TextView fechaFinal;
+    ImageView fotoTarea;
+    RadioGroup grupo;
+    RadioButton asignada1, inactiva1, sinAsignar1;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -59,12 +73,14 @@ public class Tab1Fragment extends Fragment{
     }
 
     @SuppressLint("MissingPermission")
-    ActivityResultLauncher<Intent> mStartForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == Activity.RESULT_OK) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_MEDIA_LOCATION}, 200);
-                    }
+    ActivityResultLauncher<PickVisualMediaRequest> pickMedia =
+            registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
+                if (uri != null) {
+                    Log.d("PhotoPicker", "Selected URI: " + uri);
+                    fotoTarea.setImageURI(uri);
+                    imagenUri = uri;
+                } else {
+                    Log.d("PhotoPicker", "No media selected");
                 }
             });
 
@@ -99,17 +115,20 @@ public class Tab1Fragment extends Fragment{
         View dialogView = inflater.inflate(R.layout.ventana_alerta, null);
         dialogBuilder.setView(dialogView);
 
-        Button botonFecha = (Button) dialogView.findViewById(R.id.botonFecha);
-        EditText nombreTarea = (EditText) dialogView.findViewById(R.id.editTextNombreTarea);
-        EditText descripcionTarea = (EditText) dialogView.findViewById(R.id.editTextDescripcionTarea);
-        EditText precioTarea = (EditText) dialogView.findViewById(R.id.editTextPrecio);
-        TextView fechaFinal = (TextView) dialogView.findViewById(R.id.fecha);
-        ImageView fotoTarea = (ImageView) dialogView.findViewById(R.id.imagenTarea);
-        Button botonFoto = (Button) dialogView.findViewById(R.id.botonImagen);
-        RadioGroup grupo = (RadioGroup) dialogView.findViewById(R.id.radioGroup);
-        RadioButton asignada1 = (RadioButton) dialogView.findViewById(R.id.asignada);
-        RadioButton inactiva1 = (RadioButton) dialogView.findViewById(R.id.inactiva);
-        RadioButton sinAsignar1 = (RadioButton) dialogView.findViewById(R.id.sinAsignar);
+        botonFecha = (Button) dialogView.findViewById(R.id.botonFecha);
+        nombreTarea = (EditText) dialogView.findViewById(R.id.editTextNombreTarea);
+        descripcionTarea = (EditText) dialogView.findViewById(R.id.editTextDescripcionTarea);
+        precioTarea = (EditText) dialogView.findViewById(R.id.editTextPrecio);
+        fechaFinal = (TextView) dialogView.findViewById(R.id.fecha);
+        fotoTarea = (ImageView) dialogView.findViewById(R.id.imagenTarea);
+        botonFoto = (Button) dialogView.findViewById(R.id.botonImagen);
+        grupo = (RadioGroup) dialogView.findViewById(R.id.radioGroup);
+        asignada1 = (RadioButton) dialogView.findViewById(R.id.asignada);
+        inactiva1 = (RadioButton) dialogView.findViewById(R.id.inactiva);
+        sinAsignar1 = (RadioButton) dialogView.findViewById(R.id.sinAsignar);
+
+
+
         dialogBuilder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -133,7 +152,7 @@ public class Tab1Fragment extends Fragment{
                 }
 
                 if(!nombre.equals("") && !descripcion.equals("") && !precio.equals("") && !fechaElegida.equals("")) {
-                    listDatos.add(new ActividadesVo(nombre, descripcion, R.drawable.goku_prueba, precio,fecha, circulo));
+                    listDatos.add(new ActividadesVo(nombre, descripcion, imagenUri, precio,fecha, circulo));
                     AdapterDatos adapter = new AdapterDatos(listDatos);
                     recycler.setAdapter(adapter);
                 } else if (nombre.equals("") || descripcion.equals("") || precio.equals("") || fechaElegida.equals("")) {
@@ -180,8 +199,13 @@ public class Tab1Fragment extends Fragment{
         botonFoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent permisosMultimedia = new Intent(MediaStore.ACTION_PICK_IMAGES);
+                /*Intent permisosMultimedia = new Intent(MediaStore.ACTION_PICK_IMAGES);
                 mStartForResult.launch(permisosMultimedia);
+                Toast.makeText(getContext(), "asd", Toast.LENGTH_SHORT).show();
+                fotoTarea.setImageURI(permisosMultimedia.getData());*/
+                pickMedia.launch(new PickVisualMediaRequest.Builder()
+                        .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+                        .build());
             }
         });
 
@@ -189,4 +213,9 @@ public class Tab1Fragment extends Fragment{
         alertDialog.show();
 
     }
+
+
+
+
+
 }
