@@ -18,6 +18,9 @@
     <string name="botonSinAsignar">Sin Asignar</string>
     <string name="asignacion">Selecciona el estado de la TAREA/ACTIVIDAD</string>
     <string name="tituloAlertView">Introduce los datos:</string>
+    <string name="activityQuest">QUEST</string>
+    <string name="actividadesTuyas">TUS ACTIVIDADES</string>
+    <string name="profesorado">PROFESORADO</string>
     <string name="aceptar">ACEPTAR</string>
     <string name="cancelar">CANCELAR</string>
 </resources>

@@ -8,7 +8,7 @@
 
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/Tab_Layout"
+        android:id="@+id/Profesor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

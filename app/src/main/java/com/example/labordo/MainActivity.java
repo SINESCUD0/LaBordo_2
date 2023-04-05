@@ -2,27 +2,17 @@
 
 package com.example.labordo;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.Manifest;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.InputType;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.example.labordo.fragmentos.Tab1Fragment;
 import com.google.android.material.tabs.TabLayout;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     TabLayout tabLayout;
@@ -32,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main_profesorado);
 
         verificarPermisos();
 
