@@ -14,6 +14,7 @@ public class MiVisualizadorDePantalla extends FragmentStateAdapter  {
         super(fragmentActivity);
     }
 
+    //Este createFragment sirve para poder cambiar de pestaña al desplazar la pantalla
     @NonNull
     @Override
     public Fragment createFragment(int position) {
