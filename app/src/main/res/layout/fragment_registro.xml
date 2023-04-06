@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragmentos.FragmentRegistro">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/correo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/correo"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/correo_Usuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hintUsuario"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            android:autofillHints="" />
+
+        <TextView
+            android:id="@+id/DNI_Usuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/DNI"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/DNIUsuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:hint="@string/hintDNI"
+            android:inputType="textPersonName"
+            android:minHeight="48dp" />
+
+        <TextView
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/password"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/password_Usuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hintPassword"
+            android:inputType="textPassword"
+            android:minHeight="48dp"
+            tools:ignore="SpeakableTextPresentCheck"
+            android:autofillHints="" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RadioGroup
+                android:id="@+id/radioTipo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/alumno"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
+                    android:text="@string/tipoAlumno"/>
+
+                <RadioButton
+                    android:id="@+id/profesor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
+                    android:text="@string/tipoProfesor"/>
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/crearUsuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="saveUsuario"
+            android:text="@string/crearUsuario" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -23,4 +23,16 @@
     <string name="profesorado">PROFESORADO</string>
     <string name="aceptar">ACEPTAR</string>
     <string name="cancelar">CANCELAR</string>
+    <string name="hintUsuario">Introduzca el correo electronico</string>
+    <string name="hintPassword">Introduzca la contraseña</string>
+    <string name="botonInicio">Iniciar</string>
+    <string name="registroUsuario">¿No tienes cuenta?</string>
+    <string name="registrar">Registrar</string>
+    <string name="correo">Correo electronico:</string>
+    <string name="DNI">DNI:</string>
+    <string name="password">Contraseña:</string>
+    <string name="tipoProfesor">Profesor</string>
+    <string name="tipoAlumno">Alumno</string>
+    <string name="hintDNI">Introduzca tu DNI</string>
+    <string name="crearUsuario">CREAR</string>
 </resources>

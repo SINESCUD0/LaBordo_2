@@ -9,8 +9,8 @@ import com.example.labordo.fragmentos.Tab1Fragment;
 import com.example.labordo.fragmentos.Tab2Fragment;
 import com.example.labordo.fragmentos.Tab3Fragment;
 
-public class MiVisualizadorDePantalla extends FragmentStateAdapter  {
-    public MiVisualizadorDePantalla(@NonNull FragmentActivity fragmentActivity) {
+public class MiVisualizadorDePantallaProfesor extends FragmentStateAdapter  {
+    public MiVisualizadorDePantallaProfesor(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
 

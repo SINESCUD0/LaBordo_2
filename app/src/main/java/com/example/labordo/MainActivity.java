@@ -17,7 +17,7 @@ import com.google.android.material.tabs.TabLayout;
 public class MainActivity extends AppCompatActivity {
     TabLayout tabLayout;
     ViewPager2 viewPager2;
-    MiVisualizadorDePantalla miVisualizadorDePantalla;
+    MiVisualizadorDePantallaProfesor miVisualizadorDePantalla;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout = findViewById(R.id.Profesor);
         viewPager2 = findViewById(R.id.Vista_Pagina);
-        miVisualizadorDePantalla = new MiVisualizadorDePantalla(this);
+        miVisualizadorDePantalla = new MiVisualizadorDePantallaProfesor(this);
         viewPager2.setAdapter(miVisualizadorDePantalla);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
