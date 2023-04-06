@@ -15,8 +15,8 @@ import com.example.labordo.objetos.Alumnado;
 
 import java.util.ArrayList;
 
-public class AdapterAlumnado /*extends RecyclerView.Adapter<AdapterAlumnado.ViewHolderDatos> implements View.OnClickListener*/{
-    /*ArrayList<Alumnado> listAlumnos;
+public class AdapterAlumnado extends RecyclerView.Adapter<AdapterAlumnado.ViewHolderDatos> implements View.OnClickListener{
+    ArrayList<Alumnado> listAlumnos;
     private View.OnClickListener listener;
 
     public AdapterAlumnado(ArrayList<Alumnado> listAlumnos) {
@@ -75,7 +75,7 @@ public class AdapterAlumnado /*extends RecyclerView.Adapter<AdapterAlumnado.View
             fechaNacimiento = (TextView) itemView.findViewById(R.id.fechaNacimiento);
             actividad = (ImageView) itemView.findViewById(R.id.actividad);
 
-            itemView.findViewById(R.id.layout_actividades_asignadas).setOnClickListener(new View.OnClickListener() {
+            itemView.findViewById(R.id.layout_lista_alumnado).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Toast.makeText(itemView.getContext(), "Posicion "+getAdapterPosition(), Toast.LENGTH_SHORT).show();
@@ -83,6 +83,4 @@ public class AdapterAlumnado /*extends RecyclerView.Adapter<AdapterAlumnado.View
             });
         }
     }
-
-     */
 }
