@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
         verificarPermisos();
 
-        tabLayout = findViewById(R.id.Tab_Layout);
+        tabLayout = findViewById(R.id.Profesor);
         viewPager2 = findViewById(R.id.Vista_Pagina);
         miVisualizadorDePantalla = new MiVisualizadorDePantalla(this);
         viewPager2.setAdapter(miVisualizadorDePantalla);

@@ -35,6 +35,6 @@
         android:id="@+id/Vista_Pagina"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/Tab_Layout" />
+        android:layout_below="@id/Alumno" />
 
 </RelativeLayout>
