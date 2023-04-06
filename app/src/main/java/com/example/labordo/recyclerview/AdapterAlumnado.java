@@ -15,8 +15,8 @@ import com.example.labordo.objetos.Alumnado;
 
 import java.util.ArrayList;
 
-public class AdapterAlumnado extends RecyclerView.Adapter<AdapterAlumnado.ViewHolderDatos> implements View.OnClickListener{
-    ArrayList<Alumnado> listAlumnos;
+public class AdapterAlumnado /*extends RecyclerView.Adapter<AdapterAlumnado.ViewHolderDatos> implements View.OnClickListener*/{
+    /*ArrayList<Alumnado> listAlumnos;
     private View.OnClickListener listener;
 
     public AdapterAlumnado(ArrayList<Alumnado> listAlumnos) {
@@ -83,4 +83,6 @@ public class AdapterAlumnado extends RecyclerView.Adapter<AdapterAlumnado.ViewHo
             });
         }
     }
+
+     */
 }
