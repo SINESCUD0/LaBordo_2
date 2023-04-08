@@ -29,6 +29,14 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity
+            android:name=".usuarios.Main_Profesorado"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".usuarios.Main_Alumnado"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>

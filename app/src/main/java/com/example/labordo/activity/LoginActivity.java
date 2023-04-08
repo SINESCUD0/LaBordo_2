@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.labordo.R;
 import com.example.labordo.base_datos.BaseDatosGeneral;
+import com.example.labordo.usuarios.Main_Alumnado;
 import com.example.labordo.usuarios.Main_Profesorado;
 
 public class LoginActivity extends AppCompatActivity {
@@ -35,15 +36,21 @@ public class LoginActivity extends AppCompatActivity {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String correo = correoUsuario.getText().toString();
         String password = passwordUsuario.getText().toString();
-        cv = db.rawQuery("SELECT correoUsuario, passwordUsuario FROM t_usuarios WHERE correoUsuario = '"
+        cv = db.rawQuery("SELECT correoUsuario, passwordUsuario, tipoCuenta FROM t_usuarios WHERE correoUsuario = '"
                 +correo+"' AND passwordUsuario = '"+password+"'",null);
         try {
             if (cv.moveToFirst()) {
                 String corr = cv.getString(0);
                 String pass = cv.getString(1);
+                String tipo = cv.getString(2);
                 if (correo.equals(corr) && password.equals(pass)) {
-                    Intent i = new Intent(this, Main_Profesorado.class);
-                    startActivity(i);
+
+                    switch(tipo){
+                        case "Profesor": startActivity(new Intent(this, Main_Profesorado.class));break;
+                        case "Alumno": startActivity(new Intent(this, Main_Alumnado.class));break;
+                    }
+                    //Intent i = new Intent(this, Main_Profesorado.class);
+                    //startActivity(i);
                     datos = corr;
                     correoUsuario.setText("");
                     passwordUsuario.setText("");
