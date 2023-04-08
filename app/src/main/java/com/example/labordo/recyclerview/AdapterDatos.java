@@ -1,24 +1,19 @@
 package com.example.labordo.recyclerview;
 
-import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.labordo.MainActivity;
 import com.example.labordo.R;
 import com.example.labordo.objetos.ActividadesVo;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDatos> implements View.OnClickListener{
 

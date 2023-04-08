@@ -34,7 +34,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class Tab2Fragment extends Fragment {
+public class Tab2Profesor extends Fragment {
     ActivityResultContracts.PickVisualMedia selectorImagen;
     ArrayList<ActividadesVo> listDatos;
     RecyclerView recycler;
@@ -76,7 +76,7 @@ public class Tab2Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View vista = inflater.inflate(R.layout.fragment_tab2, container, false);
+        View vista = inflater.inflate(R.layout.tab2_profesor, container, false);
         listDatos = new ArrayList<>();
         recycler = (RecyclerView) vista.findViewById(R.id.TareasAsignadas2);
         add = (FloatingActionButton) vista.findViewById(R.id.botonTarea1);

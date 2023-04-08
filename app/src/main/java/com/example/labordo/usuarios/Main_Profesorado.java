@@ -1,6 +1,6 @@
 //SAMALA HAMALA
 
-package com.example.labordo;
+package com.example.labordo.usuarios;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -12,9 +12,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.example.labordo.R;
+import com.example.labordo.visualizador_pantalla.MiVisualizadorDePantallaProfesor;
 import com.google.android.material.tabs.TabLayout;
 
-public class MainActivity extends AppCompatActivity {
+public class Main_Profesorado extends AppCompatActivity {
     TabLayout tabLayout;
     ViewPager2 viewPager2;
     MiVisualizadorDePantallaProfesor miVisualizadorDePantalla;

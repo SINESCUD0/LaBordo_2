@@ -1,12 +1,10 @@
-package com.example.labordo.registro;
+package com.example.labordo.base_datos;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import androidx.annotation.Nullable;
-
-import com.example.labordo.base_datos.BaseDatosGeneral;
 
 public class RegistroDatos extends BaseDatosGeneral {
     Context context;

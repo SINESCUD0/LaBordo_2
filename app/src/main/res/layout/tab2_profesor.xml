@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragmentos.Tab2Fragment">
+    tools:context=".fragmentos.Tab2Profesor">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/TareasAsignadas2"
