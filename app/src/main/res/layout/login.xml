@@ -34,35 +34,30 @@
         android:id="@+id/registro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="16dp"
+
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="4dp"
         android:text="@string/registroUsuario"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login" />
+        app:layout_constraintBottom_toTopOf="@+id/crearCuenta"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/login"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="44dp"
-        android:layout_marginBottom="40dp"
-        android:text="@string/botonInicio"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="80dp"
         android:onClick="iniciarSesion"
-        app:layout_constraintBottom_toBottomOf="@+id/crearCuenta"
+        android:text="@string/botonInicio"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/passwordUsuario"/>
+        app:layout_constraintTop_toBottomOf="@+id/passwordUsuario" />
 
     <Button
         android:id="@+id/crearCuenta"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="260dp"
-        android:layout_marginStart="52dp"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
         android:onClick="registrarse"
         android:text="@string/registrar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
