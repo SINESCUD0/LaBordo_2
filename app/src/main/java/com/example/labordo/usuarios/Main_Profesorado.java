@@ -2,17 +2,23 @@
 
 package com.example.labordo.usuarios;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.labordo.R;
+import com.example.labordo.activity.LoginActivity;
+import com.example.labordo.activity.Settings;
 import com.example.labordo.visualizador_pantalla.MiVisualizadorDePantallaProfesor;
 import com.google.android.material.tabs.TabLayout;
 
@@ -58,6 +64,26 @@ public class Main_Profesorado extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.logout:
+                startActivity(new Intent(this, LoginActivity.class));;
+                break;
+            case R.id.settings:
+                startActivity(new Intent(this, Settings.class));;
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     //SOLICITUD DE PERMISOS POR PANTALLA
     public void verificarPermisos(){
         int permisosAlmacenamiento = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_MEDIA_LOCATION);

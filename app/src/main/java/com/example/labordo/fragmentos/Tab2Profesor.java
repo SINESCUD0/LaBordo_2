@@ -35,6 +35,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 
 public class Tab2Profesor extends Fragment {
+
     ActivityResultContracts.PickVisualMedia selectorImagen;
     ArrayList<ActividadesVo> listDatos;
     RecyclerView recycler;

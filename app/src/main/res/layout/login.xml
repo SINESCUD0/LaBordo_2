@@ -10,14 +10,11 @@
         android:id="@+id/correoUsuario"
         android:layout_width="324dp"
         android:layout_height="50dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="140dp"
-        android:layout_marginEnd="44dp"
-        android:autofillHints=""
+        android:layout_marginTop="144dp"
+        android:gravity="center"
         android:hint="@string/hintUsuario"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,14 +22,11 @@
         android:id="@+id/passwordUsuario"
         android:layout_width="324dp"
         android:layout_height="50dp"
-        android:layout_marginStart="44dp"
         android:layout_marginTop="232dp"
-        android:layout_marginEnd="44dp"
-        android:autofillHints=""
+        android:gravity="center"
         android:hint="@string/hintPassword"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -40,35 +34,35 @@
         android:id="@+id/registro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="164dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="16dp"
         android:text="@string/registroUsuario"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordUsuario" />
+        app:layout_constraintTop_toBottomOf="@+id/login" />
 
     <Button
         android:id="@+id/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="44dp"
-        android:layout_marginBottom="357dp"
+        android:layout_marginBottom="40dp"
         android:text="@string/botonInicio"
         android:onClick="iniciarSesion"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/crearCuenta"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordUsuario" />
+        app:layout_constraintTop_toTopOf="@+id/passwordUsuario"/>
 
     <Button
         android:id="@+id/crearCuenta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="113dp"
-        android:layout_marginTop="54dp"
-        android:layout_marginEnd="44dp"
-        android:text="@string/registrar"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="260dp"
+        android:layout_marginStart="52dp"
         android:onClick="registrarse"
+        android:text="@string/registrar"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/registro"
         app:layout_constraintTop_toBottomOf="@+id/login" />
 </androidx.constraintlayout.widget.ConstraintLayout>
