@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import com.example.labordo.R;
 import com.example.labordo.activity.LoginActivity;
-import com.example.labordo.activity.Settings;
+import com.example.labordo.activity.Setting;
 import com.example.labordo.visualizador_pantalla.MiVisualizadorDePantallaProfesor;
 import com.google.android.material.tabs.TabLayout;
 
@@ -74,11 +74,11 @@ public class Main_Profesorado extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
+            case R.id.settings:
+                startActivity(new Intent(this, Setting.class));;
+                break;
             case R.id.logout:
                 startActivity(new Intent(this, LoginActivity.class));;
-                break;
-            case R.id.settings:
-                startActivity(new Intent(this, Settings.class));;
                 break;
         }
         return super.onOptionsItemSelected(item);
