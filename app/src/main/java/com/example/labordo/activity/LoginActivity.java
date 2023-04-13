@@ -2,6 +2,7 @@ package com.example.labordo.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,10 +13,14 @@ import android.widget.Toast;
 
 import com.example.labordo.R;
 import com.example.labordo.base_datos.BaseDatosGeneral;
+import com.example.labordo.splash_screen.SplashScreen;
 import com.example.labordo.usuarios.Main_Alumnado;
 import com.example.labordo.usuarios.Main_Profesorado;
 
-public class LoginActivity extends AppCompatActivity {
+import java.util.Timer;
+import java.util.TimerTask;
+
+public class LoginActivity extends Activity {
 
     EditText correoUsuario;
     EditText passwordUsuario;

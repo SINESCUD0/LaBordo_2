@@ -1,17 +1,19 @@
 package com.example.labordo.usuarios;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
@@ -65,12 +67,6 @@ public class Main_Alumnado extends AppCompatActivity {
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        preguntarCerrarSesion();
-    }
-
-
     //PARA CREAR EL MENU
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -78,12 +74,17 @@ public class Main_Alumnado extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    public void onBackPressed(){
+        cerrarSesion();
+    }
+
     //PARA ELEGIR LAS OPCIONES DEL MENU
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.logout:
-                preguntarCerrarSesion();
+                cerrarSesion();
                 break;
             case R.id.settings:
                 startActivity(new Intent(this, Setting.class));;
@@ -106,15 +107,22 @@ public class Main_Alumnado extends AppCompatActivity {
         }
     }
 
-    public void preguntarCerrarSesion(){
-        AlertDialog.Builder dialogoBuilder = new AlertDialog.Builder(this).setMessage("¿Desea cerrar sesión?").setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+    public void cerrarSesion(){
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.ventana_alerta_logout, null);
+        dialogBuilder.setView(dialogView);
+
+        dialogBuilder.setPositiveButton("SI", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+            public void onClick(DialogInterface dialog, int which) {
                 finish();
             }
-        }).setNegativeButton("Cancelar", null);
-        AlertDialog dialogo = dialogoBuilder.create();
-        dialogo.show();
-    }
+        });
 
+        dialogBuilder.setNegativeButton("NO", null);
+
+        AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.show();
+    }
 }
