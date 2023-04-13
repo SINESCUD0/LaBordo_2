@@ -2,22 +2,26 @@
 
 package com.example.labordo.usuarios;
 
+import androidx.activity.OnBackPressedDispatcherOwner;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.labordo.R;
-import com.example.labordo.activity.LoginActivity;
 import com.example.labordo.activity.Setting;
 import com.example.labordo.visualizador_pantalla.MiVisualizadorDePantallaProfesor;
 import com.google.android.material.tabs.TabLayout;
@@ -70,6 +74,10 @@ public class Main_Profesorado extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
+    @Override
+    public void onBackPressed(){
+        cerrarSesion();
+    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -78,7 +86,7 @@ public class Main_Profesorado extends AppCompatActivity {
                 startActivity(new Intent(this, Setting.class));
                 break;
             case R.id.logout:
-                finish();
+                cerrarSesion();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -96,5 +104,24 @@ public class Main_Profesorado extends AppCompatActivity {
                 requestPermissions(new String[]{Manifest.permission.ACCESS_MEDIA_LOCATION}, 200);
             }
         }
+    }
+
+    public void cerrarSesion(){
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.ventana_alerta_logout, null);
+        dialogBuilder.setView(dialogView);
+
+        dialogBuilder.setPositiveButton("SI", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+
+        dialogBuilder.setNegativeButton("NO", null);
+
+        AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.show();
     }
 }

@@ -14,7 +14,7 @@ public class CambiarPassword extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cambiar_password);
+        setContentView(R.layout.cambiar_password);
 
         findViewById(R.id.botonAceptarPassword).setOnClickListener(new View.OnClickListener() {
             @Override

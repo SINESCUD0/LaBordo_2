@@ -42,6 +42,8 @@
     <string name="botonSettingContrasenia">Aceptar Contraseña</string>
     <string name="perfil">Perfil</string>
     <string name="cambiarPassword">Cambiar contraseña</string>
+    <string name="correoElectronico">Prueba</string>
+    <string name="tituloLogout">Seguro que desea cerrar sesión</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
