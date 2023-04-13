@@ -47,6 +47,8 @@
     <string name="Produced">PRODUCED BY</string>
     <string name="nombre1">Iván García Peralta</string>
     <string name="nombre2">Ayman Kamal Boulhand</string>
+    <string name="tipoCuenta">Tipo de cuenta:</string>
+    <string name="perfil2">PERFIL</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
