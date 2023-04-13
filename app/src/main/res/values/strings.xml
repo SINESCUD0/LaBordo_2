@@ -37,9 +37,11 @@
     <string name="crearUsuario">CREAR</string>
     <string name="title_activity_main2">MainActivity2</string>
     <string name="tituloSetting">Configuración</string>
-    <string name="hintContraseniaSetting1">Nueva contrasenia</string>
-    <string name="hintContraseniaSetting2">Confirmar nueva contrasenia</string>
+    <string name="hintContraseniaSetting1">Nueva contraseña</string>
+    <string name="hintContraseniaSetting2">Confirmar nueva contraseña</string>
     <string name="botonSettingContrasenia">Aceptar Contraseña</string>
+    <string name="perfil">Perfil</string>
+    <string name="cambiarPassword">Cambiar contraseña</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
