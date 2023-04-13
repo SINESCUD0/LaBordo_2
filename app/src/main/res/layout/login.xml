@@ -34,7 +34,6 @@
         android:id="@+id/registro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:layout_marginStart="4dp"
         android:layout_marginBottom="4dp"
         android:text="@string/registroUsuario"
@@ -45,12 +44,13 @@
         android:id="@+id/login"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="80dp"
+        android:layout_marginTop="312dp"
+        android:gravity="center"
         android:onClick="iniciarSesion"
         android:text="@string/botonInicio"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordUsuario" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/crearCuenta"

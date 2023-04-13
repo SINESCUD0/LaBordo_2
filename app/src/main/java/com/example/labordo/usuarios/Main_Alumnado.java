@@ -63,17 +63,19 @@ public class Main_Alumnado extends AppCompatActivity {
         });
     }
 
+    //PARA CREAR EL MENU
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
+    //PARA ELEGIR LAS OPCIONES DEL MENU
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.logout:
-                startActivity(new Intent(this, LoginActivity.class));;
+                finish();
                 break;
             case R.id.settings:
                 startActivity(new Intent(this, Setting.class));;

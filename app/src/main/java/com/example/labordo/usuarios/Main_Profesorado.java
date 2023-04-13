@@ -75,10 +75,10 @@ public class Main_Profesorado extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.settings:
-                startActivity(new Intent(this, Setting.class));;
+                startActivity(new Intent(this, Setting.class));
                 break;
             case R.id.logout:
-                startActivity(new Intent(this, LoginActivity.class));;
+                finish();
                 break;
         }
         return super.onOptionsItemSelected(item);
