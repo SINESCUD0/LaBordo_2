@@ -7,13 +7,14 @@
 
     <TextView
         android:id="@+id/tituloAlertView"
-        android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:gravity="center"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
+        android:fontFamily="@font/montserrat_light"
+        android:gravity="center"
         android:text="@string/tituloAlertView"
+        android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,6 +37,7 @@
             android:layout_marginStart="14dp"
             android:layout_marginTop="50dp"
             android:layout_marginEnd="14dp"
+            android:fontFamily="@font/open_sans"
             android:hint="@string/hintNombreTarea"
             android:inputType="textPersonName"
             android:minHeight="48dp"
@@ -51,6 +53,7 @@
             android:layout_marginStart="14dp"
             android:layout_marginTop="14dp"
             android:layout_marginEnd="14dp"
+            android:fontFamily="@font/open_sans"
             android:hint="@string/hintDescripcionTarea"
             android:inputType="textMultiLine"
             android:minHeight="48dp"
@@ -66,6 +69,7 @@
             android:layout_marginStart="14dp"
             android:layout_marginTop="14dp"
             android:layout_marginEnd="14dp"
+            android:fontFamily="@font/open_sans"
             android:hint="@string/hintPrecioTarea"
             android:inputType="number"
             android:minHeight="48dp"
@@ -86,6 +90,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="14dp"
+                android:fontFamily="@font/open_sans"
                 android:text="@string/fechaLimite"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextPrecio" />
@@ -95,6 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="14dp"
+                android:fontFamily="@font/open_sans"
                 app:layout_constraintTop_toBottomOf="@+id/editTextPrecio" />
 
             <Button
@@ -102,8 +108,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="14dp"
+                android:fontFamily="@font/open_sans"
                 android:text="Add"
-                app:layout_constraintTop_toBottomOf="@+id/editTextPrecio"/>
+                app:layout_constraintTop_toBottomOf="@+id/editTextPrecio" />
 
         </LinearLayout>
 
@@ -130,6 +137,7 @@
                     android:id="@+id/asignada"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
                     android:minHeight="48dp"
                     android:text="@string/botonAsignada" />
 
@@ -137,6 +145,7 @@
                     android:id="@+id/inactiva"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
                     android:minHeight="48dp"
                     android:text="@string/botonInactiva" />
 
@@ -144,6 +153,7 @@
                     android:id="@+id/sinAsignar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
                     android:minHeight="48dp"
                     android:text="@string/botonSinAsignar" />
 
@@ -152,13 +162,14 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/botonImagen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
             android:layout_marginTop="14dp"
             android:layout_marginEnd="14dp"
-            android:id="@+id/botonImagen"
-            android:text="@string/seleccionFoto"/>
+            android:fontFamily="@font/open_sans"
+            android:text="@string/seleccionFoto" />
 
     </LinearLayout>
 </ScrollView>

@@ -7,26 +7,44 @@
     tools:context=".activity.LoginActivity">
 
     <EditText
-        android:id="@+id/correoUsuario"
-        android:layout_width="324dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="144dp"
-        android:gravity="center"
-        android:hint="@string/hintUsuario"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
         android:id="@+id/passwordUsuario"
         android:layout_width="324dp"
         android:layout_height="50dp"
-        android:layout_marginTop="232dp"
+        android:layout_marginTop="192dp"
+        android:fontFamily="@font/open_sans"
         android:gravity="center"
         android:hint="@string/hintPassword"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/correoUsuario"
+        android:layout_width="324dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="104dp"
+        android:fontFamily="@font/open_sans"
+        android:gravity="center"
+        android:hint="@string/hintUsuario"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/login"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="272dp"
+        android:fontFamily="@font/open_sans"
+        android:gravity="center"
+        android:onClick="iniciarSesion"
+        android:text="@string/botonInicio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,26 +54,16 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginBottom="4dp"
+        android:fontFamily="@font/open_sans"
         android:text="@string/registroUsuario"
         app:layout_constraintBottom_toTopOf="@+id/crearCuenta"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/login"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="312dp"
-        android:gravity="center"
-        android:onClick="iniciarSesion"
-        android:text="@string/botonInicio"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
         android:id="@+id/crearCuenta"
         android:layout_width="match_parent"
         android:layout_height="55dp"
+        android:fontFamily="@font/open_sans"
         android:onClick="registrarse"
         android:text="@string/registrar"
         app:layout_constraintBottom_toBottomOf="parent"

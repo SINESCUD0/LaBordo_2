@@ -17,11 +17,9 @@
         <!-- ACTIVIDADES -->
         <activity
             android:name=".splash_screen.SplashScreen"
-            android:theme="@android:style/Theme.DeviceDefault.NoActionBar.Fullscreen"
             android:exported="true">
                 <intent-filter>
                     <action android:name="android.intent.action.MAIN" />
-
                     <category android:name="android.intent.category.LAUNCHER" />
                 </intent-filter>
         </activity>
@@ -34,24 +32,29 @@
         <activity
             android:name=".activity.LoginActivity"
             android:exported="false"
-            android:theme="@android:style/Theme.DeviceDefault.NoActionBar.Fullscreen"/>
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity
             android:name=".activity.RegistroActivity"
             android:exported="false"
-            android:theme="@android:style/Theme.DeviceDefault.NoActionBar.Fullscreen">
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".activity.Setting"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".usuarios.Main_Profesorado"
             android:exported="true" />
         <activity
             android:name=".usuarios.Main_Alumnado"
             android:exported="true" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

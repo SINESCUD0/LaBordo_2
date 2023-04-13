@@ -16,18 +16,21 @@
             android:id="@+id/ActividadesQuest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans"
             android:text="@string/activityQuest" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/ActividadesTuyas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans"
             android:text="@string/actividadesTuyas" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/Profesorado"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans"
             android:text="@string/profesorado" />
     </com.google.android.material.tabs.TabLayout>
 

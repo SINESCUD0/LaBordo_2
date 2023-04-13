@@ -3,6 +3,10 @@ package com.example.labordo.splash_screen;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.labordo.R;
 import com.example.labordo.activity.LoginActivity;
@@ -17,7 +21,17 @@ public class SplashScreen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen);
 
+        Animation animacionAbajo = AnimationUtils.loadAnimation(this, R.anim.desplazamiento_abajo);
 
+        TextView texto1 = findViewById(R.id.titulo);
+        TextView texto2 = findViewById(R.id.nombre1);
+        TextView texto3 = findViewById(R.id.nombre2);
+        ImageView imagen = findViewById(R.id.icono);
+
+        texto1.setAnimation(animacionAbajo);
+        texto2.setAnimation(animacionAbajo);
+        texto3.setAnimation(animacionAbajo);
+        imagen.setAnimation(animacionAbajo);
 
         TimerTask tarea = new TimerTask() {
             @Override
@@ -29,6 +43,6 @@ public class SplashScreen extends Activity {
         };
 
         Timer tiempo = new Timer();
-        tiempo.schedule(tarea, 5000);
+        tiempo.schedule(tarea, 6000);
     }
 }

@@ -40,10 +40,13 @@
     <string name="hintContraseniaSetting1">Nueva contraseña</string>
     <string name="hintContraseniaSetting2">Confirmar nueva contraseña</string>
     <string name="botonSettingContrasenia">Aceptar Contraseña</string>
-    <string name="perfil">Perfil</string>
+    <string name="perfil">Ver Perfil</string>
     <string name="cambiarPassword">Cambiar contraseña</string>
     <string name="correoElectronico">Prueba</string>
-    <string name="tituloLogout">Seguro que desea cerrar sesión</string>
+    <string name="tituloLogout">Quieres cerrar sesión</string>
+    <string name="Produced">PRODUCED BY</string>
+    <string name="nombre1">Iván García Peralta</string>
+    <string name="nombre2">Ayman Kamal Boulhand</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>

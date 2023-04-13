@@ -35,23 +35,25 @@
                     android:layout_marginTop="18dp"/>
 
                 <TextView
+                    android:id="@+id/nombreTarea"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nombre Tarea"
-                    android:id="@+id/nombreTarea"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/montserrat_light"
+                    android:text="Nombre Tarea"
                     android:textSize="25sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <TextView
+                android:id="@+id/informacionTarea"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Descripcion"
-                android:id="@+id/informacionTarea"
+                android:layout_marginRight="10dp"
                 android:layout_marginBottom="15dp"
-                android:layout_marginRight="10dp"/>
+                android:fontFamily="@font/open_sans"
+                android:text="Descripcion" />
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -59,26 +61,29 @@
                 android:layout_marginTop="5dp">
 
                 <TextView
+                    android:id="@+id/precio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="0dp"
                     android:layout_weight="1"
-                    android:text="Precio"
-                    android:id="@+id/precio"
-                    android:layout_marginBottom="0dp"/>
+                    android:fontFamily="@font/open_sans"
+                    android:text="Precio" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text=" €"
                     android:id="@+id/monedas"/>
+
                 <TextView
+                    android:id="@+id/fechaLimite"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Fecha limite"
-                    android:id="@+id/fechaLimite"
-                    android:layout_weight="1"
                     android:layout_marginLeft="100dp"
-                    android:layout_marginBottom="0dp"/>
+                    android:layout_marginBottom="0dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/open_sans"
+                    android:text="Fecha limite" />
             </LinearLayout>
 
         </LinearLayout>

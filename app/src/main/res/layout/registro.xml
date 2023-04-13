@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,13 +8,16 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/correo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_thin"
             android:text="@string/correo"
             android:textSize="20sp" />
 
@@ -21,15 +25,17 @@
             android:id="@+id/correo_Usuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:fontFamily="@font/open_sans"
             android:hint="@string/hintUsuario"
             android:inputType="textPersonName"
-            android:minHeight="48dp"
-            android:autofillHints="" />
+            android:minHeight="48dp" />
 
         <TextView
             android:id="@+id/DNI_Usuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_thin"
             android:text="@string/DNI"
             android:textSize="20sp" />
 
@@ -38,6 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autofillHints=""
+            android:fontFamily="@font/open_sans"
             android:hint="@string/hintDNI"
             android:inputType="textPersonName"
             android:minHeight="48dp" />
@@ -46,6 +53,7 @@
             android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_thin"
             android:text="@string/password"
             android:textSize="20sp" />
 
@@ -53,11 +61,12 @@
             android:id="@+id/password_Usuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:fontFamily="@font/open_sans"
             android:hint="@string/hintPassword"
             android:inputType="textPassword"
             android:minHeight="48dp"
-            tools:ignore="SpeakableTextPresentCheck"
-            android:autofillHints="" />
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -74,15 +83,17 @@
                     android:id="@+id/alumno"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
                     android:minHeight="48dp"
-                    android:text="@string/tipoAlumno"/>
+                    android:text="@string/tipoAlumno" />
 
                 <RadioButton
                     android:id="@+id/profesor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
                     android:minHeight="48dp"
-                    android:text="@string/tipoProfesor"/>
+                    android:text="@string/tipoProfesor" />
 
             </RadioGroup>
 
@@ -93,6 +104,7 @@
             android:id="@+id/crearUsuario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans"
             android:onClick="saveUsuario"
             android:text="@string/crearUsuario" />
 
