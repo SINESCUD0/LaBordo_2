@@ -1,6 +1,5 @@
 package com.example.labordo.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -17,7 +16,7 @@ import com.example.labordo.R;
 import com.example.labordo.base_datos.BaseDatosGeneral;
 import com.example.labordo.base_datos.RegistroDatos;
 
-public class RegistroActivity extends Activity {
+public class RegistroActivity extends AppCompatActivity {
 
     EditText correo;
     EditText DNI;

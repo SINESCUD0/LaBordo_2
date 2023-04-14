@@ -22,6 +22,7 @@
         android:layout_marginBottom="20dp"
         android:clickable="true"
         android:src="@android:drawable/ic_menu_add"
+        app:backgroundTint="@color/azulClaro"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />

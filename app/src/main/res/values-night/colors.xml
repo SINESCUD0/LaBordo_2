@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="prueba">#FFFFFF</color>
+    <color name="azulClaro">#7F7FE3</color>
 </resources>

@@ -31,10 +31,12 @@
             android:exported="false" />
         <activity
             android:name=".activity.LoginActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/NoActionBar"/>
         <activity
             android:name=".activity.RegistroActivity"
-            android:exported="false">
+            android:exported="false"
+            android:theme="@style/NoActionBar">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -44,10 +46,10 @@
             android:exported="false" />
         <activity
             android:name=".usuarios.Main_Profesorado"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".usuarios.Main_Alumnado"
-            android:exported="true" />
+            android:exported="false" />
 
         <meta-data
             android:name="preloaded_fonts"
