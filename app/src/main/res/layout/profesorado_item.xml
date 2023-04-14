@@ -29,6 +29,7 @@
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/montserrat_light"
                 android:text="Nombre Profesor"
+                android:textColor="@color/prueba"
                 android:textSize="25sp"
                 android:textStyle="bold" />
 
@@ -40,6 +41,7 @@
                 android:layout_marginBottom="15dp"
                 android:fontFamily="@font/open_sans"
                 android:text="Curso"
+                android:textColor="@color/prueba"
                 android:textSize="20sp" />
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -54,6 +56,7 @@
                     android:layout_marginBottom="0dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/open_sans"
+                    android:textColor="@color/prueba"
                     android:text="DNI" />
 
                 <TextView
@@ -64,7 +67,8 @@
                     android:layout_marginBottom="0dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/open_sans"
-                    android:text="Fecha de Nacimiento" />
+                    android:text="Fecha de Nacimiento"
+                    android:textColor="@color/prueba"/>
             </LinearLayout>
 
         </LinearLayout>

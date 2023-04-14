@@ -17,21 +17,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/actividadesAsignadas"
-            android:fontFamily="@font/open_sans" />
+            android:fontFamily="@font/open_sans"
+            android:textColor="@color/prueba"/>
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/Actividades"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/actividades"
-            android:fontFamily="@font/open_sans" />
+            android:fontFamily="@font/open_sans"
+            android:textColor="@color/prueba"/>
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/Alumnado"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/alumnado"
-            android:fontFamily="@font/open_sans" />
+            android:fontFamily="@font/open_sans"
+            android:textColor="@color/prueba"/>
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager2.widget.ViewPager2

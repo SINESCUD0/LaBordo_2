@@ -14,6 +14,7 @@
         android:fontFamily="@font/montserrat_light"
         android:gravity="center"
         android:text="@string/tituloAlertView"
+        android:textColor="@color/prueba"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -92,6 +93,7 @@
                 android:layout_marginStart="14dp"
                 android:fontFamily="@font/open_sans"
                 android:text="@string/fechaLimite"
+                android:textColor="@color/prueba"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextPrecio" />
 
@@ -139,7 +141,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans"
                     android:minHeight="48dp"
-                    android:text="@string/botonAsignada" />
+                    android:text="@string/botonAsignada"
+                    android:textColor="@color/prueba"/>
 
                 <RadioButton
                     android:id="@+id/inactiva"
@@ -147,7 +150,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans"
                     android:minHeight="48dp"
-                    android:text="@string/botonInactiva" />
+                    android:text="@string/botonInactiva"
+                    android:textColor="@color/prueba"/>
 
                 <RadioButton
                     android:id="@+id/sinAsignar"
@@ -155,7 +159,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans"
                     android:minHeight="48dp"
-                    android:text="@string/botonSinAsignar" />
+                    android:text="@string/botonSinAsignar"
+                    android:textColor="@color/prueba"/>
 
             </RadioGroup>
 

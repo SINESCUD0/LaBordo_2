@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_thin"
             android:text="@string/correo"
+            android:textColor="@color/prueba"
             android:textSize="20sp" />
 
         <EditText
@@ -37,6 +38,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_thin"
             android:text="@string/DNI"
+            android:textColor="@color/prueba"
             android:textSize="20sp" />
 
         <EditText
@@ -55,6 +57,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_thin"
             android:text="@string/password"
+            android:textColor="@color/prueba"
             android:textSize="20sp" />
 
         <EditText
@@ -85,7 +88,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans"
                     android:minHeight="48dp"
-                    android:text="@string/tipoAlumno" />
+                    android:text="@string/tipoAlumno"
+                    android:textColor="@color/prueba"/>
 
                 <RadioButton
                     android:id="@+id/profesor"
@@ -93,7 +97,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans"
                     android:minHeight="48dp"
-                    android:text="@string/tipoProfesor" />
+                    android:text="@string/tipoProfesor"
+                    android:textColor="@color/prueba"/>
 
             </RadioGroup>
 

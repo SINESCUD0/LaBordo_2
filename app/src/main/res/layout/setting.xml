@@ -10,10 +10,11 @@
         android:id="@+id/perfil"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="208dp"
+        android:layout_marginTop="236dp"
         android:background="@android:color/transparent"
         android:fontFamily="@font/open_sans"
         android:text="@string/perfil"
+        android:textColor="@color/prueba"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titulo" />
 
@@ -21,10 +22,11 @@
         android:id="@+id/cambiarPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="292dp"
+        android:layout_marginTop="320dp"
         android:background="@android:color/transparent"
         android:fontFamily="@font/open_sans"
         android:text="@string/cambiarPassword"
+        android:textColor="@color/prueba"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titulo" />
 
@@ -36,6 +38,7 @@
         android:layout_marginTop="16dp"
         android:fontFamily="@font/montserrat_extralight"
         android:text="@string/tituloSetting"
+        android:textColor="@color/prueba"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -49,7 +52,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titulo"
-        app:srcCompat="@drawable/xd" />
+        app:srcCompat="@drawable/sin_foto" />
 
     <TextView
         android:id="@+id/correoElectronico"
@@ -58,7 +61,8 @@
         android:layout_marginTop="237dp"
         android:fontFamily="@font/open_sans"
         android:gravity="center"
-        android:text="@string/correoElectronico"
+        android:text=""
+        android:textColor="@color/prueba"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
