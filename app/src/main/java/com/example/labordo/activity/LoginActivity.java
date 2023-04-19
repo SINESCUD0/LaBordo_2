@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void registrarse(View view){
-        Intent i = new Intent(this, RegistroActivity.class);
+        Intent i = new Intent(this, PruebaRegistro.class);
         startActivity(i);
     }
 }

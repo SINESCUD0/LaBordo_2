@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,6 +12,44 @@
         android:layout_marginTop="80dp"
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/nombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_thin"
+            android:text="@string/nombre"
+            android:textColor="@color/prueba"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/nombre_Usuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:fontFamily="@font/open_sans"
+            android:hint="@string/hintNombre"
+            android:inputType="textPersonName"
+            android:minHeight="48dp" />
+
+        <TextView
+            android:id="@+id/apellido"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_thin"
+            android:text="@string/apellidos"
+            android:textColor="@color/prueba"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/apellido_Usuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:fontFamily="@font/open_sans"
+            android:hint="@string/hintApellido"
+            android:inputType="textPersonName"
+            android:minHeight="48dp" />
 
         <TextView
             android:id="@+id/correo"
@@ -115,4 +153,4 @@
 
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

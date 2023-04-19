@@ -17,7 +17,6 @@ import com.example.labordo.base_datos.BaseDatosGeneral;
 import com.example.labordo.base_datos.RegistroDatos;
 
 public class RegistroActivity extends AppCompatActivity {
-
     EditText correo;
     EditText DNI;
     EditText password;

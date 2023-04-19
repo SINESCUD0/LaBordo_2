@@ -31,6 +31,13 @@
     <string name="correo">Correo electronico:</string>
     <string name="DNI">DNI:</string>
     <string name="password">Contraseña:</string>
+    <string name="nombre">Nombre:</string>
+    <string name="hintNombre">Introduzca su nombre</string>
+    <string name="apellidos">Apellidos:</string>
+    <string name="hintApellido">Introduzca sus apellidos</string>
+    <string name="fechaNacimiento">Fecha Nacimiento</string>
+    <string name="curso">Curso:</string>
+    <string name="instituto">Instituto:</string>
     <string name="tipoProfesor">Profesor</string>
     <string name="tipoAlumno">Alumno</string>
     <string name="hintDNI">Introduzca tu DNI</string>

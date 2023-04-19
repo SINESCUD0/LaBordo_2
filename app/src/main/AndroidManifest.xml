@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <!-- PERMISOS -->
     <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -34,7 +35,7 @@
             android:exported="false"
             android:theme="@style/NoActionBar"/>
         <activity
-            android:name=".activity.RegistroActivity"
+            android:name=".activity.PruebaRegistro"
             android:exported="false"
             android:theme="@style/NoActionBar">
             <meta-data
