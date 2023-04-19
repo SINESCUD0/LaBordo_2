@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.labordo.R;
 import com.example.labordo.activity.LoginActivity;
+import com.example.labordo.activity.PruebaLogin;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -36,7 +37,7 @@ public class SplashScreen extends Activity {
         TimerTask tarea = new TimerTask() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashScreen.this, LoginActivity.class);
+                Intent intent = new Intent(SplashScreen.this, PruebaLogin.class);
                 startActivity(intent);
                 finish();
             }

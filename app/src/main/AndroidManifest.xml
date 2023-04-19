@@ -31,7 +31,7 @@
             android:name=".activity.CambiarPassword"
             android:exported="false" />
         <activity
-            android:name=".activity.LoginActivity"
+            android:name=".activity.PruebaLogin"
             android:exported="false"
             android:theme="@style/NoActionBar"/>
         <activity
