@@ -31,11 +31,11 @@
             android:name=".activity.CambiarPassword"
             android:exported="false" />
         <activity
-            android:name=".activity.PruebaLogin"
+            android:name=".activity.LoginActivity"
             android:exported="false"
             android:theme="@style/NoActionBar"/>
         <activity
-            android:name=".activity.PruebaRegistro"
+            android:name=".activity.RegistroActivity"
             android:exported="false"
             android:theme="@style/NoActionBar">
             <meta-data
