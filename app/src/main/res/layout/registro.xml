@@ -147,15 +147,14 @@
             android:textColor="@color/prueba"
             android:textSize="20sp" />
 
-        <EditText
+        <Spinner
             android:id="@+id/curso_Usuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autofillHints=""
             android:fontFamily="@font/open_sans"
-            android:hint="@string/hintCurso"
-            android:inputType="textPersonName"
-            android:minHeight="48dp" />
+            android:minHeight="48dp"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <TextView
             android:id="@+id/instituto"

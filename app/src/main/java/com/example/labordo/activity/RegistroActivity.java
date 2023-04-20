@@ -17,12 +17,14 @@ import android.widget.Toast;
 import com.example.labordo.R;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class RegistroActivity extends AppCompatActivity {
 
     //PARA CONECTARTE A LA BASE DE DATOS
-    private static final String DATABASE_URL = "jdbc:mysql://192.168.1.36:3306/labordo?useUnicode=true&characterEncoding=UTF-8\"";
+    private static final String DATABASE_URL = "jdbc:mysql://192.168.1.38:3306/labordo?useUnicode=true&characterEncoding=UTF-8\"";
 
     //USUARIO PARA INICIAR SESION EN LA BASE DE DATOS
     private static final String USER = "root";
@@ -31,8 +33,8 @@ public class RegistroActivity extends AppCompatActivity {
     private static final String PASSWORD = "L4b0rd0#";
 
     //CREO LAS VARIABLES CON LA QUE VAMOS A RECOGER LOS DATOS DEL LAYOUT
-    Spinner institutos;
-    EditText correo, password, dni, nombre, apellido, curso;
+    Spinner institutos, curso;
+    EditText correo, password, dni, nombre, apellido;
     TextView fecha, fechaFinal;
     Button crear;
 
@@ -59,8 +61,11 @@ public class RegistroActivity extends AppCompatActivity {
         //CREO EL ARRAYADAPTER PARA AÑADIR LA LISTA DE INSTITUTOS AL SPINNER
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.institutos_list,
                 android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this,R.array.cursos,
+                android.R.layout.simple_spinner_item);
         //AÑADO EL ADAPTER DENTRO DEL SPINNER
         institutos.setAdapter(adapter);
+        curso.setAdapter(adapter2);
 
         //CUANDO DES AL BOTON CREAR SALTARA AL METODO Send()
         crear.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +73,7 @@ public class RegistroActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Send objSend = new Send();
                 objSend.execute("");
+                finish();
             }
         });
 
@@ -115,7 +121,7 @@ public class RegistroActivity extends AppCompatActivity {
         String nombre1 = nombre.getText().toString();
         String apellido1 = apellido.getText().toString();
         String fechaNacimiento = fechaFinal.getText().toString();
-        String curso1 = curso.getText().toString();
+        String curso1 = curso.getSelectedItem().toString();
         String instituto1 = institutos.getAdapter().toString();
         String dni1 = dni.getText().toString();
         String password1 = password.getText().toString();
@@ -134,18 +140,21 @@ public class RegistroActivity extends AppCompatActivity {
                     //SI NO CONSIGUES CONECTARTE A LA BASE DE DATOS
                     msg = "La conexion va mal";
                 }else{
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                    Date date = formatter.parse(fechaNacimiento);
+                    java.sql.Date fechaNacimientoSQL = new java.sql.Date(date.getTime());
                     //SI CONSIGUE CONECTARSE A LA BASE DE DATOS INTRODUCIRA LOS SIGUIENTES VALORES
                     String query = "INSERT INTO estudiante(nombre, apellidos, correo, dni, contrasenia, fecha_nacimiento," +
-                            " curso, instituto) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+                            " curso) VALUES(?, ?, ?, ?, ?, ?, ?)";
                     PreparedStatement statement = conn.prepareStatement(query);
                     statement.setString(1, nombre1);
                     statement.setString(2, apellido1);
                     statement.setString(3, correo1);
                     statement.setString(4, dni1);
                     statement.setString(5, password1);
-                    statement.setString(6, fechaNacimiento);
+                    statement.setString(6, String.valueOf(fechaNacimientoSQL));
                     statement.setString(7, curso1);
-                    statement.setString(8, instituto1);
+                    //statement.setString(8, instituto1);
                     statement.executeUpdate();
                     msg = "Usuario creado correctamente";
                     statement.close();

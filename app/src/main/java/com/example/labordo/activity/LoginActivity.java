@@ -52,6 +52,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Send objSend = new Send();
                 objSend.execute();
+                correoUsuario.setText("");
+                passwordUsuario.setText("");
             }
         });
     }
@@ -107,8 +109,11 @@ public class LoginActivity extends AppCompatActivity {
                             rs2.close();
 
                         }
+                        else{
+                            msg = "Contraseña incorrecta";
+                        }
                         //SI EL CORREO INTRODUCIDO ES DE UN ESTUDIANTE HARA LO SIGUIENTE
-                        else if (tipo.equals(tipo2)) {
+                        if (tipo.equals(tipo2)) {
                             String query2 = "SELECT * FROM estudiante WHERE correo = ? AND contrasenia = ?";
                             PreparedStatement statement2 = conn.prepareStatement(query2);
                             statement2.setString(1, correo1);
@@ -123,6 +128,9 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             statement2.close();
                             rs2.close();
+                        }
+                        else{
+                            msg = "Contraseña incorrecta";
                         }
                     } else {
                         //SI INTRODUCES MAL LOS DATOS SALDRA EL SIGUIENTE MENSAJE

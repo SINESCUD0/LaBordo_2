@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="cursos">
+        <item>PRI</item>
+        <item>SEC</item>
+        <item>BAC</item>
+        <item>GB</item>
+        <item>GM</item>
+        <item>GB</item>
+        <item>UNI</item>
+    </string-array>
+</resources>
