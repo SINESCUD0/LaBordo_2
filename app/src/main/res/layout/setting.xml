@@ -1,34 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.Setting">
-
-    <Button
-        android:id="@+id/perfil"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="236dp"
-        android:background="@android:color/transparent"
-        android:fontFamily="@font/open_sans"
-        android:text="@string/perfil"
-        android:textColor="@color/prueba"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titulo" />
-
-    <Button
-        android:id="@+id/cambiarPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="320dp"
-        android:background="@android:color/transparent"
-        android:fontFamily="@font/open_sans"
-        android:text="@string/cambiarPassword"
-        android:textColor="@color/prueba"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titulo" />
 
     <TextView
         android:id="@+id/titulo"
@@ -39,32 +16,49 @@
         android:fontFamily="@font/montserrat_extralight"
         android:text="@string/tituloSetting"
         android:textColor="@color/prueba"
-        android:textSize="30sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="30sp" />
 
     <ImageView
         android:id="@+id/fotoPerfil"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginTop="19dp"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titulo"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/titulo"
         app:srcCompat="@drawable/sin_foto" />
 
     <TextView
         android:id="@+id/correoElectronico"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="237dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/fotoPerfil"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/open_sans"
         android:gravity="center"
         android:text=""
-        android:textColor="@color/prueba"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textColor="@color/prueba" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <Button
+        android:id="@+id/perfil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/correoElectronico"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/transparent"
+        android:fontFamily="@font/open_sans"
+        android:text="@string/perfil"
+        android:textColor="@color/prueba" />
+
+    <Button
+        android:id="@+id/cambiarPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/perfil"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/transparent"
+        android:fontFamily="@font/open_sans"
+        android:text="@string/cambiarPassword"
+        android:textColor="@color/prueba" />
+
+</RelativeLayout>
