@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="institutos_list">
+        <item>Selecciona instituto</item>
+        <item>Leonardo Da Vinci</item>
+        <item>Lourdes</item>
+        <item>Juan de la Cierva</item>
+    </string-array>
+</resources>

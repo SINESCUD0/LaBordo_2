@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,6 +8,7 @@
     tools:context=".activity.RegistroActivity">
 
     <LinearLayout
+        android:id="@+id/layout_registro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
@@ -67,7 +69,7 @@
             android:autofillHints=""
             android:fontFamily="@font/open_sans"
             android:hint="@string/hintUsuario"
-            android:inputType="textPersonName"
+            android:inputType="textEmailAddress"
             android:minHeight="48dp" />
 
         <TextView
@@ -89,6 +91,33 @@
             android:inputType="textPersonName"
             android:minHeight="48dp" />
 
+        <LinearLayout
+            android:id="@+id/layout_fecha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/FechaNacimiento"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_thin"
+                android:text="@string/fechaNacimiento"
+                android:textColor="@color/prueba"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/FechaNacimientoRegistro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="70dp"
+                android:fontFamily="@font/montserrat_thin"
+                android:textColor="@color/prueba"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+
         <TextView
             android:id="@+id/password"
             android:layout_width="match_parent"
@@ -109,39 +138,42 @@
             android:minHeight="48dp"
             tools:ignore="SpeakableTextPresentCheck" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/curso"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:fontFamily="@font/montserrat_thin"
+            android:text="@string/curso"
+            android:textColor="@color/prueba"
+            android:textSize="20sp" />
 
-            <RadioGroup
-                android:id="@+id/radioTipo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/curso_Usuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:fontFamily="@font/open_sans"
+            android:hint="@string/hintCurso"
+            android:inputType="textPersonName"
+            android:minHeight="48dp" />
 
-                <RadioButton
-                    android:id="@+id/alumno"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans"
-                    android:minHeight="48dp"
-                    android:text="@string/tipoAlumno"
-                    android:textColor="@color/prueba"/>
+        <TextView
+            android:id="@+id/instituto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_thin"
+            android:text="@string/instituto"
+            android:textColor="@color/prueba"
+            android:textSize="20sp" />
 
-                <RadioButton
-                    android:id="@+id/profesor"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans"
-                    android:minHeight="48dp"
-                    android:text="@string/tipoProfesor"
-                    android:textColor="@color/prueba"/>
-
-            </RadioGroup>
-
-        </LinearLayout>
-
+        <Spinner
+            android:id="@+id/instituto_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:fontFamily="@font/open_sans"
+            android:minHeight="48dp"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <Button
             android:id="@+id/crearUsuario"

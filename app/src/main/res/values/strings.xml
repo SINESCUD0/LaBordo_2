@@ -35,8 +35,9 @@
     <string name="hintNombre">Introduzca su nombre</string>
     <string name="apellidos">Apellidos:</string>
     <string name="hintApellido">Introduzca sus apellidos</string>
-    <string name="fechaNacimiento">Fecha Nacimiento</string>
+    <string name="fechaNacimiento">Fecha Nacimiento:</string>
     <string name="curso">Curso:</string>
+    <string name="hintCurso">Introduzca su curso</string>
     <string name="instituto">Instituto:</string>
     <string name="tipoProfesor">Profesor</string>
     <string name="tipoAlumno">Alumno</string>

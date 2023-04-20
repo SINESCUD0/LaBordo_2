@@ -32,9 +32,9 @@ public class RegistroActivity extends AppCompatActivity {
         correo = (EditText) findViewById(R.id.correo_Usuario);
         DNI = (EditText) findViewById(R.id.DNIUsuario);
         password = (EditText) findViewById(R.id.password_Usuario);
-        tipo = (RadioGroup) findViewById(R.id.radioTipo);
-        tipoProfesor = (RadioButton) findViewById(R.id.profesor);
-        tipoAlumno = (RadioButton) findViewById(R.id.alumno);
+        //tipo = (RadioGroup) findViewById(R.id.radioTipo);
+        //tipoProfesor = (RadioButton) findViewById(R.id.profesor);
+        //tipoAlumno = (RadioButton) findViewById(R.id.alumno);
         crear = (Button) findViewById(R.id.crearUsuario);
         BaseDatosGeneral dbHelper = new BaseDatosGeneral(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
