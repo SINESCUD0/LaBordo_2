@@ -35,12 +35,12 @@ public class AdapterProfesorado extends RecyclerView.Adapter<AdapterProfesorado.
     @Override
     public void onBindViewHolder(@NonNull ViewHolderDatos holder, int position) {
         holder.nombreProfesor.setText(listProfesores.get(position).getNombreProfesor());
-        holder.curso.setText(listProfesores.get(position).getCursoProfesor());
+        holder.apellidos.setText(listProfesores.get(position).getApellidosProfesor());
         holder.fotoProfesor.setImageURI(listProfesores.get(position).getFotoProfesor());
         holder.DNI.setText(listProfesores.get(position).getDNI());
-        holder.fechaNacimiento.setText(listProfesores.get(position).getFechaNacimiento());
-        holder.actividad.setImageResource(listProfesores.get(position).getImagenActividad());
-
+        holder.instituto.setText(listProfesores.get(position).getInstituto());
+        holder.correo.setText(listProfesores.get(position).getCorreo());
+        //holder.actividad.setImageResource(listProfesores.get(position).getImagenActividad());
     }
 
     @Override
@@ -59,21 +59,20 @@ public class AdapterProfesorado extends RecyclerView.Adapter<AdapterProfesorado.
 
     public class ViewHolderDatos extends RecyclerView.ViewHolder{
 
-        TextView nombreProfesor;
-        TextView curso;
+        TextView nombreProfesor, apellidos, DNI, correo;
+        TextView instituto;
         ImageView fotoProfesor;
-        TextView DNI;
-        TextView fechaNacimiento;
-        ImageView actividad;
+        //ImageView actividad;
 
         public ViewHolderDatos(@NonNull View itemView) {
             super(itemView);
-            nombreProfesor = (TextView) itemView.findViewById(R.id.nombreProfesor);
-            curso = (TextView) itemView.findViewById(R.id.curso);
-            fotoProfesor = (ImageView) itemView.findViewById(R.id.fotoProfesor);
-            DNI = (TextView) itemView.findViewById(R.id.dni);
-            fechaNacimiento = (TextView) itemView.findViewById(R.id.fechaNacimiento);
-            actividad = (ImageView) itemView.findViewById(R.id.actividad);
+            nombreProfesor = itemView.findViewById(R.id.nombreProfesor);
+            apellidos = itemView.findViewById(R.id.apellidos_profesor);
+            fotoProfesor = itemView.findViewById(R.id.fotoProfesor);
+            DNI = itemView.findViewById(R.id.dni_profesor);
+            instituto = itemView.findViewById(R.id.instituto_profesor);
+            correo = itemView.findViewById(R.id.correo_profesor);
+            //actividad = itemView.findViewById(R.id.actividad);
 
             itemView.findViewById(R.id.layout_lista_profesorado).setOnClickListener(new View.OnClickListener() {
                 @Override

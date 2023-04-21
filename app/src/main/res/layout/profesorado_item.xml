@@ -16,9 +16,10 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginTop="15dp"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp"
+            android:src="@drawable/sin_foto"/>
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
@@ -26,49 +27,61 @@
                 android:id="@+id/nombreProfesor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:fontFamily="@font/montserrat_light"
                 android:text="Nombre Profesor"
                 android:textColor="@color/prueba"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/curso"
+                android:id="@+id/apellidos_profesor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="0dp"
+                android:fontFamily="@font/open_sans"
+                android:text="Apellidos"
+                android:textColor="@color/prueba"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/instituto_profesor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="15dp"
                 android:fontFamily="@font/open_sans"
-                android:text="Curso"
+                android:text="Instituto"
                 android:textColor="@color/prueba"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="5dp">
 
                 <TextView
-                    android:id="@+id/dni"
+                    android:id="@+id/dni_profesor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="0dp"
-                    android:layout_weight="1"
                     android:fontFamily="@font/open_sans"
                     android:textColor="@color/prueba"
-                    android:text="DNI" />
+                    android:text="DNI"
+                    android:textSize="10sp"
+                    android:layout_alignParentStart="true"
+                    android:layout_weight="1"/>
 
                 <TextView
-                    android:id="@+id/fechaNacimientoProfesor"
+                    android:id="@+id/correo_profesor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="100dp"
-                    android:layout_marginBottom="0dp"
-                    android:layout_weight="1"
                     android:fontFamily="@font/open_sans"
-                    android:text="Fecha de Nacimiento"
-                    android:textColor="@color/prueba"/>
+                    android:text="Correo del Profesor"
+                    android:textColor="@color/prueba"
+                    android:textSize="10sp"
+                    android:paddingEnd="10dp"
+                    android:layout_alignParentEnd="true"/>
             </LinearLayout>
 
         </LinearLayout>

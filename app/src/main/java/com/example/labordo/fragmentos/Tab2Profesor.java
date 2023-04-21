@@ -3,6 +3,7 @@ package com.example.labordo.fragmentos;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -29,23 +30,35 @@ import android.widget.Toast;
 
 import com.example.labordo.R;
 import com.example.labordo.objetos.ActividadesVo;
+import com.example.labordo.objetos.Profesorado;
 import com.example.labordo.recyclerview.AdapterDatos;
+import com.example.labordo.recyclerview.AdapterProfesorado;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class Tab2Profesor extends Fragment {
+
+    //PARA CONECTARTE A LA BASE DE DATOS
+    private static final String DATABASE_URL = "jdbc:mysql://192.168.1.43:3306/labordo?useUnicode=true&characterEncoding=UTF-8\"";
+
+    //USUARIO PARA INICIAR SESION EN LA BASE DE DATOS
+    private static final String USER = "root";
+
+    //CONTRASEÑA PARA INICIAR SESION EN EL USUARIO ROOT
+    private static final String PASSWORD = "L4b0rd0#";
 
     ActivityResultContracts.PickVisualMedia selectorImagen;
     ArrayList<ActividadesVo> listDatos;
     RecyclerView recycler;
     FloatingActionButton add;
-    String nombre;
-    String descripcion;
-    String precio;
+    String nombre, descripcion, precio, fechaElegida;
     String fecha = "";
     int actividad;
-    String fechaElegida;
 
     Uri imagenUri;
     Button botonFecha, botonFoto;
@@ -140,7 +153,7 @@ public class Tab2Profesor extends Fragment {
                 }
 
                 if (!nombre.equals("") && !descripcion.equals("") && !precio.equals("") && !fechaElegida.equals("")) {
-                    listDatos.add(new ActividadesVo(nombre, descripcion, imagenUri, precio, fecha, circulo));
+                    listDatos.add(new ActividadesVo(nombre, descripcion, imagenUri, precio, fecha));
                     AdapterDatos adapter = new AdapterDatos(listDatos);
                     recycler.setAdapter(adapter);
                 } else if (nombre.equals("") || descripcion.equals("") || precio.equals("") || fechaElegida.equals("")) {
@@ -167,7 +180,7 @@ public class Tab2Profesor extends Fragment {
                     @Override
                     public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
 
-                        String dia = dayOfMonth + "/" + month + "/" + year;
+                        String dia = year + "/" + month + "/" + dayOfMonth;
 
                         fecha = dia;
                     }
@@ -203,6 +216,63 @@ public class Tab2Profesor extends Fragment {
     }
     public void eliminar(){
 
+    }
+
+    //PARA AÑADIR LAS LABORES A LA BASE DE DATOS
+    class Send extends AsyncTask<Void, Void, Void> {
+
+        //ESTA VARIABLE (MSG) LA UTILIZAMOS PARA EN CASO DE FALLO TE MUESTRE EN EL TOAST EL FALLO QUE DA
+        String msg = "";
+
+        @Override
+        protected void onPreExecute(){
+            Toast.makeText(getContext(),"Añadiendo", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try{
+                Class.forName("com.mysql.jdbc.Driver"); //PILLAMOS LA INFORMACION DEL PAQUETE
+                Connection conn = DriverManager.getConnection(DATABASE_URL,USER, PASSWORD); //NOS CONECTAMOS A LA BASE DE DATOS
+                if(conn == null){
+                    //SI NO CONSIGUES CONECTARTE A LA BASE DE DATOS
+                    msg = "Se ha perdido la conexion";
+                }else{
+                    //SI CONSIGUE CONECTARSE A LA BASE DE DATOS QUE EJECUTE LA SIGUIENTE SENTENCIA
+                    String query = "INSERT INTO labores (nombreActividad, precio, descripcion, imagenTarea, fechaLimite)" +
+                            " VALUES(?, ?, ?, ?, ?)";
+                    PreparedStatement statement = conn.prepareStatement(query);
+                    statement.setString(1, nombre);
+                    statement.setString(2, precio);
+                    statement.setString(3, descripcion);
+                    statement.setString(4, );
+                    statement.setString(5, fechaElegida);
+                    ResultSet rs = statement.executeQuery();
+
+                    listDatos.add(new ActividadesVo(nombreActividad, descripcion, imagen, precio, fechaLimite));
+
+                    msg = "Actualizado";
+
+                    statement.close();
+                    rs.close();
+                }
+
+                conn.close();
+
+            }catch (Exception e){
+                //SI FALLA ALGO EN EL CODIGO SALDRA LA SIGUIENTE EXCEPTION
+                msg = e.getMessage();
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid){
+            Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+            AdapterProfesorado adapter = new AdapterProfesorado(listDatos);
+            recycler.setAdapter(adapter);
+        }
     }
 
 }

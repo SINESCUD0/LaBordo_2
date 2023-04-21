@@ -11,13 +11,13 @@ public class ActividadesVo {
     private String fecha;
     private int imagenActividad; //Actividad de la tarea
 
-    public ActividadesVo(String nombreTarea, String descripcion, Uri imagenTarea, String precio, String fecha, int imagenActividad) {
+    public ActividadesVo(String nombreTarea, String descripcion, Uri imagenTarea, String precio, String fecha) {
         this.nombreTarea = nombreTarea;
         this.descripcion = descripcion;
         this.imagenTarea = imagenTarea;
         this.precio = precio;
         this.fecha = fecha;
-        this.imagenActividad = imagenActividad;
+        //this.imagenActividad = imagenActividad;
     }
 
     public String getNombreTarea() {return nombreTarea;}
@@ -35,6 +35,6 @@ public class ActividadesVo {
     public String getFecha() {return fecha;}
     public void setFecha(String fecha) {this.fecha = fecha;}
 
-    public int getImagenActividad() {return imagenActividad;}
-    public void setImagenActividad(int imagenActividad) {this.imagenActividad = imagenActividad;}
+    //public int getImagenActividad() {return imagenActividad;}
+    //public void setImagenActividad(int imagenActividad) {this.imagenActividad = imagenActividad;}
 }
