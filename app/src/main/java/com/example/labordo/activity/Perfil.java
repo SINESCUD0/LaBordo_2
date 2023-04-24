@@ -71,16 +71,22 @@ public class Perfil extends AppCompatActivity {
 
         dni.setText(logininfo.getDni());
         correo.setText(logininfo.getCorreo());
-        byte[] byteArray;
-        Bitmap bm;
 
-        try {
-            byteArray = logininfo.getImagenPerfil().getBytes(1, (int)logininfo.getImagenPerfil().length());
-            bm = BitmapFactory.decodeByteArray(byteArray,0 , byteArray.length);
-            fotoPerfil.setImageBitmap(bm);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+
+        if(logininfo.getImagenPerfil() != null){
+            byte[] byteArray;
+            Bitmap bm;
+
+            try {
+                byteArray = logininfo.getImagenPerfil().getBytes(1, (int)logininfo.getImagenPerfil().length());
+                bm = BitmapFactory.decodeByteArray(byteArray,0 , byteArray.length);
+                fotoPerfil.setImageBitmap(bm);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
+
+
 
         botonFoto.setOnClickListener(new View.OnClickListener() {
             @Override
