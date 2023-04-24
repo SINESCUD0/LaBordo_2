@@ -96,7 +96,7 @@ public class Main_Profesorado extends AppCompatActivity {
         int permisosAlmacenamiento = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_MEDIA_LOCATION);
 
         if(permisosAlmacenamiento == PackageManager.PERMISSION_GRANTED){
-            Toast.makeText(this, "Permisos Concedidos", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Permisos Concedidos", Toast.LENGTH_SHORT).show();
         }else{
             Toast.makeText(this, "Acepta los permisos", Toast.LENGTH_SHORT).show();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

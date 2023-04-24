@@ -3,6 +3,7 @@ package com.example.labordo.activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
 
     String tipo1 = "profesor";
     String tipo2 = "estudiante";
+    int color = R.color.prueba;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,10 +52,15 @@ public class LoginActivity extends AppCompatActivity {
         iniciar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Send objSend = new Send();
-                objSend.execute();
-                correoUsuario.setText("");
-                passwordUsuario.setText("");
+                Toast.makeText(LoginActivity.this, "Inciciando sesion ...", Toast.LENGTH_SHORT).show();
+                Handler delay = new Handler();
+                delay.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Send objSend = new Send();
+                        objSend.execute();
+                    }
+                }, 2000);
             }
         });
     }
@@ -67,10 +74,10 @@ public class LoginActivity extends AppCompatActivity {
         String correo1 = correoUsuario.getText().toString();
         String password1 = passwordUsuario.getText().toString();
 
-        @Override
+        /*@Override
         protected void onPreExecute(){
             Toast.makeText(LoginActivity.this,"Iniciando Sesion", Toast.LENGTH_SHORT).show();
-        }
+        }*/
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -99,12 +106,17 @@ public class LoginActivity extends AppCompatActivity {
                             statement2.setString(1, correo1);
                             statement2.setString(2, password1);
                             ResultSet rs2 = statement2.executeQuery();
-
-                            msg = "¡Inicio de sesión exitoso!";
-
-                            Intent i = new Intent(LoginActivity.this, Main_Profesorado.class);
-                            startActivity(i);
-
+                            if(rs2.next()){
+                                msg = "¡Inicio de sesión exitoso!";
+                                Intent i = new Intent(LoginActivity.this, Main_Profesorado.class);
+                                startActivity(i);
+                                correoUsuario.setText("");
+                                passwordUsuario.setText("");
+                            }
+                            else{
+                                msg = "Contraseña o correo incorrecta";
+                                //color = 0xfff00000;
+                            }
                             statement2.close();
                             rs2.close();
 
@@ -122,16 +134,22 @@ public class LoginActivity extends AppCompatActivity {
 
                                 Intent i = new Intent(LoginActivity.this, Main_Alumnado.class);
                                 startActivity(i);
+
+                                //color = R.color.prueba;
+                                correoUsuario.setText("");
+                                passwordUsuario.setText("");
+                            }
+                            else{
+                                msg = "Contraseña o correo incorrecta";
+                                //color = 0xfff00000;
                             }
                             statement2.close();
                             rs2.close();
                         }
-                        else{
-                            msg = "Contraseña incorrecta";
-                        }
                     } else {
                         //SI INTRODUCES MAL LOS DATOS SALDRA EL SIGUIENTE MENSAJE
                         msg = "No has introducido bien los datos";
+                        //color = 0xfff00000;
                     }
 
                     statement.close();

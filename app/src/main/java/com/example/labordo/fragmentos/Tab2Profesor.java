@@ -69,17 +69,21 @@ public class Tab2Profesor extends Fragment {
 
     Uri imagenUri;
     byte[] imagenBytes;
-    Button botonFecha, botonFoto;
+    Button botonFoto;
     EditText nombreTarea, descripcionTarea, precioTarea;
-    TextView fechaFinal;
+    TextView fechaFinal, botonFecha;
     ImageView fotoTarea;
     RadioGroup grupo;
     RadioButton asignada1, inactiva1, sinAsignar1;
 
+    //AYMAN AQUI TENEMOS QUE RECIBIR EL DNI DEL PROFESOR Y AÑADIRLO EN ESTA VARIABLE
+    String dniProfesor;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        RecibirLabores recibirLabores= new RecibirLabores();
+        recibirLabores.execute();
     }
 
     @SuppressLint("MissingPermission")
@@ -125,7 +129,7 @@ public class Tab2Profesor extends Fragment {
         View dialogView = inflater.inflate(R.layout.ventana_alerta, null);
         dialogBuilder.setView(dialogView);
 
-        botonFecha = (Button) dialogView.findViewById(R.id.botonFecha);
+        botonFecha = (TextView) dialogView.findViewById(R.id.textFechaEntrega);
         nombreTarea = (EditText) dialogView.findViewById(R.id.editTextNombreTarea);
         descripcionTarea = (EditText) dialogView.findViewById(R.id.editTextDescripcionTarea);
         precioTarea = (EditText) dialogView.findViewById(R.id.editTextPrecio);
@@ -285,6 +289,53 @@ public class Tab2Profesor extends Fragment {
 
                     statement.close();
                     inputStream.close();
+                }
+
+                conn.close();
+
+            }catch (Exception e){
+                //SI FALLA ALGO EN EL CODIGO SALDRA LA SIGUIENTE EXCEPTION
+                msg = e.getMessage();
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid){
+            Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+            AdapterDatos adapterDatos = new AdapterDatos(listDatos);
+            recycler.setAdapter(adapterDatos);
+        }
+    }
+
+    //PARA RECIBIR LAS LABORES QUE TIENE EL PROFESOR
+    class RecibirLabores extends AsyncTask<Void, Void, Void> {
+
+        //ESTA VARIABLE (MSG) LA UTILIZAMOS PARA EN CASO DE FALLO TE MUESTRE EN EL TOAST EL FALLO QUE DA
+        String msg = "";
+
+        @Override
+        protected void onPreExecute(){
+            Toast.makeText(getContext(),"Actualizando", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try{
+                Class.forName("com.mysql.jdbc.Driver"); //PILLAMOS LA INFORMACION DEL PAQUETE
+                Connection conn = DriverManager.getConnection(DATABASE_URL,USER, PASSWORD); //NOS CONECTAMOS A LA BASE DE DATOS
+                if(conn == null){
+                    //SI NO CONSIGUES CONECTARTE A LA BASE DE DATOS
+                    msg = "Se ha perdido la conexion";
+                }else{
+                    //SI CONSIGUE CONECTARSE A LA BASE DE DATOS QUE EJECUTE LA SIGUIENTE SENTENCIA
+                    String query = "SELECT nombreActividad, precio, descripcion, imagenTarea, fechaLimite" +
+                            " FROM labores WHERE dni_profesor = ?";
+                    PreparedStatement statement = conn.prepareStatement(query);
+                    statement.setString(1, dniProfesor);
+                    ResultSet rs = statement.executeQuery();
+
                 }
 
                 conn.close();

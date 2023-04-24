@@ -70,6 +70,7 @@
             android:layout_marginStart="14dp"
             android:layout_marginTop="14dp"
             android:layout_marginEnd="14dp"
+            android:layout_marginBottom="15dp"
             android:fontFamily="@font/open_sans"
             android:hint="@string/hintPrecioTarea"
             android:inputType="number"
@@ -103,15 +104,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="14dp"
                 android:fontFamily="@font/open_sans"
-                app:layout_constraintTop_toBottomOf="@+id/editTextPrecio" />
-
-            <Button
-                android:id="@+id/botonFecha"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="14dp"
-                android:fontFamily="@font/open_sans"
-                android:text="Add"
                 app:layout_constraintTop_toBottomOf="@+id/editTextPrecio" />
 
         </LinearLayout>

@@ -71,8 +71,8 @@ public class AdapterAlumnado extends RecyclerView.Adapter<AdapterAlumnado.ViewHo
             nombreAlumno = (TextView) itemView.findViewById(R.id.nombreAlumno);
             curso = (TextView) itemView.findViewById(R.id.curso);
             fotoAlumno = (ImageView) itemView.findViewById(R.id.fotoAlumno);
-            DNI = (TextView) itemView.findViewById(R.id.dni);
-            fechaNacimiento = (TextView) itemView.findViewById(R.id.fechaNacimiento);
+            DNI = (TextView) itemView.findViewById(R.id.dni_alumno);
+            fechaNacimiento = (TextView) itemView.findViewById(R.id.fechaNacimiento_alumno);
             actividad = (ImageView) itemView.findViewById(R.id.actividad);
 
             itemView.findViewById(R.id.layout_lista_alumnado).setOnClickListener(new View.OnClickListener() {
