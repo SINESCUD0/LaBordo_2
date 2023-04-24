@@ -21,7 +21,7 @@ import java.sql.ResultSet;
 
 public class LoginActivity extends AppCompatActivity {
     //PARA CONECTARTE A LA BASE DE DATOS
-    private static final String DATABASE_URL = "jdbc:mysql://192.168.1.43:3306/labordo?useUnicode=true&characterEncoding=UTF-8\"";
+    private static final String DATABASE_URL = "jdbc:mysql://192.168.1.41:3306/labordo?useUnicode=true&characterEncoding=UTF-8\"";
 
     //USUARIO PARA INICIAR SESION EN LA BASE DE DATOS
     private static final String USER = "root";
@@ -109,11 +109,8 @@ public class LoginActivity extends AppCompatActivity {
                             rs2.close();
 
                         }
-                        else{
-                            msg = "Contraseña incorrecta";
-                        }
                         //SI EL CORREO INTRODUCIDO ES DE UN ESTUDIANTE HARA LO SIGUIENTE
-                        if (tipo.equals(tipo2)) {
+                        else if (tipo.equals(tipo2)) {
                             String query2 = "SELECT * FROM estudiante WHERE correo = ? AND contrasenia = ?";
                             PreparedStatement statement2 = conn.prepareStatement(query2);
                             statement2.setString(1, correo1);

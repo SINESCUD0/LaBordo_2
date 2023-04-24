@@ -40,7 +40,7 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
         holder.imagenTarea.setImageURI(listDatos.get(position).getImagenTarea());
         holder.precio.setText(listDatos.get(position).getPrecio());
         holder.fecha.setText(listDatos.get(position).getFecha());
-        holder.actividad.setImageResource(listDatos.get(position).getImagenActividad());
+        //holder.actividad.setImageResource(listDatos.get(position).getImagenActividad());
 
     }
 
@@ -65,7 +65,7 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
         ImageView imagenTarea;
         TextView precio;
         TextView fecha;
-        ImageView actividad;
+        //ImageView actividad;
 
         public ViewHolderDatos(@NonNull View itemView) {
             super(itemView);
@@ -74,7 +74,7 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
             imagenTarea = (ImageView) itemView.findViewById(R.id.imageView);
             precio = (TextView) itemView.findViewById(R.id.precio);
             fecha = (TextView) itemView.findViewById(R.id.fechaLimite);
-            actividad = (ImageView) itemView.findViewById(R.id.actividad);
+            //actividad = (ImageView) itemView.findViewById(R.id.actividad);
 
             itemView.findViewById(R.id.layout_actividades_asignadas).setOnClickListener(new View.OnClickListener() {
                 @Override

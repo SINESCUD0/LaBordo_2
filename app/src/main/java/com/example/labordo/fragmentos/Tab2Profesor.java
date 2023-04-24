@@ -1,6 +1,7 @@
 package com.example.labordo.fragmentos;
 
 import android.annotation.SuppressLint;
+import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -35,16 +36,22 @@ import com.example.labordo.recyclerview.AdapterDatos;
 import com.example.labordo.recyclerview.AdapterProfesorado;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Tab2Profesor extends Fragment {
 
-    //PARA CONECTARTE A LA BASE DE DATOS
-    private static final String DATABASE_URL = "jdbc:mysql://192.168.1.43:3306/labordo?useUnicode=true&characterEncoding=UTF-8\"";
+    //PARA CONECTARTE A LA BASE DE DATOS CAMBIAR CADA VEZ QUE SE ENCIENDA EL SERVIDOR LA IP
+    private static final String DATABASE_URL = "jdbc:mysql://192.168.1.41:3306/labordo?useUnicode=true&characterEncoding=UTF-8\"";
 
     //USUARIO PARA INICIAR SESION EN LA BASE DE DATOS
     private static final String USER = "root";
@@ -61,6 +68,7 @@ public class Tab2Profesor extends Fragment {
     int actividad;
 
     Uri imagenUri;
+    byte[] imagenBytes;
     Button botonFecha, botonFoto;
     EditText nombreTarea, descripcionTarea, precioTarea;
     TextView fechaFinal;
@@ -139,6 +147,8 @@ public class Tab2Profesor extends Fragment {
                 actividad = grupo.getCheckedRadioButtonId();
                 fechaElegida = fechaFinal.toString();
 
+
+
                 boolean asignada = asignada1.isChecked();
                 boolean inactiva = inactiva1.isChecked();
                 boolean sinAsignar = sinAsignar1.isChecked();
@@ -153,9 +163,11 @@ public class Tab2Profesor extends Fragment {
                 }
 
                 if (!nombre.equals("") && !descripcion.equals("") && !precio.equals("") && !fechaElegida.equals("")) {
-                    listDatos.add(new ActividadesVo(nombre, descripcion, imagenUri, precio, fecha));
-                    AdapterDatos adapter = new AdapterDatos(listDatos);
-                    recycler.setAdapter(adapter);
+                    //listDatos.add(new ActividadesVo(nombre, descripcion, imagenUri, precio, fecha));
+                    //AdapterDatos adapter = new AdapterDatos(listDatos);
+                    //recycler.setAdapter(adapter);
+                    EnvioLabores labores = new EnvioLabores();
+                    labores.execute();
                 } else if (nombre.equals("") || descripcion.equals("") || precio.equals("") || fechaElegida.equals("")) {
                     Toast.makeText(getContext(), "Introduce todos los datos", Toast.LENGTH_SHORT).show();
                 }
@@ -179,9 +191,14 @@ public class Tab2Profesor extends Fragment {
                 calendarViewPrueba.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
                     @Override
                     public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+                        final int mesActual = month + 1;
+                        //FORMATEO EL DIA Y EL MES SI ES MENOR DE 10, ES DECIR, SI ELEGIMOS EL MES DE FEBRERO
+                        //NOS MOSTRARA EL MES FORMATEADO EN VEZ DE SOLO 2 NOS SALDRA COMO 02, ESTO SE APLICA IGUAL
+                        //AL DIA
+                        String diaFormateado = (dayOfMonth < 10)? "0" + String.valueOf(dayOfMonth):String.valueOf(dayOfMonth);
+                        String mesFormateado = (mesActual < 10)? "0" + String.valueOf(mesActual):String.valueOf(mesActual);
 
-                        String dia = year + "/" + month + "/" + dayOfMonth;
-
+                        String dia = diaFormateado + "/" + mesFormateado + "/" + year;
                         fecha = dia;
                     }
                 });
@@ -214,12 +231,19 @@ public class Tab2Profesor extends Fragment {
         alertDialog.show();
 
     }
-    public void eliminar(){
-
+    private byte[] getBytes(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+        int bufferSize = 1024;
+        byte[] buffer = new byte[bufferSize];
+        int len;
+        while ((len = inputStream.read(buffer)) != -1) {
+            byteBuffer.write(buffer, 0, len);
+        }
+        return byteBuffer.toByteArray();
     }
 
     //PARA AÑADIR LAS LABORES A LA BASE DE DATOS
-    class Send extends AsyncTask<Void, Void, Void> {
+    class EnvioLabores extends AsyncTask<Void, Void, Void> {
 
         //ESTA VARIABLE (MSG) LA UTILIZAMOS PARA EN CASO DE FALLO TE MUESTRE EN EL TOAST EL FALLO QUE DA
         String msg = "";
@@ -239,22 +263,28 @@ public class Tab2Profesor extends Fragment {
                     msg = "Se ha perdido la conexion";
                 }else{
                     //SI CONSIGUE CONECTARSE A LA BASE DE DATOS QUE EJECUTE LA SIGUIENTE SENTENCIA
-                    String query = "INSERT INTO labores (nombreActividad, precio, descripcion, imagenTarea, fechaLimite)" +
-                            " VALUES(?, ?, ?, ?, ?)";
+                    String query = "INSERT INTO labores (nombreActividad, precio, descripcion, imagenTarea, fechaLimite, estado)" +
+                            " VALUES(?, ?, ?, ?, ?, 'LIBRE')";
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                    Date date = formatter.parse(fecha);
+                    java.sql.Date fechaElegidaSQL = new java.sql.Date(date.getTime());
+                    ContentResolver contentResolver = getActivity().getContentResolver();
+                    InputStream inputStream = contentResolver.openInputStream(imagenUri);
+                    imagenBytes = getBytes(inputStream);
                     PreparedStatement statement = conn.prepareStatement(query);
                     statement.setString(1, nombre);
                     statement.setString(2, precio);
                     statement.setString(3, descripcion);
-                    statement.setString(4, );
-                    statement.setString(5, fechaElegida);
-                    ResultSet rs = statement.executeQuery();
+                    statement.setBytes(4, imagenBytes);
+                    statement.setString(5, String.valueOf(fechaElegidaSQL));
+                    statement.executeUpdate();
 
-                    listDatos.add(new ActividadesVo(nombreActividad, descripcion, imagen, precio, fechaLimite));
+                    listDatos.add(new ActividadesVo(nombre, descripcion, imagenUri, precio, fecha));
 
-                    msg = "Actualizado";
+                    msg = "Tarea añadida";
 
                     statement.close();
-                    rs.close();
+                    inputStream.close();
                 }
 
                 conn.close();
@@ -270,8 +300,8 @@ public class Tab2Profesor extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid){
             Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
-            AdapterProfesorado adapter = new AdapterProfesorado(listDatos);
-            recycler.setAdapter(adapter);
+            AdapterDatos adapterDatos = new AdapterDatos(listDatos);
+            recycler.setAdapter(adapterDatos);
         }
     }
 

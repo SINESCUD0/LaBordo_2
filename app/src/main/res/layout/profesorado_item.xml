@@ -41,7 +41,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="0dp"
                 android:fontFamily="@font/open_sans"
-                android:text="Apellidos"
+                android:text="Apellidos Profesor"
                 android:textColor="@color/prueba"
                 android:textSize="10sp" />
 
