@@ -40,7 +40,7 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
         holder.imagenTarea.setImageURI(listDatos.get(position).getImagenTarea());
         holder.precio.setText(listDatos.get(position).getPrecio());
         holder.fecha.setText(listDatos.get(position).getFecha());
-        holder.actividad.setImageResource(listDatos.get(position).getImagenActividad());
+        //holder.actividad.setImageResource(listDatos.get(position).getImagenActividad());
 
     }
 

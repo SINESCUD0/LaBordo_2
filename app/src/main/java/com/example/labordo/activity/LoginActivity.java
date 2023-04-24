@@ -11,9 +11,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.labordo.R;
+import com.example.labordo.objetos.Alumnado;
+import com.example.labordo.objetos.LoginInfo;
+import com.example.labordo.objetos.Profesorado;
 import com.example.labordo.usuarios.Main_Alumnado;
 import com.example.labordo.usuarios.Main_Profesorado;
 
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -21,7 +25,7 @@ import java.sql.ResultSet;
 
 public class LoginActivity extends AppCompatActivity {
     //PARA CONECTARTE A LA BASE DE DATOS
-    private static final String DATABASE_URL = "jdbc:mysql://192.168.1.43:3306/labordo?useUnicode=true&characterEncoding=UTF-8\"";
+    private static final String DATABASE_URL = "jdbc:mysql://192.168.1.41:3306/labordo?useUnicode=true&characterEncoding=UTF-8\"";
 
     //USUARIO PARA INICIAR SESION EN LA BASE DE DATOS
     private static final String USER = "root";
@@ -35,6 +39,9 @@ public class LoginActivity extends AppCompatActivity {
 
     String tipo1 = "profesor";
     String tipo2 = "estudiante";
+
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,8 +59,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Send objSend = new Send();
                 objSend.execute();
-                correoUsuario.setText("");
-                passwordUsuario.setText("");
+                //correoUsuario.setText("");
+                //passwordUsuario.setText("");
             }
         });
     }
@@ -94,19 +101,33 @@ public class LoginActivity extends AppCompatActivity {
                         String tipo = rs.getString("tipo");
                         //SI EL CORREO INTRODUCIDO ES DE UN PROFESOR HARA LO SIGUIENTE
                         if(tipo.equals(tipo1)){
-                            String query2 = "SELECT * FROM profesor WHERE correo = ? AND contrasenia = ?";
-                            PreparedStatement statement2 = conn.prepareStatement(query2);
-                            statement2.setString(1, correo1);
-                            statement2.setString(2, password1);
-                            ResultSet rs2 = statement2.executeQuery();
+                            String querya = "SELECT * FROM profesor WHERE correo = ? AND contrasenia = ?";
+                            PreparedStatement statementa = conn.prepareStatement(querya);
+                            statementa.setString(1, correo1);
+                            statementa.setString(2, password1);
+                            ResultSet rsa = statementa.executeQuery();
 
-                            msg = "¡Inicio de sesión exitoso!";
+                            if(rsa.next()){
 
-                            Intent i = new Intent(LoginActivity.this, Main_Profesorado.class);
-                            startActivity(i);
+                                msg = "¡Inicio de sesión exitoso!";
 
-                            statement2.close();
-                            rs2.close();
+                                Intent i = new Intent(LoginActivity.this, Main_Profesorado.class);
+                                startActivity(i);
+
+                                String dni = rsa.getString("dni");
+                                String nombre = rsa.getString("nombre");
+                                String apellidos = rsa.getString("apellidos");
+                                String correo = rsa.getString("correo");
+                                String contrasenia = rsa.getString("contrasenia");
+                                String instituto = rsa.getString("instituto");
+                                Blob imagen = rsa.getBlob("fotoPerfil");
+                                boolean tipoCuenta = true;
+
+                                //new Profesorado(dni, nombre, apellidos, correo, contrasenia, instituto, tipoCuenta);
+                                new LoginInfo(dni, nombre, apellidos, correo, contrasenia, instituto,imagen, tipoCuenta);
+                            }
+                            statementa.close();
+                            rsa.close();
 
                         }
                         else{
@@ -122,6 +143,19 @@ public class LoginActivity extends AppCompatActivity {
 
                             if(rs2.next()){
                                 msg = "¡Inicio de sesión exitoso!";
+
+                                String dni = rs2.getString("dni");
+                                String nombre = rs2.getString("nombre");
+                                String apellidos = rs2.getString("apellidos");
+                                String correo = rs2.getString("correo");
+                                String contrasenia = rs2.getString("contrasenia");
+                                String instituto = rs2.getString("instituto");
+                                Blob imagen = rs2.getBlob("fotoPerfil");
+                                boolean tipoCuenta = false;
+
+//                                Toast.makeText(getApplicationContext(), (int) imagen.length()+"", Toast.LENGTH_SHORT).show();
+
+                                new LoginInfo(dni, nombre, apellidos, correo, contrasenia, instituto, imagen, tipoCuenta);
 
                                 Intent i = new Intent(LoginActivity.this, Main_Alumnado.class);
                                 startActivity(i);

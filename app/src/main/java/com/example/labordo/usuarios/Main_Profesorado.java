@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.labordo.R;
 import com.example.labordo.activity.Setting;
+import com.example.labordo.objetos.Alumnado;
 import com.example.labordo.visualizador_pantalla.MiVisualizadorDePantallaProfesor;
 import com.google.android.material.tabs.TabLayout;
 
@@ -122,5 +123,6 @@ public class Main_Profesorado extends AppCompatActivity {
 
         AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.show();
+
     }
 }

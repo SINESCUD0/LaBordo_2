@@ -44,7 +44,7 @@ import java.util.ArrayList;
 public class Tab2Profesor extends Fragment {
 
     //PARA CONECTARTE A LA BASE DE DATOS
-    private static final String DATABASE_URL = "jdbc:mysql://192.168.1.43:3306/labordo?useUnicode=true&characterEncoding=UTF-8\"";
+    private static final String DATABASE_URL = "jdbc:mysql://192.168.1.41:3306/labordo?useUnicode=true&characterEncoding=UTF-8\"";
 
     //USUARIO PARA INICIAR SESION EN LA BASE DE DATOS
     private static final String USER = "root";
@@ -242,6 +242,7 @@ public class Tab2Profesor extends Fragment {
                     String query = "INSERT INTO labores (nombreActividad, precio, descripcion, imagenTarea, fechaLimite)" +
                             " VALUES(?, ?, ?, ?, ?)";
                     PreparedStatement statement = conn.prepareStatement(query);
+                    /*
                     statement.setString(1, nombre);
                     statement.setString(2, precio);
                     statement.setString(3, descripcion);
@@ -252,9 +253,9 @@ public class Tab2Profesor extends Fragment {
                     listDatos.add(new ActividadesVo(nombreActividad, descripcion, imagen, precio, fechaLimite));
 
                     msg = "Actualizado";
-
+*/
                     statement.close();
-                    rs.close();
+                    //rs.close();
                 }
 
                 conn.close();
@@ -270,8 +271,8 @@ public class Tab2Profesor extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid){
             Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
-            AdapterProfesorado adapter = new AdapterProfesorado(listDatos);
-            recycler.setAdapter(adapter);
+            //AdapterProfesorado adapter = new AdapterProfesorado(listDatos);
+            //recycler.setAdapter(adapter);
         }
     }
 

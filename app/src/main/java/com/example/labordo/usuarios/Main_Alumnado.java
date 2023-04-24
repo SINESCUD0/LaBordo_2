@@ -21,6 +21,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.example.labordo.R;
 import com.example.labordo.activity.LoginActivity;
 import com.example.labordo.activity.Setting;
+import com.example.labordo.objetos.Alumnado;
 import com.example.labordo.visualizador_pantalla.MiVisualizadorDePantallaAlumno;
 import com.google.android.material.tabs.TabLayout;
 
