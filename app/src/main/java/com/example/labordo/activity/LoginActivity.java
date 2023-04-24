@@ -12,9 +12,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.labordo.R;
+import com.example.labordo.objetos.LoginInfo;
 import com.example.labordo.usuarios.Main_Alumnado;
 import com.example.labordo.usuarios.Main_Profesorado;
 
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -110,6 +112,15 @@ public class LoginActivity extends AppCompatActivity {
                                 msg = "¡Inicio de sesión exitoso!";
                                 Intent i = new Intent(LoginActivity.this, Main_Profesorado.class);
                                 startActivity(i);
+                                String dni = rs2.getString("dni");
+                                String nombre = rs2.getString("nombre");
+                                String apellidos = rs2.getString("apellidos");
+                                String correo = rs2.getString("correo");
+                                String password = rs2.getString("contrasenia");
+                                String instituto = rs2.getString("instituto");
+                                Blob imagen = rs2.getBlob("fotoPerfil");
+                                boolean tipoCuenta = true;
+                                new LoginInfo(dni, nombre, apellidos, correo, password, instituto, imagen, tipoCuenta);
                                 correoUsuario.setText("");
                                 passwordUsuario.setText("");
                             }
@@ -134,6 +145,16 @@ public class LoginActivity extends AppCompatActivity {
 
                                 Intent i = new Intent(LoginActivity.this, Main_Alumnado.class);
                                 startActivity(i);
+
+                                String dni = rs2.getString("dni");
+                                String nombre = rs2.getString("nombre");
+                                String apellidos = rs2.getString("apellidos");
+                                String correo = rs2.getString("correo");
+                                String password = rs2.getString("contrasenia");
+                                String instituto = rs2.getString("instituto");
+                                Blob imagen = rs2.getBlob("fotoPerfil");
+                                boolean tipoCuenta = false;
+                                new LoginInfo(dni, nombre, apellidos, correo, password, instituto, imagen, tipoCuenta);
 
                                 //color = R.color.prueba;
                                 correoUsuario.setText("");
