@@ -19,15 +19,6 @@ public class Alumnado extends LoginInfo {
 
     }
 
-    public Alumnado(String dni, String nombre, String apellidos, String correo, String pass, String instituto) {
-        super(dni, nombre, apellidos, correo, pass, instituto, false);
-        DNI = dni;
-        nombreAlumno = nombre+" "+apellidos;
-        this.correo = correo;
-        this.pass = pass;
-        this.instituto = instituto;
-    }
-
     public Alumnado(String nombreAlumno, String cursoAlumno, Uri fotoAlumno, String DNI, String fechaNacimiento, int imagenActividad) {
         this.nombreAlumno = nombreAlumno;
         this.cursoAlumno = cursoAlumno;

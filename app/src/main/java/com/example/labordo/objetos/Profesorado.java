@@ -17,16 +17,6 @@ public class Profesorado extends LoginInfo {
 
     }
 
-    public Profesorado(String dni, String nombre, String apellidos, String correo, String pass, String instituto) {
-        super(dni, nombre, apellidos, correo, pass, instituto, true);
-        DNI = dni;
-        nombreProfesor = nombre+" "+apellidos;
-        this.correo = correo;
-        this.pass = pass;
-        this.instituto = instituto;
-        this.tipoCuenta = tipoCuenta;
-    }
-
     public Profesorado(String nombreProfesor, String instituto, String DNI,
                        String apellidosProfesor, String correo) {
         this.nombreProfesor = nombreProfesor;
