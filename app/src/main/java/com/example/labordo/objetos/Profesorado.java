@@ -18,12 +18,13 @@ public class Profesorado extends LoginInfo {
     }
 
     public Profesorado(String nombreProfesor, String instituto, String DNI,
-                       String apellidosProfesor, String correo) {
+                       String apellidosProfesor, String correo, Uri fotoProfesor) {
         this.nombreProfesor = nombreProfesor;
         this.instituto = instituto;
         this.DNI = DNI;
         this.apellidosProfesor = apellidosProfesor;
         this.correo = correo;
+        this.fotoProfesor = fotoProfesor;
     }
 
     public String getNombreProfesor() {return nombreProfesor;}

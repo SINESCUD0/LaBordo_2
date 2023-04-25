@@ -1,5 +1,8 @@
 package com.example.labordo.fragmentos;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -15,9 +18,13 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.labordo.R;
+import com.example.labordo.objetos.Alumnado;
 import com.example.labordo.objetos.Profesorado;
 import com.example.labordo.recyclerview.AdapterProfesorado;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -89,27 +96,54 @@ public class Tab3Alumno extends Fragment {
                     msg = "Se ha perdido la conexion";
                 }else{
                     //SI CONSIGUE CONECTARSE A LA BASE DE DATOS QUE EJECUTE LA SIGUIENTE SENTENCIA
-                    String query = "SELECT dni, nombre, apellidos, correo, instituto FROM profesor";
+                    String query = "SELECT * FROM profesor";
                     PreparedStatement statement = conn.prepareStatement(query);
                     ResultSet rs = statement.executeQuery();
 
                     while(rs.next()) {
+                        int numero = 1;
                         String dni = rs.getString("dni");
                         String nombre = rs.getString("nombre");
                         String apellidos = rs.getString("apellidos");
                         String correo = rs.getString("correo");
                         String instituto = String.valueOf(rs.getInt("instituto"));
+                        Blob imageValue = rs.getBlob("fotoPerfil");
+                        numero++;
+                        if(imageValue == null){
+                            Uri imageUri = Uri.parse("android.resource://com.example.labordo/" + R.drawable.sin_foto);
+                            String query2 = "SELECT nombre FROM instituto WHERE id = ?";
+                            PreparedStatement statement2 = conn.prepareStatement(query2);
+                            statement2.setString(1, instituto);
+                            ResultSet rs2 = statement2.executeQuery();
+                            if(rs2.next()){
+                                String nombreInstituto = rs2.getString("nombre");
+                                listProfesores.add(new Profesorado(nombre, nombreInstituto, dni, apellidos, correo, imageUri));
+                            }
+                            rs2.close();
+                            statement2.close();
+                        }else{
+                            // Obtener la URI del archivo temporal
+                            byte[] blobBytes = imageValue.getBytes(1, (int) imageValue.length());
 
-                        String query2 = "SELECT nombre FROM instituto WHERE id = ?";
-                        PreparedStatement statement2 = conn.prepareStatement(query2);
-                        statement2.setString(1, instituto);
-                        ResultSet rs2 = statement2.executeQuery();
-                        if(rs2.next()){
-                            String nombreInstituto = rs2.getString("nombre");
-                            listProfesores.add(new Profesorado(nombre, nombreInstituto, dni, apellidos,correo));
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(blobBytes, 0, blobBytes.length);
+
+                            File file = File.createTempFile("fotoPerfilAlumno_"+numero, ".jpg", getContext().getCacheDir());
+                            FileOutputStream fos = new FileOutputStream(file);
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, fos);
+                            fos.close();
+
+                            Uri uri = Uri.fromFile(file);
+                            String query2 = "SELECT nombre FROM instituto WHERE id = ?";
+                            PreparedStatement statement2 = conn.prepareStatement(query2);
+                            statement2.setString(1, instituto);
+                            ResultSet rs2 = statement2.executeQuery();
+                            if(rs2.next()){
+                                String nombreInstituto = rs2.getString("nombre");
+                                listProfesores.add(new Profesorado(nombre, nombreInstituto, dni, apellidos, correo, uri));
+                            }
+                            rs2.close();
+                            statement2.close();
                         }
-                        rs2.close();
-                        statement2.close();
                     }
                     msg = "Actualizado";
 

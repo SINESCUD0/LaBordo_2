@@ -40,7 +40,6 @@ public class AdapterProfesorado extends RecyclerView.Adapter<AdapterProfesorado.
         holder.DNI.setText(listProfesores.get(position).getDNI());
         holder.instituto.setText(listProfesores.get(position).getInstituto());
         holder.correo.setText(listProfesores.get(position).getCorreo());
-        //holder.actividad.setImageResource(listProfesores.get(position).getImagenActividad());
     }
 
     @Override
@@ -62,7 +61,6 @@ public class AdapterProfesorado extends RecyclerView.Adapter<AdapterProfesorado.
         TextView nombreProfesor, apellidos, DNI, correo;
         TextView instituto;
         ImageView fotoProfesor;
-        //ImageView actividad;
 
         public ViewHolderDatos(@NonNull View itemView) {
             super(itemView);
@@ -72,7 +70,6 @@ public class AdapterProfesorado extends RecyclerView.Adapter<AdapterProfesorado.
             DNI = itemView.findViewById(R.id.dni_profesor);
             instituto = itemView.findViewById(R.id.instituto_profesor);
             correo = itemView.findViewById(R.id.correo_profesor);
-            //actividad = itemView.findViewById(R.id.actividad);
 
             itemView.findViewById(R.id.layout_lista_profesorado).setOnClickListener(new View.OnClickListener() {
                 @Override
