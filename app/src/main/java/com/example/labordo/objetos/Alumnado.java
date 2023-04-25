@@ -23,6 +23,7 @@ public class Alumnado extends LoginInfo {
 
     public Alumnado(String nombreAlumno, String cursoAlumno, Uri fotoAlumno, String DNI,
                     String fechaNacimiento, String puntos, String correo, String instituto, String apellidos) {
+
         this.nombreAlumno = nombreAlumno;
         this.cursoAlumno = cursoAlumno;
         this.fotoAlumno = fotoAlumno;
@@ -31,7 +32,7 @@ public class Alumnado extends LoginInfo {
         this.puntos = puntos;
         this.correo = correo;
         this.instituto = instituto;
-        this.apellidos = apellidos;
+        this.apellidos = new String();
     }
 
 

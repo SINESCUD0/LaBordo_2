@@ -18,10 +18,8 @@ import java.sql.SQLException;
 public class Setting extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.setting);
-        this.getSupportActionBar().hide();
+    protected void onResume() {
+        super.onResume();
 
         LoginInfo loginInfo = new LoginInfo();
         ImageView fotoPerfil = findViewById(R.id.fotoPerfil);
@@ -39,6 +37,8 @@ public class Setting extends AppCompatActivity {
             }
         }
 
+
+
         findViewById(R.id.perfil).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,6 +52,15 @@ public class Setting extends AppCompatActivity {
                 startActivity(new Intent(Setting.this, CambiarPassword.class));
             }
         });
+
+
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.setting);
+        this.getSupportActionBar().hide();
 
 
         }

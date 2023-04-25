@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -24,6 +25,7 @@ import com.example.labordo.R;
 import com.example.labordo.objetos.Alumnado;
 import com.example.labordo.objetos.LoginInfo;
 import com.example.labordo.objetos.Profesorado;
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -40,75 +42,39 @@ import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Perfil extends AppCompatActivity {
-
-    //PARA CONECTARTE A LA BASE DE DATOS CAMBIAR CADA VEZ QUE SE ENCIENDA EL SERVIDOR LA IP
-    private static final String DATABASE_URL = "jdbc:mysql://192.168.1.45:3306/labordo?useUnicode=true&characterEncoding=UTF-8\"";
-
-    //USUARIO PARA INICIAR SESION EN LA BASE DE DATOS
-    private static final String USER = "root";
-
-    //CONTRASEÑA PARA INICIAR SESION EN EL USUARIO ROOT
-    private static final String PASSWORD = "L4b0rd0#";
 
     Button botonFoto;
     ImageView fotoPerfil;
     Uri imagenUri;
     TextView tipoDeCuenta, dni, correo;
 
-    /*
-    Alumnado alumno = new Alumnado();
-    Profesorado profesor = new Profesorado();
-     */
+
+    private static final String DATABASE_URL = "jdbc:mysql://192.168.43.150:3306/labordo?useUnicode=true&characterEncoding=UTF-8\"";
+    private static final String USER = "root";
+    private static final String PASSWORD = "L4b0rd0#";
+
+
 
     LoginInfo logininfo = new LoginInfo();
 
     @SuppressLint("MissingPermission")
     ActivityResultLauncher<PickVisualMediaRequest> pickMedia =
             registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
-                if (uri != null) {
+                //if (uri != null) {
                     Log.d("PhotoPicker", "Selected URI: " + uri);
 
+                    //imagenUri = uri;
+
                     fotoPerfil.setImageURI(uri);
-                    byte[] bArray;
 
-
-                    try {
-                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-                        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                        bArray = bos.toByteArray();
-
-
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-
-
-                    try {
-                        Class.forName("com.mysql.jdbc.Driver"); //PILLAMOS LA INFORMACION DEL PAQUETE
-                        Connection conn = DriverManager.getConnection(DATABASE_URL,USER, PASSWORD); //NOS CONECTAMOS A LA BASE DE DATOS
-                        String query;
-
-                        if(logininfo.isTipoCuenta()){
-                            query = "update profesor set fotoPerfil = ? where dni = '"+logininfo.getDni()+"'";
-                            PreparedStatement statement = conn.prepareStatement(query);
-                            statement.setBinaryStream(1, new ByteArrayInputStream(bArray), bArray.length);
-
-                            statement.executeUpdate();
-                            conn.close();
-                        }
-
-                    } catch (ClassNotFoundException e) {
-                        throw new RuntimeException(e);
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                        // Peta aquí
-                    }
-
-
-                    /*
+                    ActualizarFoto fotoRenovada = new ActualizarFoto();
+                    fotoRenovada.execute();
+/*
                     Drawable fotoDrawable = fotoPerfil.getDrawable();
                     Bitmap fotoBitmap = ((BitmapDrawable) fotoDrawable).getBitmap();
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -122,12 +88,11 @@ public class Perfil extends AppCompatActivity {
                         fotoPerfil.setImageBitmap(fotoBitmap);
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
-                    }*/
-                } else {
-                    Log.d("PhotoPicker", "No media selected");
-                }
+                    }
+*/
 
             });
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,6 +131,8 @@ public class Perfil extends AppCompatActivity {
         }
 
 
+        Toast.makeText(Perfil.this, "a", Toast.LENGTH_SHORT).show();
+
 
         botonFoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,9 +143,69 @@ public class Perfil extends AppCompatActivity {
         });
     }
 
-    private void subirFoto(){
+    private void subirFoto() {
         pickMedia.launch(new PickVisualMediaRequest.Builder()
                 .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
                 .build());
     }
+
+
+
+
+
+
+    public class ActualizarFoto extends AsyncTask<Void, Void, Void>{
+
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+
+
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection conn = DriverManager.getConnection(DATABASE_URL,USER, PASSWORD);
+
+                if(conn != null){
+
+                    Bitmap fotoBitmap = ((BitmapDrawable) fotoPerfil.getDrawable()).getBitmap();
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    fotoBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                    byte[] byteArray = stream.toByteArray();
+
+
+                    Blob blob = conn.createBlob();
+                    blob.setBytes(1, byteArray);
+
+                    logininfo.setImagenPerfil(blob);
+
+                    String query;
+
+                    if(logininfo.isTipoCuenta()){
+                        query = "update profesor set fotoPerfil = ? where dni = ?;";
+                    }else {
+                        query = "update estudiante set fotoPerfil = ? where dni = ?;";
+                    }
+
+                    PreparedStatement statement = conn.prepareStatement(query);
+                    statement.setBlob(1, blob);
+                    statement.setString(2, logininfo.getDni());
+                    statement.executeUpdate();
+
+                    statement.close();
+
+                }
+
+                conn.close();
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+
+            return null;
+        }
+    }
+
 }
