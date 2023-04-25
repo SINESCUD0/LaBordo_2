@@ -3,6 +3,8 @@ package com.example.labordo.fragmentos;
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,12 +34,16 @@ import android.widget.Toast;
 
 import com.example.labordo.R;
 import com.example.labordo.objetos.ActividadesVo;
+import com.example.labordo.objetos.Alumnado;
+import com.example.labordo.objetos.LoginInfo;
 import com.example.labordo.objetos.Profesorado;
 import com.example.labordo.recyclerview.AdapterDatos;
 import com.example.labordo.recyclerview.AdapterProfesorado;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
@@ -76,8 +83,9 @@ public class Tab2Profesor extends Fragment {
     RadioGroup grupo;
     RadioButton asignada1, inactiva1, sinAsignar1;
 
-    //AYMAN AQUI TENEMOS QUE RECIBIR EL DNI DEL PROFESOR Y AÑADIRLO EN ESTA VARIABLE
-    String dniProfesor;
+    SwipeRefreshLayout refresh;
+    LoginInfo dniProfesor = new LoginInfo();
+
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -104,17 +112,25 @@ public class Tab2Profesor extends Fragment {
         // Inflate the layout for this fragment
         View vista = inflater.inflate(R.layout.tab2_profesor, container, false);
         listDatos = new ArrayList<>();
-        recycler = (RecyclerView) vista.findViewById(R.id.TareasAsignadas2);
-        add = (FloatingActionButton) vista.findViewById(R.id.botonTarea1);
+        recycler = vista.findViewById(R.id.TareasAsignadas2);
+        add = vista.findViewById(R.id.botonTarea1);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        refresh = vista.findViewById(R.id.refresh);
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                listDatos.clear();
+                RecibirLabores objSend = new RecibirLabores();
+                objSend.execute();
+                refresh.setRefreshing(false);
+            }
+        });
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 pedirInformacion();
             }
         });
-
-
         return vista;
     }
 
@@ -267,8 +283,9 @@ public class Tab2Profesor extends Fragment {
                     msg = "Se ha perdido la conexion";
                 }else{
                     //SI CONSIGUE CONECTARSE A LA BASE DE DATOS QUE EJECUTE LA SIGUIENTE SENTENCIA
-                    String query = "INSERT INTO labores (nombreActividad, precio, descripcion, imagenTarea, fechaLimite, estado)" +
-                            " VALUES(?, ?, ?, ?, ?, 'LIBRE')";
+                    String dni = dniProfesor.getDni();
+                    String query = "INSERT INTO labores (nombreActividad, precio, descripcion, imagenTarea, fechaLimite, estado, dni_profesor)" +
+                            " VALUES(?, ?, ?, ?, ?, 'LIBRE', ?)";
                     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                     Date date = formatter.parse(fecha);
                     java.sql.Date fechaElegidaSQL = new java.sql.Date(date.getTime());
@@ -281,6 +298,7 @@ public class Tab2Profesor extends Fragment {
                     statement.setString(3, descripcion);
                     statement.setBytes(4, imagenBytes);
                     statement.setString(5, String.valueOf(fechaElegidaSQL));
+                    statement.setString(6, dni);
                     statement.executeUpdate();
 
                     listDatos.add(new ActividadesVo(nombre, descripcion, imagenUri, precio, fecha));
@@ -329,12 +347,41 @@ public class Tab2Profesor extends Fragment {
                     //SI NO CONSIGUES CONECTARTE A LA BASE DE DATOS
                     msg = "Se ha perdido la conexion";
                 }else{
+                    String dni = dniProfesor.getDni();
+                    int numero = 1;
                     //SI CONSIGUE CONECTARSE A LA BASE DE DATOS QUE EJECUTE LA SIGUIENTE SENTENCIA
-                    String query = "SELECT nombreActividad, precio, descripcion, imagenTarea, fechaLimite," +
-                            " estado, instituto, dni_profesor FROM labores WHERE dni_profesor = ?";
+                    String query = "SELECT * FROM labores WHERE dni_profesor = ?";
                     PreparedStatement statement = conn.prepareStatement(query);
-                    statement.setString(1, dniProfesor);
+                    statement.setString(1, dni);
                     ResultSet rs = statement.executeQuery();
+
+                    while(rs.next()){
+                        String nombre = rs.getString("nombreActividad");
+                        String precio = String.valueOf(rs.getInt("precio"));
+                        String descripcion = rs.getString("descripcion");
+                        Blob imageValue = rs.getBlob("imagenTarea");
+                        String fechaLimite = String.valueOf(rs.getDate("fechaLimite"));
+                        String estado = rs.getString("estado");
+                        numero++;
+                        if(imageValue == null){
+                            Uri imageUri = Uri.parse("android.resource://com.example.labordo/" + R.drawable.sin_foto);
+                            listDatos.add(new ActividadesVo(nombre, descripcion, imageUri, precio, fechaLimite));
+                        }else{
+                            // Obtener la URI del archivo temporal
+                            byte[] blobBytes = imageValue.getBytes(1, (int) imageValue.length());
+
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(blobBytes, 0, blobBytes.length);
+
+                            File file = File.createTempFile("image"+numero, ".jpg", getContext().getCacheDir());
+                            FileOutputStream fos = new FileOutputStream(file);
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, fos);
+                            fos.close();
+
+                            Uri uri = Uri.fromFile(file);
+                            listDatos.add(new ActividadesVo(nombre, descripcion, uri, precio, fechaLimite));
+                        }
+                    }
+
 
                 }
 

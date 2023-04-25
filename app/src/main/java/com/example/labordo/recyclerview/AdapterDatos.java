@@ -35,15 +35,13 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolderDatos holder, int position) {
-        /*
+
         holder.nombreActividad.setText(listDatos.get(position).getNombreTarea());
         holder.descripcion.setText(listDatos.get(position).getDescripcion());
         holder.imagenTarea.setImageURI(listDatos.get(position).getImagenTarea());
         holder.precio.setText(listDatos.get(position).getPrecio());
         holder.fecha.setText(listDatos.get(position).getFecha());
         //holder.actividad.setImageResource(listDatos.get(position).getImagenActividad());
-
-         */
 
     }
 
