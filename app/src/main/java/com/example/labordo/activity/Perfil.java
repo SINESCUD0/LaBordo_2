@@ -44,17 +44,14 @@ import java.sql.SQLException;
 
 public class Perfil extends AppCompatActivity {
 
+    //PARA CONECTARTE A LA BASE DE DATOS CAMBIAR CADA VEZ QUE SE ENCIENDA EL SERVIDOR LA IP
+    private static final String DATABASE_URL = "jdbc:mysql://192.168.1.45:3306/labordo?useUnicode=true&characterEncoding=UTF-8\"";
 
-    private static final String DATABASE_URL = "jdbc:mysql://192.168.43.150:3306/labordo?useUnicode=true&characterEncoding=UTF-8\"";
-
+    //USUARIO PARA INICIAR SESION EN LA BASE DE DATOS
     private static final String USER = "root";
 
+    //CONTRASEÑA PARA INICIAR SESION EN EL USUARIO ROOT
     private static final String PASSWORD = "L4b0rd0#";
-
-
-
-
-
 
     Button botonFoto;
     ImageView fotoPerfil;

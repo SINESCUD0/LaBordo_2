@@ -19,9 +19,7 @@ public class AdapterAlumnado extends RecyclerView.Adapter<AdapterAlumnado.ViewHo
     ArrayList<Alumnado> listAlumnos;
     private View.OnClickListener listener;
 
-    public AdapterAlumnado(ArrayList<Alumnado> listAlumnos) {
-        this.listAlumnos = listAlumnos;
-    }
+    public AdapterAlumnado(ArrayList<Alumnado> listAlumnos) {this.listAlumnos = listAlumnos;}
 
     @NonNull
     @Override
@@ -39,15 +37,14 @@ public class AdapterAlumnado extends RecyclerView.Adapter<AdapterAlumnado.ViewHo
         holder.fotoAlumno.setImageURI(listAlumnos.get(position).getFotoAlumno());
         holder.DNI.setText(listAlumnos.get(position).getDNI());
         holder.fechaNacimiento.setText(listAlumnos.get(position).getFechaNacimiento());
-        holder.actividad.setImageResource(listAlumnos.get(position).getImagenActividad());
-
+        holder.correo.setText(listAlumnos.get(position).getCorreo());
+        holder.apellidos.setText(listAlumnos.get(position).getApellidos());
+        holder.instituto.setText(listAlumnos.get(position).getInstituto());
+        holder.puntos.setText(listAlumnos.get(position).getPuntos());
     }
 
     @Override
-    public int getItemCount() {
-        return listAlumnos.size();
-    }
-
+    public int getItemCount() {return listAlumnos.size();}
 
     @Override
     public void onClick(View v) {
@@ -56,24 +53,22 @@ public class AdapterAlumnado extends RecyclerView.Adapter<AdapterAlumnado.ViewHo
         }
     }
 
-
     public class ViewHolderDatos extends RecyclerView.ViewHolder{
 
-        TextView nombreAlumno;
-        TextView curso;
+        TextView nombreAlumno, curso, DNI, fechaNacimiento, apellidos, instituto, puntos, correo;
         ImageView fotoAlumno;
-        TextView DNI;
-        TextView fechaNacimiento;
-        ImageView actividad;
 
         public ViewHolderDatos(@NonNull View itemView) {
             super(itemView);
             nombreAlumno = (TextView) itemView.findViewById(R.id.nombreAlumno);
-            curso = (TextView) itemView.findViewById(R.id.curso);
+            curso = (TextView) itemView.findViewById(R.id.curso_alumno);
             fotoAlumno = (ImageView) itemView.findViewById(R.id.fotoAlumno);
             DNI = (TextView) itemView.findViewById(R.id.dni_alumno);
             fechaNacimiento = (TextView) itemView.findViewById(R.id.fechaNacimiento_alumno);
-            actividad = (ImageView) itemView.findViewById(R.id.actividad);
+            apellidos = (TextView) itemView.findViewById(R.id.apellidos_alumno);
+            instituto = (TextView) itemView.findViewById(R.id.instituto_alumno);
+            puntos = (TextView) itemView.findViewById(R.id.puntos_alumno);
+            correo = (TextView) itemView.findViewById(R.id.correo_alumno);
 
             itemView.findViewById(R.id.layout_lista_alumnado).setOnClickListener(new View.OnClickListener() {
                 @Override
