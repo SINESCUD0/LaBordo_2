@@ -15,6 +15,7 @@ public class CambiarPassword extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cambiar_password);
+        this.getSupportActionBar().hide();
 
         findViewById(R.id.botonAceptarPassword).setOnClickListener(new View.OnClickListener() {
             @Override

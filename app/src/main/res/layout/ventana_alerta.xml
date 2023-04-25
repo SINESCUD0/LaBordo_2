@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:fontFamily="@font/montserrat_light"
+        android:fontFamily="@font/montserrat_thin"
         android:gravity="center"
         android:text="@string/tituloAlertView"
         android:textColor="@color/prueba"
@@ -165,7 +165,7 @@
             android:layout_marginStart="14dp"
             android:layout_marginTop="14dp"
             android:layout_marginEnd="14dp"
-            android:fontFamily="@font/open_sans"
+            android:fontFamily="@font/montserrat_light"
             android:text="@string/seleccionFoto" />
 
     </LinearLayout>
