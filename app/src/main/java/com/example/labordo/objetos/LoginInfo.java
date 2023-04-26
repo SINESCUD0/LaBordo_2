@@ -77,6 +77,6 @@ public class LoginInfo {
         LoginInfo.dni = dni;
     }
 
-
+    public String getInstitutoLogin() {return instituto;}
 }
 

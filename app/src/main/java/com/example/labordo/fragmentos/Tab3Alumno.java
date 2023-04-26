@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.labordo.R;
 import com.example.labordo.objetos.Alumnado;
+import com.example.labordo.objetos.LoginInfo;
 import com.example.labordo.objetos.Profesorado;
 import com.example.labordo.recyclerview.AdapterProfesorado;
 
@@ -34,7 +35,7 @@ import java.util.ArrayList;
 public class Tab3Alumno extends Fragment {
 
     //PARA CONECTARTE A LA BASE DE DATOS
-    private static final String DATABASE_URL = "jdbc:mysql://192.168.43.150:3306/labordo?useUnicode=true&characterEncoding=UTF-8\"";
+    private static final String DATABASE_URL = "jdbc:mysql://192.168.1.38:3306/labordo?useUnicode=true&characterEncoding=UTF-8\"";
 
     //USUARIO PARA INICIAR SESION EN LA BASE DE DATOS
     private static final String USER = "root";
@@ -43,7 +44,7 @@ public class Tab3Alumno extends Fragment {
     private static final String PASSWORD = "L4b0rd0#";
     ArrayList<Profesorado> listProfesores;
     RecyclerView recycler;
-    Button prueba;
+    LoginInfo institutoAlumno = new LoginInfo();
 
     SwipeRefreshLayout refresh;
 
@@ -95,13 +96,18 @@ public class Tab3Alumno extends Fragment {
                     //SI NO CONSIGUES CONECTARTE A LA BASE DE DATOS
                     msg = "Se ha perdido la conexion";
                 }else{
+                    //RECOGEMOS LA INFORMACION DEL NUMERO DEL INSTITUTO DEL ESTUDIANTE QUE HA INICIADO SESION
+                    String instituto_Alumno = institutoAlumno.getInstitutoLogin();
+
                     //SI CONSIGUE CONECTARSE A LA BASE DE DATOS QUE EJECUTE LA SIGUIENTE SENTENCIA
-                    String query = "SELECT * FROM profesor";
+                    String query = "SELECT * FROM profesor WHERE instituto = ?";
                     PreparedStatement statement = conn.prepareStatement(query);
+                    statement.setString(1, instituto_Alumno);
                     ResultSet rs = statement.executeQuery();
 
                     while(rs.next()) {
                         int numero = 1;
+                        //RECOJO LOS VALORES DE LAS COLUMNAS DE LA TABLA PROFESOR
                         String dni = rs.getString("dni");
                         String nombre = rs.getString("nombre");
                         String apellidos = rs.getString("apellidos");

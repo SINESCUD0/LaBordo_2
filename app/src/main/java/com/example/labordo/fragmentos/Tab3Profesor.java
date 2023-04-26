@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.labordo.R;
 import com.example.labordo.objetos.Alumnado;
+import com.example.labordo.objetos.LoginInfo;
 import com.example.labordo.recyclerview.AdapterAlumnado;
 
 import java.io.ByteArrayOutputStream;
@@ -35,7 +36,7 @@ import java.util.ArrayList;
 public class Tab3Profesor extends Fragment {
 
     //PARA CONECTARTE A LA BASE DE DATOS
-    private static final String DATABASE_URL = "jdbc:mysql://192.168.43.150:3306/labordo?useUnicode=true&characterEncoding=UTF-8\"";
+    private static final String DATABASE_URL = "jdbc:mysql://192.168.1.38:3306/labordo?useUnicode=true&characterEncoding=UTF-8\"";
 
     //USUARIO PARA INICIAR SESION EN LA BASE DE DATOS
     private static final String USER = "root";
@@ -45,6 +46,7 @@ public class Tab3Profesor extends Fragment {
     ArrayList<Alumnado> listAlumnos;
     RecyclerView recycler;
     SwipeRefreshLayout refresh;
+    LoginInfo institutoProfesor = new LoginInfo();
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -74,7 +76,7 @@ public class Tab3Profesor extends Fragment {
         return vista;
     }
 
-    //PARA RECIBIR LA LISTA DE PROFESORES
+    //PARA RECIBIR LA LISTA DE ESTUDIANTES
     class Send extends AsyncTask<Void, Void, Void> {
 
         //ESTA VARIABLE (MSG) LA UTILIZAMOS PARA EN CASO DE FALLO TE MUESTRE EN EL TOAST EL FALLO QUE DA
@@ -94,9 +96,12 @@ public class Tab3Profesor extends Fragment {
                     //SI NO CONSIGUES CONECTARTE A LA BASE DE DATOS
                     msg = "Se ha perdido la conexion";
                 }else{
+                    //RECOJO EL VALOR DEL INSTITUTO DEL PROFESOR QUE SE HA REGISTRADO
+                    String instituto_profesor = institutoProfesor.getInstitutoLogin();
                     //SI CONSIGUE CONECTARSE A LA BASE DE DATOS QUE EJECUTE LA SIGUIENTE SENTENCIA
-                    String query = "SELECT * FROM estudiante";
+                    String query = "SELECT * FROM estudiante WHERE instituto = ?";
                     PreparedStatement statement = conn.prepareStatement(query);
+                    statement.setString(1, instituto_profesor);
                     ResultSet rs = statement.executeQuery();
 
                     while(rs.next()) {

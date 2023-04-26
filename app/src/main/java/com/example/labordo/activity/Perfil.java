@@ -54,7 +54,7 @@ public class Perfil extends AppCompatActivity {
     TextView tipoDeCuenta, dni, correo;
 
 
-    private static final String DATABASE_URL = "jdbc:mysql://192.168.43.150:3306/labordo?useUnicode=true&characterEncoding=UTF-8\"";
+    private static final String DATABASE_URL = "jdbc:mysql://192.168.1.38:3306/labordo?useUnicode=true&characterEncoding=UTF-8\"";
     private static final String USER = "root";
     private static final String PASSWORD = "L4b0rd0#";
 
