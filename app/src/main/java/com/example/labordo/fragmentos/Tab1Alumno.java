@@ -111,9 +111,10 @@ public class Tab1Alumno extends Fragment {
                         String fechaLimite = String.valueOf(rs.getDate("fechaLimite"));
                         String estado = rs.getString("estado");
                         numero++;
+                        Uri imageUri2 = Uri.parse("android.resource://com.example.labordo/" + R.drawable.inactivo);
                         if(imageValue == null){
                             Uri imageUri = Uri.parse("android.resource://com.example.labordo/" + R.drawable.sin_foto);
-                            listDatos.add(new ActividadesVo(nombre, descripcion, imageUri, precio, fechaLimite));
+                            listDatos.add(new ActividadesVo(nombre, descripcion, imageUri, precio, fechaLimite, imageUri2));
                         }else{
                             // Obtener la URI del archivo temporal
                             byte[] blobBytes = imageValue.getBytes(1, (int) imageValue.length());
@@ -126,7 +127,7 @@ public class Tab1Alumno extends Fragment {
                             fos.close();
 
                             Uri uri = Uri.fromFile(file);
-                            listDatos.add(new ActividadesVo(nombre, descripcion, uri, precio, fechaLimite));
+                            listDatos.add(new ActividadesVo(nombre, descripcion, uri, precio, fechaLimite, imageUri2));
                         }
                     }
 

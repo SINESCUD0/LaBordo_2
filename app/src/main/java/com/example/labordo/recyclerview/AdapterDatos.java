@@ -1,5 +1,6 @@
 package com.example.labordo.recyclerview;
 
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,7 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
         holder.imagenTarea.setImageURI(listDatos.get(position).getImagenTarea());
         holder.precio.setText(listDatos.get(position).getPrecio());
         holder.fecha.setText(listDatos.get(position).getFecha());
-        //holder.actividad.setImageResource(listDatos.get(position).getImagenActividad());
+        holder.actividad.setImageURI(listDatos.get(position).getImagenActividad());
 
     }
 
@@ -66,16 +67,22 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
         ImageView imagenTarea;
         TextView precio;
         TextView fecha;
-        //ImageView actividad;
+        ImageView actividad;
 
         public ViewHolderDatos(@NonNull View itemView) {
             super(itemView);
             nombreActividad = (TextView) itemView.findViewById(R.id.nombreTarea);
             descripcion = (TextView) itemView.findViewById(R.id.informacionTarea);
+            //PARA QUE PUEDA
+            descripcion.setMovementMethod(new ScrollingMovementMethod());
+            descripcion.setOnTouchListener((v, event) -> {
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            });
             imagenTarea = (ImageView) itemView.findViewById(R.id.imageView);
             precio = (TextView) itemView.findViewById(R.id.precio);
             fecha = (TextView) itemView.findViewById(R.id.fechaLimite);
-            //actividad = (ImageView) itemView.findViewById(R.id.actividad);
+            actividad = (ImageView) itemView.findViewById(R.id.actividad);
 
             itemView.findViewById(R.id.layout_actividades_asignadas).setOnClickListener(new View.OnClickListener() {
                 @Override

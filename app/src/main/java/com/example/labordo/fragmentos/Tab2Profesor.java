@@ -302,8 +302,9 @@ public class Tab2Profesor extends Fragment {
                     statement.setString(6, institutoProfesor);
                     statement.setString(7, dni);
                     statement.executeUpdate();
+                    Uri imageUri = Uri.parse("android.resource://com.example.labordo/" + R.drawable.asignada);
 
-                    listDatos.add(new ActividadesVo(nombre, descripcion, imagenUri, precio, fecha));
+                    listDatos.add(new ActividadesVo(nombre, descripcion, imagenUri, precio, fecha, imageUri));
 
                     msg = "Tarea añadida";
 
@@ -367,7 +368,16 @@ public class Tab2Profesor extends Fragment {
                         numero++;
                         if(imageValue == null){
                             Uri imageUri = Uri.parse("android.resource://com.example.labordo/" + R.drawable.sin_foto);
-                            listDatos.add(new ActividadesVo(nombre, descripcion, imageUri, precio, fechaLimite));
+                            if(estado.equals("LIBRE")){
+                                Uri imageUri2 = Uri.parse("android.resource://com.example.labordo/" + R.drawable.inactivo);
+                                listDatos.add(new ActividadesVo(nombre, descripcion, imageUri, precio, fechaLimite, imageUri2));
+                            } else if (estado.equals("RESUELTA")) {
+                                Uri imageUri2 = Uri.parse("android.resource://com.example.labordo/" + R.drawable.asignada);
+                                listDatos.add(new ActividadesVo(nombre, descripcion, imageUri, precio, fechaLimite, imageUri2));
+                            } else if (estado.equals("CONFIRMADA")) {
+                                Uri imageUri2 = Uri.parse("android.resource://com.example.labordo/" + R.drawable.pendiente);
+                                listDatos.add(new ActividadesVo(nombre, descripcion, imageUri, precio, fechaLimite, imageUri2));
+                            }
                         }else{
                             // Obtener la URI del archivo temporal
                             byte[] blobBytes = imageValue.getBytes(1, (int) imageValue.length());
@@ -380,7 +390,16 @@ public class Tab2Profesor extends Fragment {
                             fos.close();
 
                             Uri uri = Uri.fromFile(file);
-                            listDatos.add(new ActividadesVo(nombre, descripcion, uri, precio, fechaLimite));
+                            if(estado.equals("LIBRE")){
+                                Uri imageUri2 = Uri.parse("android.resource://com.example.labordo/" + R.drawable.inactivo);
+                                listDatos.add(new ActividadesVo(nombre, descripcion, uri, precio, fechaLimite, imageUri2));
+                            } else if (estado.equals("RESUELTA")) {
+                                Uri imageUri2 = Uri.parse("android.resource://com.example.labordo/" + R.drawable.asignada);
+                                listDatos.add(new ActividadesVo(nombre, descripcion, uri, precio, fechaLimite, imageUri2));
+                            } else if (estado.equals("CONFIRMADA")) {
+                                Uri imageUri2 = Uri.parse("android.resource://com.example.labordo/" + R.drawable.pendiente);
+                                listDatos.add(new ActividadesVo(nombre, descripcion, uri, precio, fechaLimite, imageUri2));
+                            }
                         }
                     }
 
