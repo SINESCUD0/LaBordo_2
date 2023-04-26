@@ -98,7 +98,7 @@ public class Tab1Alumno extends Fragment {
                     String instituto_alumno = institutoAlumno.getInstitutoLogin();
                     int numero = 1;
                     //SI CONSIGUE CONECTARSE A LA BASE DE DATOS QUE EJECUTE LA SIGUIENTE SENTENCIA
-                    String query = "SELECT * FROM labores WHERE instituto = ?";
+                    String query = "SELECT * FROM labores WHERE instituto = ? AND estado = 'LIBRE'";
                     PreparedStatement statement = conn.prepareStatement(query);
                     statement.setString(1, instituto_alumno);
                     ResultSet rs = statement.executeQuery();

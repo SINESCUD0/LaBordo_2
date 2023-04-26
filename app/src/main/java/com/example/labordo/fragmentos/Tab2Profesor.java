@@ -84,7 +84,7 @@ public class Tab2Profesor extends Fragment {
     RadioButton asignada1, inactiva1, sinAsignar1;
 
     SwipeRefreshLayout refresh;
-    LoginInfo dniProfesor = new LoginInfo();
+    LoginInfo profesor = new LoginInfo();
 
 
     @Override
@@ -283,9 +283,10 @@ public class Tab2Profesor extends Fragment {
                     msg = "Se ha perdido la conexion";
                 }else{
                     //SI CONSIGUE CONECTARSE A LA BASE DE DATOS QUE EJECUTE LA SIGUIENTE SENTENCIA
-                    String dni = dniProfesor.getDni();
-                    String query = "INSERT INTO labores (nombreActividad, precio, descripcion, imagenTarea, fechaLimite, estado, dni_profesor)" +
-                            " VALUES(?, ?, ?, ?, ?, 'LIBRE', ?)";
+                    String dni = profesor.getDni();
+                    String institutoProfesor = profesor.getInstitutoLogin();
+                    String query = "INSERT INTO labores (nombreActividad, precio, descripcion, imagenTarea, fechaLimite, estado, instituto, dni_profesor)" +
+                            " VALUES(?, ?, ?, ?, ?, 'LIBRE', ?, ?)";
                     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                     Date date = formatter.parse(fecha);
                     java.sql.Date fechaElegidaSQL = new java.sql.Date(date.getTime());
@@ -298,7 +299,8 @@ public class Tab2Profesor extends Fragment {
                     statement.setString(3, descripcion);
                     statement.setBytes(4, imagenBytes);
                     statement.setString(5, String.valueOf(fechaElegidaSQL));
-                    statement.setString(6, dni);
+                    statement.setString(6, institutoProfesor);
+                    statement.setString(7, dni);
                     statement.executeUpdate();
 
                     listDatos.add(new ActividadesVo(nombre, descripcion, imagenUri, precio, fecha));
@@ -347,7 +349,7 @@ public class Tab2Profesor extends Fragment {
                     //SI NO CONSIGUES CONECTARTE A LA BASE DE DATOS
                     msg = "Se ha perdido la conexion";
                 }else{
-                    String dni = dniProfesor.getDni();
+                    String dni = profesor.getDni();
                     int numero = 1;
                     //SI CONSIGUE CONECTARSE A LA BASE DE DATOS QUE EJECUTE LA SIGUIENTE SENTENCIA
                     String query = "SELECT * FROM labores WHERE dni_profesor = ?";
