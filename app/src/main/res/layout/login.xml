@@ -53,9 +53,9 @@
         android:id="@+id/registro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/crearCuenta"
         android:fontFamily="@font/open_sans"
-        android:text="@string/registroUsuario"
-        android:layout_above="@+id/crearCuenta"/>
+        android:text="@string/registroUsuario" />
 
     <Button
         android:id="@+id/crearCuenta"

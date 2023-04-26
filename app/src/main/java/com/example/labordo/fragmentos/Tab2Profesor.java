@@ -58,7 +58,7 @@ import java.util.Date;
 public class Tab2Profesor extends Fragment {
 
     //PARA CONECTARTE A LA BASE DE DATOS CAMBIAR CADA VEZ QUE SE ENCIENDA EL SERVIDOR LA IP
-    private static final String DATABASE_URL = "jdbc:mysql://192.168.1.38:3306/labordo?useUnicode=true&characterEncoding=UTF-8\"";
+    private static final String DATABASE_URL = "jdbc:mysql://192.168.1.38:3306/labordo?useUnicode=true&characterEncoding=UTF-8";
 
     //USUARIO PARA INICIAR SESION EN LA BASE DE DATOS
     private static final String USER = "root";
@@ -72,7 +72,6 @@ public class Tab2Profesor extends Fragment {
     FloatingActionButton add;
     String nombre, descripcion, precio, fechaElegida;
     String fecha = "";
-    int actividad;
 
     Uri imagenUri;
     byte[] imagenBytes;
@@ -80,9 +79,6 @@ public class Tab2Profesor extends Fragment {
     EditText nombreTarea, descripcionTarea, precioTarea;
     TextView fechaFinal, botonFecha;
     ImageView fotoTarea;
-    RadioGroup grupo;
-    RadioButton asignada1, inactiva1, sinAsignar1;
-
     SwipeRefreshLayout refresh;
     LoginInfo profesor = new LoginInfo();
 
@@ -152,10 +148,6 @@ public class Tab2Profesor extends Fragment {
         fechaFinal = (TextView) dialogView.findViewById(R.id.fecha);
         fotoTarea = (ImageView) dialogView.findViewById(R.id.imagenTarea);
         botonFoto = (Button) dialogView.findViewById(R.id.botonImagen);
-        grupo = (RadioGroup) dialogView.findViewById(R.id.radioGroup);
-        asignada1 = (RadioButton) dialogView.findViewById(R.id.asignada);
-        inactiva1 = (RadioButton) dialogView.findViewById(R.id.inactiva);
-        sinAsignar1 = (RadioButton) dialogView.findViewById(R.id.sinAsignar);
 
 
         dialogBuilder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
@@ -164,23 +156,7 @@ public class Tab2Profesor extends Fragment {
                 nombre = nombreTarea.getText().toString();
                 descripcion = descripcionTarea.getText().toString();
                 precio = precioTarea.getText().toString();
-                actividad = grupo.getCheckedRadioButtonId();
                 fechaElegida = fechaFinal.toString();
-
-
-
-                boolean asignada = asignada1.isChecked();
-                boolean inactiva = inactiva1.isChecked();
-                boolean sinAsignar = sinAsignar1.isChecked();
-                int circulo = 0;
-
-                if (asignada != false) {
-                    circulo = R.drawable.asignada;
-                } else if (inactiva != false) {
-                    circulo = R.drawable.inactivo;
-                } else if (sinAsignar != false) {
-                    circulo = R.drawable.pendiente;
-                }
 
                 if (!nombre.equals("") && !descripcion.equals("") && !precio.equals("") && !fechaElegida.equals("")) {
                     //listDatos.add(new ActividadesVo(nombre, descripcion, imagenUri, precio, fecha));
@@ -302,7 +278,7 @@ public class Tab2Profesor extends Fragment {
                     statement.setString(6, institutoProfesor);
                     statement.setString(7, dni);
                     statement.executeUpdate();
-                    Uri imageUri = Uri.parse("android.resource://com.example.labordo/" + R.drawable.asignada);
+                    Uri imageUri = Uri.parse("android.resource://com.example.labordo/" + R.drawable.inactivo);
 
                     listDatos.add(new ActividadesVo(nombre, descripcion, imagenUri, precio, fecha, imageUri));
 
