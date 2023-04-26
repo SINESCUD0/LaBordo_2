@@ -83,11 +83,6 @@ public class Tab3Profesor extends Fragment {
         String msg = "";
 
         @Override
-        protected void onPreExecute(){
-            Toast.makeText(getContext(),"Actualizando", Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
         protected Void doInBackground(Void... voids) {
             try{
                 Class.forName("com.mysql.jdbc.Driver"); //PILLAMOS LA INFORMACION DEL PAQUETE
@@ -170,7 +165,7 @@ public class Tab3Profesor extends Fragment {
 
         @Override
         protected void onPostExecute(Void aVoid){
-            Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
             AdapterAlumnado adapter = new AdapterAlumnado(listAlumnos);
             recycler.setAdapter(adapter);
         }

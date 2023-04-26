@@ -127,11 +127,6 @@ public class RegistroActivity extends AppCompatActivity {
         String password1 = password.getText().toString();
 
         @Override
-        protected void onPreExecute(){
-            Toast.makeText(RegistroActivity.this,"Creando usuario", Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
         protected String doInBackground(String... strings) {
             try{
                 Class.forName("com.mysql.jdbc.Driver"); //PILLAMOS LA INFORMACION DEL PAQUETE
@@ -174,7 +169,7 @@ public class RegistroActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String msg){
             //DESPUES DE LA EJECUCION SALTARA EL SIGUIENTE TOAST
-            Toast.makeText(RegistroActivity.this,msg, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(RegistroActivity.this,msg, Toast.LENGTH_SHORT).show();
         }
     }
 }

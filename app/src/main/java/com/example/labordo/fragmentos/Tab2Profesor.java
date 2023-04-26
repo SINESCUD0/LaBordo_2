@@ -27,18 +27,13 @@ import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.labordo.R;
 import com.example.labordo.objetos.ActividadesVo;
-import com.example.labordo.objetos.Alumnado;
 import com.example.labordo.objetos.LoginInfo;
-import com.example.labordo.objetos.Profesorado;
 import com.example.labordo.recyclerview.AdapterDatos;
-import com.example.labordo.recyclerview.AdapterProfesorado;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.ByteArrayOutputStream;
@@ -141,13 +136,13 @@ public class Tab2Profesor extends Fragment {
         View dialogView = inflater.inflate(R.layout.ventana_alerta, null);
         dialogBuilder.setView(dialogView);
 
-        botonFecha = (TextView) dialogView.findViewById(R.id.textFechaEntrega);
-        nombreTarea = (EditText) dialogView.findViewById(R.id.editTextNombreTarea);
-        descripcionTarea = (EditText) dialogView.findViewById(R.id.editTextDescripcionTarea);
-        precioTarea = (EditText) dialogView.findViewById(R.id.editTextPrecio);
-        fechaFinal = (TextView) dialogView.findViewById(R.id.fecha);
-        fotoTarea = (ImageView) dialogView.findViewById(R.id.imagenTarea);
-        botonFoto = (Button) dialogView.findViewById(R.id.botonImagen);
+        botonFecha = dialogView.findViewById(R.id.textFechaEntrega);
+        nombreTarea = dialogView.findViewById(R.id.editTextNombreTarea);
+        descripcionTarea = dialogView.findViewById(R.id.editTextDescripcionTarea);
+        precioTarea = dialogView.findViewById(R.id.editTextPrecio);
+        fechaFinal = dialogView.findViewById(R.id.fecha);
+        fotoTarea = dialogView.findViewById(R.id.imagenTarea);
+        botonFoto = dialogView.findViewById(R.id.botonImagen);
 
 
         dialogBuilder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
@@ -159,9 +154,6 @@ public class Tab2Profesor extends Fragment {
                 fechaElegida = fechaFinal.toString();
 
                 if (!nombre.equals("") && !descripcion.equals("") && !precio.equals("") && !fechaElegida.equals("")) {
-                    //listDatos.add(new ActividadesVo(nombre, descripcion, imagenUri, precio, fecha));
-                    //AdapterDatos adapter = new AdapterDatos(listDatos);
-                    //recycler.setAdapter(adapter);
                     EnvioLabores labores = new EnvioLabores();
                     labores.execute();
                 } else if (nombre.equals("") || descripcion.equals("") || precio.equals("") || fechaElegida.equals("")) {
@@ -213,10 +205,6 @@ public class Tab2Profesor extends Fragment {
         botonFoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent permisosMultimedia = new Intent(MediaStore.ACTION_PICK_IMAGES);
-                mStartForResult.launch(permisosMultimedia);
-                Toast.makeText(getContext(), "asd", Toast.LENGTH_SHORT).show();
-                fotoTarea.setImageURI(permisosMultimedia.getData());*/
                 pickMedia.launch(new PickVisualMediaRequest.Builder()
                         .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
                         .build());
@@ -243,11 +231,6 @@ public class Tab2Profesor extends Fragment {
 
         //ESTA VARIABLE (MSG) LA UTILIZAMOS PARA EN CASO DE FALLO TE MUESTRE EN EL TOAST EL FALLO QUE DA
         String msg = "";
-
-        @Override
-        protected void onPreExecute(){
-            Toast.makeText(getContext(),"Añadiendo", Toast.LENGTH_SHORT).show();
-        }
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -297,10 +280,9 @@ public class Tab2Profesor extends Fragment {
             }
             return null;
         }
-
         @Override
         protected void onPostExecute(Void aVoid){
-            Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
             AdapterDatos adapterDatos = new AdapterDatos(listDatos);
             recycler.setAdapter(adapterDatos);
         }
@@ -311,11 +293,6 @@ public class Tab2Profesor extends Fragment {
 
         //ESTA VARIABLE (MSG) LA UTILIZAMOS PARA EN CASO DE FALLO TE MUESTRE EN EL TOAST EL FALLO QUE DA
         String msg = "";
-
-        @Override
-        protected void onPreExecute(){
-            Toast.makeText(getContext(),"Actualizando", Toast.LENGTH_SHORT).show();
-        }
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -391,10 +368,9 @@ public class Tab2Profesor extends Fragment {
             }
             return null;
         }
-
         @Override
         protected void onPostExecute(Void aVoid){
-            Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
             AdapterDatos adapterDatos = new AdapterDatos(listDatos);
             recycler.setAdapter(adapterDatos);
         }
