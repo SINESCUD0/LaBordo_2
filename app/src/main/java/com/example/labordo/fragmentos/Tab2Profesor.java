@@ -53,7 +53,7 @@ import java.util.Date;
 public class Tab2Profesor extends Fragment {
 
     //PARA CONECTARTE A LA BASE DE DATOS CAMBIAR CADA VEZ QUE SE ENCIENDA EL SERVIDOR LA IP
-    private static final String DATABASE_URL = "jdbc:mysql://192.168.1.38:3306/labordo?useUnicode=true&characterEncoding=UTF-8";
+    private static final String DATABASE_URL = "jdbc:mysql://192.168.1.44:3306/labordo?useUnicode=true&characterEncoding=UTF-8";
 
     //USUARIO PARA INICIAR SESION EN LA BASE DE DATOS
     private static final String USER = "root";

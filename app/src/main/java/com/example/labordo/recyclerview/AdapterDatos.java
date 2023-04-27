@@ -1,5 +1,10 @@
 package com.example.labordo.recyclerview;
 
+import android.content.ContentResolver;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,11 +14,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.labordo.R;
 import com.example.labordo.objetos.ActividadesVo;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDatos> implements View.OnClickListener{
@@ -71,9 +81,10 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
 
         public ViewHolderDatos(@NonNull View itemView) {
             super(itemView);
+            int numero = 1;
             nombreActividad = (TextView) itemView.findViewById(R.id.nombreTarea);
             descripcion = (TextView) itemView.findViewById(R.id.informacionTarea);
-            //PARA QUE PUEDA
+            //PARA QUE PUEDA HACER UN SCROLLBAR
             descripcion.setMovementMethod(new ScrollingMovementMethod());
             descripcion.setOnTouchListener((v, event) -> {
                 v.getParent().requestDisallowInterceptTouchEvent(true);
@@ -88,6 +99,52 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
                 @Override
                 public void onClick(View view) {
                     Toast.makeText(itemView.getContext(), "Posicion "+getAdapterPosition(), Toast.LENGTH_SHORT).show();
+
+                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(itemView.getContext());
+
+                    LayoutInflater inflater = LayoutInflater.from(itemView.getContext());
+                    View dialogView = inflater.inflate(R.layout.ventana_alerta_tareas, null);
+                    dialogBuilder.setView(dialogView);
+
+                    Drawable drawable = imagenTarea.getDrawable();
+                    Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+                    File file = new File(itemView.getContext().getExternalCacheDir(), "image.png");
+                    try{
+                        OutputStream outputStream = new FileOutputStream(file);
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+                        outputStream.flush();
+                        outputStream.close();
+                    }catch (IOException e){
+                        e.printStackTrace();
+                    }
+
+                    Uri foto = Uri.fromFile(file);
+                    String titulo = nombreActividad.getText().toString();
+                    String fechaT = fecha.getText().toString();
+                    String precioT = precio.getText().toString();
+                    String descripcionT = descripcion.getText().toString();
+
+                    ImageView fotoLabor = dialogView.findViewById(R.id.imagenLabor);
+                    TextView tituloLabor = dialogView.findViewById(R.id.tituloLabor);
+                    TextView fechaLimite = dialogView.findViewById(R.id.FechaEntrega);
+                    TextView precioLabor = dialogView.findViewById(R.id.precioLabor);
+                    TextView descripcionL = dialogView.findViewById(R.id.descripcionLabor);
+                    descripcionL.setMovementMethod(new ScrollingMovementMethod());
+                    descripcionL.setOnTouchListener((a, event) -> {
+                        a.getParent().requestDisallowInterceptTouchEvent(true);
+                        return false;
+                    });
+
+                    tituloLabor.setText(titulo);
+                    fechaLimite.setText(fechaT);
+                    precioLabor.setText(precioT);
+                    descripcionL.setText(descripcionT);
+                    fotoLabor.setImageURI(foto);
+
+                    dialogBuilder.setNegativeButton("OK", null);
+
+                    AlertDialog alertDialog = dialogBuilder.create();
+                    alertDialog.show();
                 }
             });
         }
