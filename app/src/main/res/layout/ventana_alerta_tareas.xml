@@ -81,7 +81,6 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="14dp"
                 android:layout_marginBottom="20dp"
-                android:paddingEnd="10dp"
                 android:fontFamily="@font/montserrat_light"
                 android:textColor="@color/prueba"
                 android:text="Descripcion"
