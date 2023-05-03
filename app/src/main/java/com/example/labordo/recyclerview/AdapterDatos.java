@@ -36,6 +36,7 @@ import com.example.labordo.fragmentos.Tab2Profesor;
 import com.example.labordo.objetos.ActividadesVo;
 import com.example.labordo.objetos.LoginInfo;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -192,7 +193,19 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
 
 
                     if(usuario.isTipoCuenta()){
-                        view.getContext().startActivity(new Intent(view.getContext(), ModificarActividad.class));
+
+                        // Imagen, Titulo, Precio, Descripcion, Fecha
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                        byte[] imageInByte = baos.toByteArray();
+
+                        Intent intent = new Intent(view.getContext(), ModificarActividad.class);
+                        intent.putExtra("imagen", imageInByte);
+                        intent.putExtra("titulo", nombreActividad.getText());
+                        intent.putExtra("precio", precio.getText());
+                        intent.putExtra("fecha", fecha.getText());
+                        intent.putExtra("descripcion", descripcion.getText());
+                        view.getContext().startActivity(intent);
                         //verDatosProfe();
                     }else if(!usuario.isTipoCuenta()){
                         verDatosEstudiante();

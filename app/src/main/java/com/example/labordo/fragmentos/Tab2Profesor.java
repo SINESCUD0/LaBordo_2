@@ -115,7 +115,7 @@ public class Tab2Profesor extends Fragment {
     @SuppressLint("ResourceType")
     public void pedirInformacion() {
 
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this.getContext());
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
 
         LayoutInflater inflater = this.getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.ventana_alerta, null);
