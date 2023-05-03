@@ -35,14 +35,6 @@ import java.util.ArrayList;
 
 public class Tab3Profesor extends Fragment {
 
-    //PARA CONECTARTE A LA BASE DE DATOS
-    private static final String DATABASE_URL = "jdbc:mysql://192.168.1.44:3306/labordo?useUnicode=true&characterEncoding=UTF-8";
-
-    //USUARIO PARA INICIAR SESION EN LA BASE DE DATOS
-    private static final String USER = "root";
-
-    //CONTRASEÑA PARA INICIAR SESION EN EL USUARIO ROOT
-    private static final String PASSWORD = "L4b0rd0#";
     ArrayList<Alumnado> listAlumnos;
     RecyclerView recycler;
     SwipeRefreshLayout refresh;
@@ -86,7 +78,9 @@ public class Tab3Profesor extends Fragment {
         protected Void doInBackground(Void... voids) {
             try{
                 Class.forName("com.mysql.jdbc.Driver"); //PILLAMOS LA INFORMACION DEL PAQUETE
-                Connection conn = DriverManager.getConnection(DATABASE_URL,USER, PASSWORD); //NOS CONECTAMOS A LA BASE DE DATOS
+                Connection conn = DriverManager.getConnection(getResources().getString(R.string.DATABASE_URL),
+                        getResources().getString(R.string.USER),
+                        getResources().getString(R.string.PASSWORD)); //NOS CONECTAMOS A LA BASE DE DATOS
                 if(conn == null){
                     //SI NO CONSIGUES CONECTARTE A LA BASE DE DATOS
                     msg = "Se ha perdido la conexion";

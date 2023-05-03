@@ -58,9 +58,13 @@
     <string name="tipoCuenta">Tipo de cuenta:</string>
     <string name="perfil2">PERFIL</string>
     <string name="saldoCuenta">Saldo: </string>
-    <!-- Strings used for fragments for navigation -->
+    <string name="DATABASE_URL">jdbc:mysql://192.168.1.146:3306/labordo?useUnicode=true&amp;characterEncoding=utf8</string>
+    <string name="USER">root</string>
+    <string name="PASSWORD">L4b0rd0#</string>
+
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+
 </resources>

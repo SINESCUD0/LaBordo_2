@@ -3,6 +3,7 @@ package com.example.labordo.fragmentos;
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
+import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -31,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.labordo.R;
+import com.example.labordo.activity.Perfil;
 import com.example.labordo.objetos.ActividadesVo;
 import com.example.labordo.objetos.LoginInfo;
 import com.example.labordo.recyclerview.AdapterDatos;
@@ -38,6 +40,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -52,16 +55,7 @@ import java.util.Date;
 
 public class Tab2Profesor extends Fragment {
 
-    //PARA CONECTARTE A LA BASE DE DATOS CAMBIAR CADA VEZ QUE SE ENCIENDA EL SERVIDOR LA IP
-    private static final String DATABASE_URL = "jdbc:mysql://192.168.1.44:3306/labordo?useUnicode=true&characterEncoding=UTF-8";
-
-    //USUARIO PARA INICIAR SESION EN LA BASE DE DATOS
-    private static final String USER = "root";
-
-    //CONTRASEÑA PARA INICIAR SESION EN EL USUARIO ROOT
-    private static final String PASSWORD = "L4b0rd0#";
-
-    ActivityResultContracts.PickVisualMedia selectorImagen;
+    ImageView fotoPerfil;
     ArrayList<ActividadesVo> listDatos;
     RecyclerView recycler;
     FloatingActionButton add;
@@ -78,6 +72,8 @@ public class Tab2Profesor extends Fragment {
     LoginInfo profesor = new LoginInfo();
 
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -85,17 +81,6 @@ public class Tab2Profesor extends Fragment {
         recibirLabores.execute();
     }
 
-    @SuppressLint("MissingPermission")
-    ActivityResultLauncher<PickVisualMediaRequest> pickMedia =
-            registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
-                if (uri != null) {
-                    Log.d("PhotoPicker", "Selected URI: " + uri);
-                    fotoTarea.setImageURI(uri);
-                    imagenUri = uri;
-                } else {
-                    Log.d("PhotoPicker", "No media selected");
-                }
-            });
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -202,14 +187,6 @@ public class Tab2Profesor extends Fragment {
                 alertDialogBuilder2.show();
             }
         });
-        botonFoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pickMedia.launch(new PickVisualMediaRequest.Builder()
-                        .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
-                        .build());
-            }
-        });
 
         AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.show();
@@ -236,7 +213,9 @@ public class Tab2Profesor extends Fragment {
         protected Void doInBackground(Void... voids) {
             try{
                 Class.forName("com.mysql.jdbc.Driver"); //PILLAMOS LA INFORMACION DEL PAQUETE
-                Connection conn = DriverManager.getConnection(DATABASE_URL,USER, PASSWORD); //NOS CONECTAMOS A LA BASE DE DATOS
+                Connection conn = DriverManager.getConnection(getResources().getString(R.string.DATABASE_URL),
+                        getResources().getString(R.string.USER),
+                        getResources().getString(R.string.PASSWORD)); //NOS CONECTAMOS A LA BASE DE DATOS
                 if(conn == null){
                     //SI NO CONSIGUES CONECTARTE A LA BASE DE DATOS
                     msg = "Se ha perdido la conexion";
@@ -298,7 +277,9 @@ public class Tab2Profesor extends Fragment {
         protected Void doInBackground(Void... voids) {
             try{
                 Class.forName("com.mysql.jdbc.Driver"); //PILLAMOS LA INFORMACION DEL PAQUETE
-                Connection conn = DriverManager.getConnection(DATABASE_URL,USER, PASSWORD); //NOS CONECTAMOS A LA BASE DE DATOS
+                Connection conn = DriverManager.getConnection(getResources().getString(R.string.DATABASE_URL),
+                        getResources().getString(R.string.USER),
+                        getResources().getString(R.string.PASSWORD)); //NOS CONECTAMOS A LA BASE DE DATOS
                 if(conn == null){
                     //SI NO CONSIGUES CONECTARTE A LA BASE DE DATOS
                     msg = "Se ha perdido la conexion";
@@ -375,5 +356,4 @@ public class Tab2Profesor extends Fragment {
             recycler.setAdapter(adapterDatos);
         }
     }
-
 }

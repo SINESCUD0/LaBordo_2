@@ -59,13 +59,14 @@
                     android:id="@+id/informacionTarea"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingEnd="10dp"
                     android:layout_marginBottom="0dp"
-                    android:fontFamily="@font/open_sans"
+                    android:fontFamily="monospace"
+                    android:paddingEnd="10dp"
+                    android:maxLines="4"
+                    android:ellipsize="end"
                     android:text="Descripcion"
-                    android:scrollbars = "vertical"
-                    android:textSize="13sp"
-                    android:textColor="@color/prueba" />
+                    android:textColor="@color/prueba"
+                    android:textSize="13sp" />
 
             </LinearLayout>
 

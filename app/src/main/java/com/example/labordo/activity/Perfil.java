@@ -6,6 +6,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -31,6 +32,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -53,43 +55,50 @@ public class Perfil extends AppCompatActivity {
     Uri imagenUri;
     TextView tipoDeCuenta, dni, correo;
 
-
-    private static final String DATABASE_URL = "jdbc:mysql://192.168.1.44:3306/labordo?useUnicode=true&characterEncoding=UTF-8\"";
-    private static final String USER = "root";
-    private static final String PASSWORD = "L4b0rd0#";
-
-
-
     LoginInfo logininfo = new LoginInfo();
 
     @SuppressLint("MissingPermission")
     ActivityResultLauncher<PickVisualMediaRequest> pickMedia =
             registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
-                //if (uri != null) {
+
+                if (uri != null){
+
                     Log.d("PhotoPicker", "Selected URI: " + uri);
 
-                    //imagenUri = uri;
+                    File archivo = new File(uri.getPath());
 
-                    fotoPerfil.setImageURI(uri);
+                    // Miramos si la imagen elegida cumple con el tamaño recomendado (512 x 512 pixeles)
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inJustDecodeBounds = true;
+                    BitmapFactory.decodeFile(archivo.getAbsolutePath(), options);
+                    int imageHeight = options.outHeight;
+                    int imageWidth = options.outWidth;
 
-                    ActualizarFoto fotoRenovada = new ActualizarFoto();
-                    fotoRenovada.execute();
-/*
-                    Drawable fotoDrawable = fotoPerfil.getDrawable();
-                    Bitmap fotoBitmap = ((BitmapDrawable) fotoDrawable).getBitmap();
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    fotoBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                    byte[] byteArray = stream.toByteArray();
-                    fotoBitmap.recycle();
-
-
+                    //Vemos cuanto pesa la imagen
+                    AssetFileDescriptor descriptorArchivo;
                     try {
-                        logininfo.getImagenPerfil().setBytes(1, byteArray);
-                        fotoPerfil.setImageBitmap(fotoBitmap);
-                    } catch (SQLException e) {
+                        descriptorArchivo = getApplicationContext().getContentResolver().openAssetFileDescriptor(uri, "r");
+                    } catch (FileNotFoundException e) {
                         throw new RuntimeException(e);
                     }
-*/
+
+
+                    if((imageHeight <= 650 || imageHeight >= 150) && (imageWidth <= 650 || imageWidth >= 150)
+                        && (descriptorArchivo.getLength()/1024) <= 66){
+
+                        fotoPerfil.setImageURI(uri);
+
+                        ActualizarFoto fotoRenovada = new ActualizarFoto();
+                        fotoRenovada.execute();
+                    }else {
+                        Toast.makeText(this, "No es una imagen válida", Toast.LENGTH_LONG).show();
+                    }
+
+
+                }
+
+
+
 
             });
 
@@ -164,7 +173,9 @@ public class Perfil extends AppCompatActivity {
 
             try {
                 Class.forName("com.mysql.jdbc.Driver");
-                Connection conn = DriverManager.getConnection(DATABASE_URL,USER, PASSWORD);
+                Connection conn = DriverManager.getConnection(getResources().getString(R.string.DATABASE_URL),
+                        getResources().getString(R.string.USER),
+                        getResources().getString(R.string.PASSWORD)); //NOS CONECTAMOS A LA BASE DE DATOS
 
                 if(conn != null){
 

@@ -1,6 +1,7 @@
 package com.example.labordo.objetos;
 
 import android.net.Uri;
+import android.text.Html;
 
 public class ActividadesVo {
 
