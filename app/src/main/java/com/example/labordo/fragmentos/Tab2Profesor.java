@@ -81,6 +81,18 @@ public class Tab2Profesor extends Fragment {
         recibirLabores.execute();
     }
 
+    @SuppressLint("MissingPermission")
+    ActivityResultLauncher<PickVisualMediaRequest> pickMedia =
+            registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
+                if (uri != null) {
+                    Log.d("PhotoPicker", "Selected URI: " + uri);
+                    fotoTarea.setImageURI(uri);
+                    imagenUri = uri;
+                } else {
+                    Log.d("PhotoPicker", "No media selected");
+                }
+            });
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -188,6 +200,14 @@ public class Tab2Profesor extends Fragment {
             }
         });
 
+        botonFoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pickMedia.launch(new PickVisualMediaRequest.Builder()
+                        .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+                        .build());
+            }
+        });
         AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.show();
 
