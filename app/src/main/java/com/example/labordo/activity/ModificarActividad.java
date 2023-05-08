@@ -138,10 +138,10 @@ public class ModificarActividad extends AppCompatActivity {
                 LinearLayout linearLayout2 = new LinearLayout(getApplicationContext());
                 linearLayout2.setOrientation(LinearLayout.VERTICAL);
 
-                AlertDialog.Builder alertDialogBuilder2 = new AlertDialog.Builder(getApplicationContext());
+                AlertDialog.Builder alertDialogBuilder2 = new AlertDialog.Builder(ModificarActividad.this);
                 alertDialogBuilder2.setTitle("Introduce la fecha:");
 
-                CalendarView calendarViewPrueba = new CalendarView(getApplicationContext());
+                CalendarView calendarViewPrueba = new CalendarView(ModificarActividad.this);
 
                 linearLayout2.addView(calendarViewPrueba);
                 alertDialogBuilder2.setView(linearLayout2);
@@ -156,7 +156,7 @@ public class ModificarActividad extends AppCompatActivity {
                         String diaFormateado = (dayOfMonth < 10)? "0" + String.valueOf(dayOfMonth):String.valueOf(dayOfMonth);
                         String mesFormateado = (mesActual < 10)? "0" + String.valueOf(mesActual):String.valueOf(mesActual);
 
-                        String dia = diaFormateado + "/" + mesFormateado + "/" + year;
+                        String dia = year+"-"+mesFormateado + "-"+diaFormateado;
                         fechaSeleccionada = dia;
                     }
                 });
@@ -235,7 +235,8 @@ public class ModificarActividad extends AppCompatActivity {
                     logininfo.setImagenPerfil(blob);
 
                     // Estoy buscando por Descripcion... habria que buscar por Clave Primaria
-                    String query = "update labores set nombreActividad = ?, precio = ?, descripcion = ?, imagenTarea = ?, fechaLimite = ?,  where descripcion = ?;";;
+                    String query = "update labores set nombreActividad = ?, precio = ?, descripcion = ?, imagenTarea = ?, fechaLimite = ?  where descripcion = ?";
+
 
 
                     PreparedStatement statement = conn.prepareStatement(query);
@@ -251,7 +252,7 @@ public class ModificarActividad extends AppCompatActivity {
                     statement.executeUpdate();
 
                     statement.close();
-
+                    finish();
                 }
 
                 conn.close();

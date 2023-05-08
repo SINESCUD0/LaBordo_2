@@ -67,7 +67,7 @@ public class Perfil extends AppCompatActivity {
 
                     File archivo = new File(uri.getPath());
 
-                    // Miramos si la imagen elegida cumple con el tamaño recomendado (512 x 512 pixeles)
+                    // Miramos si la imagen elegida cumple con el tamaño recomendado
                     BitmapFactory.Options options = new BitmapFactory.Options();
                     options.inJustDecodeBounds = true;
                     BitmapFactory.decodeFile(archivo.getAbsolutePath(), options);
