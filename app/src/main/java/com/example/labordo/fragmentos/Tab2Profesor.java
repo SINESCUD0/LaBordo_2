@@ -62,7 +62,7 @@ public class Tab2Profesor extends Fragment {
     String nombre, descripcion, precio, fechaElegida;
     String fecha = "";
 
-    Uri imagenUri;
+    Uri imagenTarea;
     byte[] imagenBytes;
     Button botonFoto;
     EditText nombreTarea, descripcionTarea, precioTarea;
@@ -87,7 +87,7 @@ public class Tab2Profesor extends Fragment {
                 if (uri != null) {
                     Log.d("PhotoPicker", "Selected URI: " + uri);
                     fotoTarea.setImageURI(uri);
-                    imagenUri = uri;
+                    imagenTarea = uri;
                 } else {
                     Log.d("PhotoPicker", "No media selected");
                 }
@@ -249,7 +249,7 @@ public class Tab2Profesor extends Fragment {
                     Date date = formatter.parse(fecha);
                     java.sql.Date fechaElegidaSQL = new java.sql.Date(date.getTime());
                     ContentResolver contentResolver = getActivity().getContentResolver();
-                    InputStream inputStream = contentResolver.openInputStream(imagenUri);
+                    InputStream inputStream = contentResolver.openInputStream(imagenTarea);
                     imagenBytes = getBytes(inputStream);
                     PreparedStatement statement = conn.prepareStatement(query);
                     statement.setString(1, nombre);
@@ -260,9 +260,9 @@ public class Tab2Profesor extends Fragment {
                     statement.setString(6, institutoProfesor);
                     statement.setString(7, dni);
                     statement.executeUpdate();
-                    Uri imageUri = Uri.parse("android.resource://com.example.labordo/" + R.drawable.inactivo);
+                    Uri imageUri2 = Uri.parse("android.resource://com.example.labordo/" + R.drawable.inactivo);
 
-                    listDatos.add(new ActividadesVo(nombre, descripcion, imagenUri, precio, fecha, imageUri));
+                    listDatos.add(new ActividadesVo(nombre, descripcion, imagenTarea, precio, fecha, imageUri2));
 
                     msg = "Tarea añadida";
 
@@ -321,16 +321,16 @@ public class Tab2Profesor extends Fragment {
                         String estado = rs.getString("estado");
                         numero++;
                         if(imageValue == null){
-                            Uri imageUri = Uri.parse("android.resource://com.example.labordo/" + R.drawable.sin_foto);
+                            Uri imageUri2 = Uri.parse("android.resource://com.example.labordo/" + R.drawable.sin_foto);
                             if(estado.equals("LIBRE")){
-                                Uri imageUri2 = Uri.parse("android.resource://com.example.labordo/" + R.drawable.inactivo);
-                                listDatos.add(new ActividadesVo(nombre, descripcion, imageUri, precio, fechaLimite, imageUri2));
+                                Uri imageUri = Uri.parse("android.resource://com.example.labordo/" + R.drawable.inactivo);
+                                listDatos.add(new ActividadesVo(nombre, descripcion, imageUri2, precio, fechaLimite, imageUri));
                             } else if (estado.equals("RESUELTA")) {
-                                Uri imageUri2 = Uri.parse("android.resource://com.example.labordo/" + R.drawable.asignada);
-                                listDatos.add(new ActividadesVo(nombre, descripcion, imageUri, precio, fechaLimite, imageUri2));
+                                Uri imageUri = Uri.parse("android.resource://com.example.labordo/" + R.drawable.asignada);
+                                listDatos.add(new ActividadesVo(nombre, descripcion, imageUri2, precio, fechaLimite, imageUri));
                             } else if (estado.equals("CONFIRMADA")) {
-                                Uri imageUri2 = Uri.parse("android.resource://com.example.labordo/" + R.drawable.pendiente);
-                                listDatos.add(new ActividadesVo(nombre, descripcion, imageUri, precio, fechaLimite, imageUri2));
+                                Uri imageUri = Uri.parse("android.resource://com.example.labordo/" + R.drawable.pendiente);
+                                listDatos.add(new ActividadesVo(nombre, descripcion, imageUri2, precio, fechaLimite, imageUri));
                             }
                         }else{
                             // Obtener la URI del archivo temporal
