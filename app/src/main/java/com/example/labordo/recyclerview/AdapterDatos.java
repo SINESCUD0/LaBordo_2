@@ -42,16 +42,18 @@ import java.util.Date;
 public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDatos> implements View.OnClickListener{
 
     ArrayList<ActividadesVo> listDatos;
+    private Context mContext;
     private View.OnClickListener listener;
+    String Titulo, Precio, Descripcion, Fecha;
     LoginInfo tipoUsuario = new LoginInfo();
-    Context view;
     EditText tituloLaborProfe;
     EditText precioLaborProfe;
     EditText descripcionLaborProfe;
     EditText fechaLimiteProfe;
 
-    public AdapterDatos(ArrayList<ActividadesVo> listDatos) {
+    public AdapterDatos(ArrayList<ActividadesVo> listDatos, Context mContext) {
         this.listDatos = listDatos;
+        this.mContext = mContext;
     }
 
     @NonNull
@@ -157,6 +159,10 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
                             return false;
                         });*/
 
+                        Titulo = titulo;
+                        Fecha = fechaT;
+                        Precio = precioT;
+                        Descripcion = descripcionT;
                         tituloLaborProfe.setText(titulo);
                         fechaLimiteProfe.setText(fechaT);
                         precioLaborProfe.setText(precioT);
@@ -243,9 +249,9 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
         protected Void doInBackground(Void... voids) {
             try{
                 Class.forName("com.mysql.jdbc.Driver"); //PILLAMOS LA INFORMACION DEL PAQUETE
-                Connection conn = DriverManager.getConnection(view.getResources().getString(R.string.DATABASE_URL),
-                        view.getResources().getString(R.string.USER),
-                        view.getResources().getString(R.string.PASSWORD)); //NOS CONECTAMOS A LA BASE DE DATOS
+                Connection conn = DriverManager.getConnection(mContext.getResources().getString(R.string.DATABASE_URL),
+                        mContext.getResources().getString(R.string.USER),
+                        mContext.getResources().getString(R.string.PASSWORD)); //NOS CONECTAMOS A LA BASE DE DATOS
                 if(conn == null){
                     //SI NO CONSIGUES CONECTARTE A LA BASE DE DATOS
                     msg = "Se ha perdido la conexion";
@@ -254,7 +260,8 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
                     String dni = tipoUsuario.getDni();
                     String institutoProfesor = tipoUsuario.getInstitutoLogin();
                     String query = "UPDATE labores SET nombreActividad = ?, precio = ?, descripcion = ?," +
-                            " fechaLimite = ? WHERE dni_profesor = ? AND instituto = ?";
+                            " fechaLimite = ? WHERE dni_profesor = ? AND instituto = ? AND nombreActividad = ?" +
+                            " AND precio = ? AND descripcion = ? AND fechaLimite = ?";
                     //SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                     //Date date = formatter.parse(fechaT);
                     //java.sql.Date fechaElegidaSQL = new java.sql.Date(date.getTime());
@@ -266,6 +273,10 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
                     statement.setString(4, fechaLimite1);
                     statement.setString(5, dni);
                     statement.setString(6, institutoProfesor);
+                    statement.setString(7, Titulo);
+                    statement.setString(8, Precio);
+                    statement.setString(9, Descripcion);
+                    statement.setString(10, Fecha);
                     statement.executeUpdate();
 
                     msg = "Tarea Actualizada";
@@ -284,7 +295,7 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
         }
         @Override
         protected void onPostExecute(Void aVoid){
-            Toast.makeText(view, msg, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
         }
     }
 

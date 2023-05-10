@@ -134,7 +134,7 @@ public class Tab1Profesor extends Fragment{
         @Override
         protected void onPostExecute(Void aVoid){
             //Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
-            AdapterDatos adapterDatos = new AdapterDatos(listDatos);
+            AdapterDatos adapterDatos = new AdapterDatos(listDatos, getContext());
             recycler.setAdapter(adapterDatos);
         }
     }
