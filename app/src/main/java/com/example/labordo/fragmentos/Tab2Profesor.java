@@ -282,7 +282,7 @@ public class Tab2Profesor extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid){
             //Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
-            AdapterDatos adapterDatos = new AdapterDatos(listDatos, getContext());
+            AdapterDatos adapterDatos = new AdapterDatos(listDatos);
             recycler.setAdapter(adapterDatos);
         }
     }
@@ -372,7 +372,7 @@ public class Tab2Profesor extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid){
             //Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
-            AdapterDatos adapterDatos = new AdapterDatos(listDatos, getContext());
+            AdapterDatos adapterDatos = new AdapterDatos(listDatos);
             recycler.setAdapter(adapterDatos);
         }
     }
