@@ -153,9 +153,58 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
             itemView.findViewById(R.id.layout_actividades_asignadas).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    if(usuario.isTipoCuenta() == true){
+                        Toast.makeText(itemView.getContext(), "PULSACION CORTA", Toast.LENGTH_SHORT).show();
+
+                        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(itemView.getContext());
+
+                        LayoutInflater inflater = LayoutInflater.from(itemView.getContext());
+                        View dialogView = inflater.inflate(R.layout.ventana_alerta_tareas_alumno, null);
+                        dialogBuilder.setView(dialogView);
+
+                        Drawable drawable = imagenTarea.getDrawable();
+                        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+                        File file = new File(itemView.getContext().getExternalCacheDir(), "image.png");
+                        try{
+                            OutputStream outputStream = new FileOutputStream(file);
+                            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+                            outputStream.flush();
+                            outputStream.close();
+                        }catch (IOException e){
+                            e.printStackTrace();
+                        }
+
+                        Uri foto = Uri.fromFile(file);
+                        String titulo = nombreActividad.getText().toString();
+                        String fechaT = fecha.getText().toString();
+                        String precioT = precio.getText().toString();
+                        String descripcionT = descripcion.getText().toString();
+
+                        ImageView fotoLabor = dialogView.findViewById(R.id.imagenLabor);
+                        TextView tituloLabor = dialogView.findViewById(R.id.tituloLabor);
+                        TextView fechaLimite = dialogView.findViewById(R.id.FechaEntrega);
+                        TextView precioLabor = dialogView.findViewById(R.id.precioLabor);
+                        TextView descripcionL = dialogView.findViewById(R.id.descripcionLabor);
+                        descripcionL.setMovementMethod(new ScrollingMovementMethod());
+                        descripcionL.setOnTouchListener((a, event) -> {
+                            a.getParent().requestDisallowInterceptTouchEvent(true);
+                            return false;
+                        });
+
+                        tituloLabor.setText(titulo);
+                        fechaLimite.setText(fechaT);
+                        precioLabor.setText(precioT);
+                        descripcionL.setText(descripcionT);
+                        fotoLabor.setImageURI(foto);
+
+                        dialogBuilder.setNegativeButton("OK", null);
+
+                        AlertDialog alertDialog = dialogBuilder.create();
+                        alertDialog.show();
+                    }
                     if (usuario.isTipoCuenta() == false) {
 
-                        //Toast.makeText(itemView.getContext(), "Posicion "+getAdapterPosition(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(itemView.getContext(), "PULSACION CORTA", Toast.LENGTH_SHORT).show();
 
                         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(itemView.getContext());
 
