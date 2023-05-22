@@ -84,11 +84,13 @@ public class Tab1Profesor extends Fragment{
                 }else{
                     //RECOJO EL NUMERO DEL INSTITUTO DEL ALUMNO QUE HA INICIADO SESION
                     String instituto_alumno = profesor.getInstitutoLogin();
+                    String dni_profesor = profesor.getDni();
                     int numero = 1;
                     //SI CONSIGUE CONECTARSE A LA BASE DE DATOS QUE EJECUTE LA SIGUIENTE SENTENCIA
-                    String query = "SELECT * FROM labores WHERE instituto = ? AND estado = 'CONFIRMADA'";
+                    String query = "SELECT * FROM labores WHERE instituto = ? AND estado = 'CONFIRMADA' AND dni_profesor = ?";
                     PreparedStatement statement = conn.prepareStatement(query);
                     statement.setString(1, instituto_alumno);
+                    statement.setString(2, dni_profesor);
                     ResultSet rs = statement.executeQuery();
 
                     while(rs.next()){

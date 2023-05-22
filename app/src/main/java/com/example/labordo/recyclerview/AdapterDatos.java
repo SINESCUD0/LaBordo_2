@@ -1,11 +1,13 @@
 package com.example.labordo.recyclerview;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,28 +32,30 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDatos> implements View.OnClickListener{
 
 
     LoginInfo usuario = new LoginInfo();
+    String titulo = "";
+    String fechaT = "";
+    String precioT = "";
+    String descripcionT = "";
     ArrayList<ActividadesVo> listDatos;
+
+    private Context mContext;
     private View.OnClickListener listener;
 
     public AdapterDatos(ArrayList<ActividadesVo> listDatos) {
         this.listDatos = listDatos;
     }
 
-
-
-
-
     // Crear nueva Activity para mostrar la Info y modificarla
-
-
-
-
 
 
     @NonNull
@@ -118,10 +122,7 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
         File file;
         View dialogView;
         Uri foto;
-        String titulo;
-        String fechaT;
-        String precioT;
-        String descripcionT;
+
 
 
 
@@ -175,10 +176,10 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
                         }
 
                         Uri foto = Uri.fromFile(file);
-                        String titulo = nombreActividad.getText().toString();
-                        String fechaT = fecha.getText().toString();
-                        String precioT = precio.getText().toString();
-                        String descripcionT = descripcion.getText().toString();
+                        titulo = nombreActividad.getText().toString();
+                        fechaT = fecha.getText().toString();
+                        precioT = precio.getText().toString();
+                        descripcionT = descripcion.getText().toString();
 
                         ImageView fotoLabor = dialogView.findViewById(R.id.imagenLabor);
                         TextView tituloLabor = dialogView.findViewById(R.id.tituloLabor);
@@ -225,10 +226,10 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
                         }
 
                         Uri foto = Uri.fromFile(file);
-                        String titulo = nombreActividad.getText().toString();
-                        String fechaT = fecha.getText().toString();
-                        String precioT = precio.getText().toString();
-                        String descripcionT = descripcion.getText().toString();
+                        titulo = nombreActividad.getText().toString();
+                        fechaT = fecha.getText().toString();
+                        precioT = precio.getText().toString();
+                        descripcionT = descripcion.getText().toString();
 
                         ImageView fotoLabor = dialogView.findViewById(R.id.imagenLabor);
                         TextView tituloLabor = dialogView.findViewById(R.id.tituloLabor);
@@ -247,13 +248,17 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
                         descripcionL.setText(descripcionT);
                         fotoLabor.setImageURI(foto);
 
-                        dialogBuilder.setNegativeButton("OK", null);
                         dialogBuilder.setPositiveButton("ACEPTAR", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 Toast.makeText(itemView.getContext(), "ACTIVIDAD ACEPTADA", Toast.LENGTH_SHORT).show();
+                                AsignarLabor nuevaLabor = new AsignarLabor();
+                                nuevaLabor.execute();
                             }
                         });
+
+                        dialogBuilder.setNegativeButton("CANCELAR", null);
+
 
                         AlertDialog alertDialog = dialogBuilder.create();
                         alertDialog.show();
@@ -263,33 +268,29 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
             itemView.findViewById(R.id.layout_actividades_asignadas).setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    Toast.makeText(itemView.getContext(), "PULSACION LARGA", Toast.LENGTH_SHORT).show();
-
-                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(itemView.getContext());
-
-                    LayoutInflater inflater = LayoutInflater.from(itemView.getContext());
                     if(usuario.isTipoCuenta()){
+                        Toast.makeText(itemView.getContext(), "PULSACION LARGA", Toast.LENGTH_SHORT).show();
+
+                        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(itemView.getContext());
+
+                        LayoutInflater inflater = LayoutInflater.from(itemView.getContext());
+
                         dialogView = inflater.inflate(R.layout.ventana_alerta_tareas_profe, null);
-                    }else if(!usuario.isTipoCuenta()){
-                        //dialogView = inflater.inflate(R.layout.ventana_alerta_tareas_alumno, null);
-                    }
-
-                    dialogBuilder.setView(dialogView);
-
-                    Drawable drawable = imagenTarea.getDrawable();
-                    Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-                    file = new File(itemView.getContext().getExternalCacheDir(), "image.png");
-                    try{
-                        OutputStream outputStream = new FileOutputStream(file);
-                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-                        outputStream.flush();
-                        outputStream.close();
-                    }catch (IOException e){
-                        e.printStackTrace();
-                    }
 
 
-                    if(usuario.isTipoCuenta()){
+                        dialogBuilder.setView(dialogView);
+
+                        Drawable drawable = imagenTarea.getDrawable();
+                        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+                        file = new File(itemView.getContext().getExternalCacheDir(), "image.png");
+                        try{
+                            OutputStream outputStream = new FileOutputStream(file);
+                            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+                            outputStream.flush();
+                            outputStream.close();
+                        }catch (IOException e){
+                            e.printStackTrace();
+                        }
 
                         // Imagen, Titulo, Precio, Descripcion, Fecha
                         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -304,12 +305,6 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
                         intent.putExtra("descripcion", descripcion.getText());
                         view.getContext().startActivity(intent);
                         //verDatosProfe();
-                    }else if(!usuario.isTipoCuenta()){
-                        /*verDatosEstudiante();
-                        dialogBuilder.setNegativeButton("OK", null);
-
-                        AlertDialog alertDialog = dialogBuilder.create();
-                        alertDialog.show();*/
                     }
 
                     return false;
@@ -433,6 +428,71 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
             precioLabor.setText(precioT);
             descripcionL.setText(descripcionT);
             fotoLabor.setImageURI(foto);
+        }
+
+        class AsignarLabor extends AsyncTask<Void, Void, Void> {
+
+            //ESTA VARIABLE (MSG) LA UTILIZAMOS PARA EN CASO DE FALLO TE MUESTRE EN EL TOAST EL FALLO QUE DA
+            String msg = "";
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                try{
+                    Class.forName("com.mysql.jdbc.Driver"); //PILLAMOS LA INFORMACION DEL PAQUETE
+                    Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.213.252:3306/labordo?useUnicode=true&characterEncoding=utf8",
+                            "root",
+                            "L4b0rd0#"); //NOS CONECTAMOS A LA BASE DE DATOS
+                    if(conn == null){
+                        //SI NO CONSIGUES CONECTARTE A LA BASE DE DATOS
+                        msg = "Se ha perdido la conexion";
+                    }else{
+                        //SI CONSIGUE CONECTARSE A LA BASE DE DATOS QUE EJECUTE LA SIGUIENTE SENTENCIA
+                        String dni_Estudiante = usuario.getDni();
+                        String instituto = usuario.getInstitutoLogin();
+                        String query2 = "SELECT id_labor FROM labores WHERE nombreActividad = ? AND precio = ? AND descripcion = ?" +
+                                " AND fechaLimite = ? AND instituto = ? ";
+                        PreparedStatement statement2 = conn.prepareStatement(query2);
+                        statement2.setString(1, titulo);
+                        statement2.setString(2, precioT);
+                        statement2.setString(3, descripcionT);
+                        statement2.setString(4, fechaT);
+                        statement2.setString(5, instituto);
+                        ResultSet rs = statement2.executeQuery();
+                        while(rs.next()){
+                            String query = "INSERT INTO estudiante_labores_asignados (dni_estudiante, id_labor) VALUES (?, ?)";
+                            PreparedStatement statement = conn.prepareStatement(query);
+                            String idLabor = rs.getString("id_labor");
+                            statement.setString(1, dni_Estudiante);
+                            statement.setString(2, idLabor);
+                            statement.executeUpdate();
+                            String query3 = "UPDATE labores SET estado = ? WHERE id_labor = ?";
+                            PreparedStatement statement3 = conn.prepareStatement(query3);
+                            String confirmada = "CONFIRMADA";
+                            statement3.setString(1, confirmada);
+                            statement3.setString(2, idLabor);
+                            statement3.executeUpdate();
+                            statement.close();
+                            statement3.close();
+                        }
+
+                        msg = "TAREA ASIGNADA";
+
+                        statement2.close();
+                    }
+
+                    conn.close();
+
+                }catch (Exception e){
+                    //SI FALLA ALGO EN EL CODIGO SALDRA LA SIGUIENTE EXCEPTION
+                    msg = e.getMessage();
+                    e.printStackTrace();
+                }
+                return null;
+            }
+            @Override
+            protected void onPostExecute(Void aVoid){
+                //Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+            }
         }
 
     }

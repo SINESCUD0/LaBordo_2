@@ -307,7 +307,7 @@ public class Tab2Profesor extends Fragment {
                     String dni = profesor.getDni();
                     int numero = 1;
                     //SI CONSIGUE CONECTARSE A LA BASE DE DATOS QUE EJECUTE LA SIGUIENTE SENTENCIA
-                    String query = "SELECT * FROM labores WHERE dni_profesor = ?";
+                    String query = "SELECT * FROM labores WHERE dni_profesor = ? AND (estado = 'LIBRE' OR estado = 'RESUELTA')";
                     PreparedStatement statement = conn.prepareStatement(query);
                     statement.setString(1, dni);
                     ResultSet rs = statement.executeQuery();
