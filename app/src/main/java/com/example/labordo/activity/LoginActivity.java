@@ -97,13 +97,19 @@ public class LoginActivity extends AppCompatActivity {
                         String tipo = rs.getString("tipo");
                         //SI EL CORREO INTRODUCIDO ES DE UN PROFESOR HARA LO SIGUIENTE
                         if(tipo.equals(tipo1)){
-                            String query2 = "SELECT * FROM profesor WHERE correo = ? AND contrasenia = ?";
+                            String query2 = "SELECT * FROM profesor WHERE correo = ? AND contrasenia = ? AND acceso = 0";
                             PreparedStatement statement2 = conn.prepareStatement(query2);
                             statement2.setString(1, correo1);
                             statement2.setString(2, password1);
                             ResultSet rs2 = statement2.executeQuery();
                             if(rs2.next()){
                                 msg = "¡Inicio de sesión exitoso!";
+                                String update = "UPDATE profesor SET acceso = 1 WHERE correo = ? AND contrasenia = ?";
+                                PreparedStatement statement4 = conn.prepareStatement(update);
+                                statement4.setString(1, correo1);
+                                statement4.setString(2, password1);
+                                statement4.executeUpdate();
+                                statement4.close();
                                 Intent i = new Intent(LoginActivity.this, Main_Profesorado.class);
                                 startActivity(i);
                                 String dni = rs2.getString("dni");
@@ -128,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                         //SI EL CORREO INTRODUCIDO ES DE UN ESTUDIANTE HARA LO SIGUIENTE
                         else if (tipo.equals(tipo2)) {
-                            String query2 = "SELECT * FROM estudiante WHERE correo = ? AND contrasenia = ?";
+                            String query2 = "SELECT * FROM estudiante WHERE correo = ? AND contrasenia = ? AND acceso = 0";
                             PreparedStatement statement2 = conn.prepareStatement(query2);
                             statement2.setString(1, correo1);
                             statement2.setString(2, password1);
@@ -136,7 +142,12 @@ public class LoginActivity extends AppCompatActivity {
 
                             if(rs2.next()){
                                 msg = "¡Inicio de sesión exitoso!";
-
+                                String update = "UPDATE estudiante SET acceso = 1 WHERE correo = ? AND contrasenia = ?";
+                                PreparedStatement statement4 = conn.prepareStatement(update);
+                                statement4.setString(1, correo1);
+                                statement4.setString(2, password1);
+                                statement4.executeUpdate();
+                                statement4.close();
                                 Intent i = new Intent(LoginActivity.this, Main_Alumnado.class);
                                 startActivity(i);
 

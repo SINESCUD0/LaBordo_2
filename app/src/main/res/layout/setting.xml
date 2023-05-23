@@ -7,16 +7,35 @@
     android:layout_height="match_parent"
     tools:context=".activity.Setting">
 
-    <TextView
-        android:id="@+id/titulo"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/montserrat_extralight"
-        android:text="@string/tituloSetting"
-        android:textColor="@color/prueba"
-        android:textSize="30sp" />
+        android:id="@+id/linearTitulo">
+
+        <TextView
+            android:id="@+id/titulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/montserrat_extralight"
+            android:text="@string/tituloSetting"
+            android:textColor="@color/prueba"
+            android:layout_weight="1"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/saldoUsuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Hola"
+            android:fontFamily="@font/montserrat_extralight"
+            android:textColor="@color/prueba"
+            android:textSize="30sp"/>
+
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/fotoPerfil"
@@ -24,7 +43,7 @@
         android:layout_height="150dp"
         android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/titulo"
+        android:layout_below="@+id/linearTitulo"
         app:srcCompat="@drawable/sin_foto" />
 
     <TextView
@@ -48,6 +67,7 @@
         android:background="@android:color/transparent"
         android:fontFamily="@font/open_sans"
         android:text="@string/perfil"
+        android:textSize="16sp"
         android:textColor="@color/prueba" />
 
     <Button
@@ -59,6 +79,7 @@
         android:background="@android:color/transparent"
         android:fontFamily="@font/open_sans"
         android:text="@string/cambiarPassword"
+        android:textSize="16sp"
         android:textColor="@color/prueba" />
 
 </RelativeLayout>

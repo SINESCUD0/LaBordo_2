@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -22,12 +23,20 @@ import com.example.labordo.R;
 import com.example.labordo.activity.LoginActivity;
 import com.example.labordo.activity.Setting;
 import com.example.labordo.objetos.Alumnado;
+import com.example.labordo.objetos.LoginInfo;
 import com.example.labordo.visualizador_pantalla.MiVisualizadorDePantallaAlumno;
 import com.google.android.material.tabs.TabLayout;
+
+import java.sql.Blob;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class Main_Alumnado extends AppCompatActivity {
     TabLayout tabLayout;
     ViewPager2 viewPager2;
+    LoginInfo usuario = new LoginInfo();
     MiVisualizadorDePantallaAlumno miVisualizadorDePantalla;
 
     @Override
@@ -117,6 +126,8 @@ public class Main_Alumnado extends AppCompatActivity {
         dialogBuilder.setPositiveButton("SI", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                Send cerrar = new Send();
+                cerrar.execute();
                 finish();
             }
         });
@@ -125,5 +136,61 @@ public class Main_Alumnado extends AppCompatActivity {
 
         AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.show();
+    }
+
+    class Send extends AsyncTask<Void, Void, Void> {
+
+        //ESTA VARIABLE (MSG) LA UTILIZAMOS PARA EN CASO DE FALLO TE MUESTRE EN EL TOAST EL FALLO QUE DA
+        String msg = "";
+
+        //COGEMOS LOS VALORES DE LOS EDIT TEXT Y LOS PASAMOS A STRING ESOS VALORES
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try{
+                Class.forName("com.mysql.jdbc.Driver"); //PILLAMOS LA INFORMACION DEL PAQUETE
+                Connection conn = DriverManager.getConnection(getResources().getString(R.string.DATABASE_URL),
+                        getResources().getString(R.string.USER),
+                        getResources().getString(R.string.PASSWORD)); //NOS CONECTAMOS A LA BASE DE DATOS
+                if(conn == null){
+                    //SI NO CONSIGUES CONECTARTE A LA BASE DE DATOS
+                    msg = "La conexion va mal";
+                }else{
+                    String correo1 = usuario.getCorreo();
+                    String dni = usuario.getDni();
+                    //SI EL CORREO INTRODUCIDO ES DE UN ESTUDIANTE HARA LO SIGUIENTE
+                    String query2 = "SELECT * FROM estudiante WHERE correo = ? AND dni = ? AND acceso = 1";
+                    PreparedStatement statement2 = conn.prepareStatement(query2);
+                    statement2.setString(1, correo1);
+                    statement2.setString(2, dni);
+                    ResultSet rs2 = statement2.executeQuery();
+
+                    if(rs2.next()){
+                        msg = "¡Cerrar sesión exitoso!";
+                        String update = "UPDATE estudiante SET acceso = 0 WHERE correo = ? AND dni = ?";
+                        PreparedStatement statement4 = conn.prepareStatement(update);
+                        statement4.setString(1, correo1);
+                        statement4.setString(2, dni);
+                        statement4.executeUpdate();
+                        statement4.close();
+                    }
+                    statement2.close();
+                    rs2.close();
+                }
+
+                conn.close();
+
+            }catch (Exception e){
+                //SI FALLA ALGO EN EL CODIGO SALDRA LA SIGUIENTE EXCEPTION
+                msg = "La conexion va mal excepcion" + e.getMessage();
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid){
+            Toast.makeText(Main_Alumnado.this, msg, Toast.LENGTH_SHORT).show();
+        }
     }
 }
