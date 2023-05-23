@@ -198,6 +198,15 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
                         descripcionL.setText(descripcionT);
                         fotoLabor.setImageURI(foto);
 
+                            dialogBuilder.setPositiveButton("TAREA TERMINADA", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Toast.makeText(itemView.getContext(), "ACTIVIDAD ACEPTADA", Toast.LENGTH_SHORT).show();
+                                //AsignarLabor nuevaLabor = new AsignarLabor();
+                                //nuevaLabor.execute();
+                            }
+                        });
+
                         dialogBuilder.setNegativeButton("OK", null);
 
                         AlertDialog alertDialog = dialogBuilder.create();
@@ -431,6 +440,73 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
         }
 
         class AsignarLabor extends AsyncTask<Void, Void, Void> {
+
+            //ESTA VARIABLE (MSG) LA UTILIZAMOS PARA EN CASO DE FALLO TE MUESTRE EN EL TOAST EL FALLO QUE DA
+            String msg = "";
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                try{
+                    Class.forName("com.mysql.jdbc.Driver"); //PILLAMOS LA INFORMACION DEL PAQUETE
+                    Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.213.252:3306/labordo?useUnicode=true&characterEncoding=utf8",
+                            "root",
+                            "L4b0rd0#"); //NOS CONECTAMOS A LA BASE DE DATOS
+                    if(conn == null){
+                        //SI NO CONSIGUES CONECTARTE A LA BASE DE DATOS
+                        msg = "Se ha perdido la conexion";
+                    }else{
+                        //SI CONSIGUE CONECTARSE A LA BASE DE DATOS QUE EJECUTE LA SIGUIENTE SENTENCIA
+                        String dni_Estudiante = usuario.getDni();
+                        String instituto = usuario.getInstitutoLogin();
+                        String query2 = "SELECT id_labor FROM labores WHERE nombreActividad = ? AND precio = ? AND descripcion = ?" +
+                                " AND fechaLimite = ? AND instituto = ? ";
+                        PreparedStatement statement2 = conn.prepareStatement(query2);
+                        statement2.setString(1, titulo);
+                        statement2.setString(2, precioT);
+                        statement2.setString(3, descripcionT);
+                        statement2.setString(4, fechaT);
+                        statement2.setString(5, instituto);
+                        ResultSet rs = statement2.executeQuery();
+                        while(rs.next()){
+                            String query = "INSERT INTO estudiante_labores_asignados (dni_estudiante, id_labor) VALUES (?, ?)";
+                            PreparedStatement statement = conn.prepareStatement(query);
+                            String idLabor = rs.getString("id_labor");
+                            statement.setString(1, dni_Estudiante);
+                            statement.setString(2, idLabor);
+                            statement.executeUpdate();
+                            String query3 = "UPDATE labores SET estado = ? WHERE id_labor = ?";
+                            PreparedStatement statement3 = conn.prepareStatement(query3);
+                            String confirmada = "CONFIRMADA";
+                            statement3.setString(1, confirmada);
+                            statement3.setString(2, idLabor);
+                            statement3.executeUpdate();
+                            statement.close();
+                            statement3.close();
+                        }
+
+                        msg = "TAREA ASIGNADA";
+
+                        statement2.close();
+                    }
+
+                    conn.close();
+
+                }catch (Exception e){
+                    //SI FALLA ALGO EN EL CODIGO SALDRA LA SIGUIENTE EXCEPTION
+                    msg = e.getMessage();
+                    e.printStackTrace();
+                }
+                return null;
+            }
+            @Override
+            protected void onPostExecute(Void aVoid){
+                //Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        //MODIFICAR ESTA CLASE PARA QUE CUANDO EL PROFESOR DE A TERMINAR TAREA LE AUMENTE EL SALDO DEL ALUMNO QUE TENIA ASIGNADA
+        //LA TAREA
+        class TerminarLabor extends AsyncTask<Void, Void, Void> {
 
             //ESTA VARIABLE (MSG) LA UTILIZAMOS PARA EN CASO DE FALLO TE MUESTRE EN EL TOAST EL FALLO QUE DA
             String msg = "";
