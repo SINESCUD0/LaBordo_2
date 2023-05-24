@@ -84,7 +84,7 @@ public class Perfil extends AppCompatActivity {
 
 
                     if((imageHeight <= 650 || imageHeight >= 150) && (imageWidth <= 650 || imageWidth >= 150)
-                        && (descriptorArchivo.getLength()/1024) <= 66){
+                        && (descriptorArchivo.getLength()/1024) < 65){
 
                         fotoPerfil.setImageURI(uri);
 
