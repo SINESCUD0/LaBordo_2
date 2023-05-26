@@ -14,13 +14,11 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.labordo.R;
 import com.example.labordo.objetos.ActividadesVo;
 import com.example.labordo.objetos.LoginInfo;
-import com.example.labordo.recyclerview.AdapterDatos;
-import com.example.labordo.recyclerview.AdapterDatosTab2Alumno;
+import com.example.labordo.recyclerview.AdapterDatosTab2;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -155,7 +153,7 @@ public class Tab2Alumno extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid){
             //Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
-            AdapterDatosTab2Alumno adapterDatos = new AdapterDatosTab2Alumno(listDatos);
+            AdapterDatosTab2 adapterDatos = new AdapterDatosTab2(listDatos);
             recycler.setAdapter(adapterDatos);
         }
     }

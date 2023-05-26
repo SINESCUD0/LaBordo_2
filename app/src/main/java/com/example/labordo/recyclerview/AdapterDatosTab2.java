@@ -1,6 +1,8 @@
 package com.example.labordo.recyclerview;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -18,9 +20,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.labordo.R;
+import com.example.labordo.activity.ModificarActividad;
 import com.example.labordo.objetos.ActividadesVo;
 import com.example.labordo.objetos.LoginInfo;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -28,7 +32,7 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class AdapterDatosTab2Alumno extends RecyclerView.Adapter<AdapterDatosTab2Alumno.ViewHolderDatos> implements View.OnClickListener {
+public class AdapterDatosTab2 extends RecyclerView.Adapter<AdapterDatosTab2.ViewHolderDatos> implements View.OnClickListener {
 
 
     LoginInfo usuario = new LoginInfo();
@@ -41,7 +45,7 @@ public class AdapterDatosTab2Alumno extends RecyclerView.Adapter<AdapterDatosTab
     private Context mContext;
     private View.OnClickListener listener;
 
-    public AdapterDatosTab2Alumno(ArrayList<ActividadesVo> listDatos) {
+    public AdapterDatosTab2(ArrayList<ActividadesVo> listDatos) {
         this.listDatos = listDatos;
     }
 
@@ -142,6 +146,55 @@ public class AdapterDatosTab2Alumno extends RecyclerView.Adapter<AdapterDatosTab
             itemView.findViewById(R.id.layout_actividades_asignadas).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    if(usuario.isTipoCuenta() == true){
+                        Toast.makeText(itemView.getContext(), "PULSACION CORTA", Toast.LENGTH_SHORT).show();
+
+                        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(itemView.getContext());
+
+                        LayoutInflater inflater = LayoutInflater.from(itemView.getContext());
+                        View dialogView = inflater.inflate(R.layout.ventana_alerta_tareas_alumno, null);
+                        dialogBuilder.setView(dialogView);
+
+                        Drawable drawable = imagenTarea.getDrawable();
+                        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+                        File file = new File(itemView.getContext().getExternalCacheDir(), "image.png");
+                        try{
+                            OutputStream outputStream = new FileOutputStream(file);
+                            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+                            outputStream.flush();
+                            outputStream.close();
+                        }catch (IOException e){
+                            e.printStackTrace();
+                        }
+
+                        Uri foto = Uri.fromFile(file);
+                        titulo = nombreActividad.getText().toString();
+                        fechaT = fecha.getText().toString();
+                        precioT = precio.getText().toString();
+                        descripcionT = descripcion.getText().toString();
+
+                        ImageView fotoLabor = dialogView.findViewById(R.id.imagenLabor);
+                        TextView tituloLabor = dialogView.findViewById(R.id.tituloLabor);
+                        TextView fechaLimite = dialogView.findViewById(R.id.FechaEntrega);
+                        TextView precioLabor = dialogView.findViewById(R.id.precioLabor);
+                        TextView descripcionL = dialogView.findViewById(R.id.descripcionLabor);
+                        descripcionL.setMovementMethod(new ScrollingMovementMethod());
+                        descripcionL.setOnTouchListener((a, event) -> {
+                            a.getParent().requestDisallowInterceptTouchEvent(true);
+                            return false;
+                        });
+
+                        tituloLabor.setText(titulo);
+                        fechaLimite.setText(fechaT);
+                        precioLabor.setText(precioT);
+                        descripcionL.setText(descripcionT);
+                        fotoLabor.setImageURI(foto);
+
+                        dialogBuilder.setNegativeButton("OK", null);
+
+                        AlertDialog alertDialog = dialogBuilder.create();
+                        alertDialog.show();
+                    }
                     if (usuario.isTipoCuenta() == false) {
 
                         Toast.makeText(itemView.getContext(), "PULSACION CORTA", Toast.LENGTH_SHORT).show();
@@ -193,6 +246,51 @@ public class AdapterDatosTab2Alumno extends RecyclerView.Adapter<AdapterDatosTab
                         AlertDialog alertDialog = dialogBuilder.create();
                         alertDialog.show();
                     }
+                }
+            });
+
+            itemView.findViewById(R.id.layout_actividades_asignadas).setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    if(usuario.isTipoCuenta()){
+                        Toast.makeText(itemView.getContext(), "PULSACION LARGA", Toast.LENGTH_SHORT).show();
+
+                        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(itemView.getContext());
+
+                        LayoutInflater inflater = LayoutInflater.from(itemView.getContext());
+
+                        dialogView = inflater.inflate(R.layout.ventana_alerta_tareas_profe, null);
+
+
+                        dialogBuilder.setView(dialogView);
+
+                        Drawable drawable = imagenTarea.getDrawable();
+                        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+                        file = new File(itemView.getContext().getExternalCacheDir(), "image.png");
+                        try{
+                            OutputStream outputStream = new FileOutputStream(file);
+                            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+                            outputStream.flush();
+                            outputStream.close();
+                        }catch (IOException e){
+                            e.printStackTrace();
+                        }
+
+                        // Imagen, Titulo, Precio, Descripcion, Fecha
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                        byte[] imageInByte = baos.toByteArray();
+
+                        Intent intent = new Intent(view.getContext(), ModificarActividad.class);
+                        intent.putExtra("imagen", imageInByte);
+                        intent.putExtra("titulo", nombreActividad.getText());
+                        intent.putExtra("precio", precio.getText());
+                        intent.putExtra("fecha", fecha.getText());
+                        intent.putExtra("descripcion", descripcion.getText());
+                        view.getContext().startActivity(intent);
+                    }
+
+                    return false;
                 }
             });
 

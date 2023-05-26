@@ -35,7 +35,7 @@ import com.example.labordo.R;
 import com.example.labordo.activity.Perfil;
 import com.example.labordo.objetos.ActividadesVo;
 import com.example.labordo.objetos.LoginInfo;
-import com.example.labordo.recyclerview.AdapterDatos;
+import com.example.labordo.recyclerview.AdapterDatosTab2;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.ByteArrayOutputStream;
@@ -282,7 +282,7 @@ public class Tab2Profesor extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid){
             //Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
-            AdapterDatos adapterDatos = new AdapterDatos(listDatos);
+            AdapterDatosTab2 adapterDatos = new AdapterDatosTab2(listDatos);
             recycler.setAdapter(adapterDatos);
         }
     }
@@ -372,7 +372,7 @@ public class Tab2Profesor extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid){
             //Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
-            AdapterDatos adapterDatos = new AdapterDatos(listDatos);
+            AdapterDatosTab2 adapterDatos = new AdapterDatosTab2(listDatos);
             recycler.setAdapter(adapterDatos);
         }
     }
