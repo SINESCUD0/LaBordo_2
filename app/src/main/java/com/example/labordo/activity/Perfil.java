@@ -57,6 +57,8 @@ public class Perfil extends AppCompatActivity {
 
     LoginInfo logininfo = new LoginInfo();
 
+    String tamanios;
+
     @SuppressLint("MissingPermission")
     ActivityResultLauncher<PickVisualMediaRequest> pickMedia =
             registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
@@ -73,6 +75,7 @@ public class Perfil extends AppCompatActivity {
                     BitmapFactory.decodeFile(archivo.getAbsolutePath(), options);
                     int imageHeight = options.outHeight;
                     int imageWidth = options.outWidth;
+                    tamanios = imageWidth+"w "+imageHeight+"h";
 
                     //Vemos cuanto pesa la imagen
                     AssetFileDescriptor descriptorArchivo;
@@ -169,8 +172,6 @@ public class Perfil extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
 
-
-
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection conn = DriverManager.getConnection(getResources().getString(R.string.DATABASE_URL),
@@ -181,8 +182,9 @@ public class Perfil extends AppCompatActivity {
 
                     Bitmap fotoBitmap = ((BitmapDrawable) fotoPerfil.getDrawable()).getBitmap();
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    fotoBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                    fotoBitmap.compress(Bitmap.CompressFormat.JPEG, 50, stream);
                     byte[] byteArray = stream.toByteArray();
+
 
 
                     Blob blob = conn.createBlob();

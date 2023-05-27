@@ -105,12 +105,12 @@ public class LoginActivity extends AppCompatActivity {
                             ResultSet rs2 = statement2.executeQuery();
                             if(rs2.next()){
                                 msg = "¡Inicio de sesión exitoso!";
-                                /*String update = "UPDATE profesor SET acceso = 1 WHERE correo = ? AND contrasenia = ?";
+                                String update = "UPDATE profesor SET acceso = 1 WHERE correo = ? AND contrasenia = ?";
                                 PreparedStatement statement4 = conn.prepareStatement(update);
                                 statement4.setString(1, correo1);
                                 statement4.setString(2, password1);
                                 statement4.executeUpdate();
-                                statement4.close();*/
+                                statement4.close();
                                 Intent i = new Intent(LoginActivity.this, Main_Profesorado.class);
                                 startActivity(i);
                                 String dni = rs2.getString("dni");
@@ -158,9 +158,10 @@ public class LoginActivity extends AppCompatActivity {
                                 String correo = rs2.getString("correo");
                                 String password = rs2.getString("contrasenia");
                                 String instituto = rs2.getString("instituto");
+                                int saldoCuenta = rs2.getInt("puntos");
                                 Blob imagen = rs2.getBlob("fotoPerfil");
                                 boolean tipoCuenta = false;
-                                new LoginInfo(dni, nombre, apellidos, correo, password, instituto, imagen, tipoCuenta);
+                                new LoginInfo(dni, nombre, apellidos, correo, password, instituto, imagen, tipoCuenta, saldoCuenta);
 
                                 //color = R.color.prueba;
                                 correoUsuario.setText("");
