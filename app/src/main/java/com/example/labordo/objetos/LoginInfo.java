@@ -16,6 +16,8 @@ public class LoginInfo {
     private static Blob imagenPerfil;
     private static boolean tipoCuenta;
 
+    private static int saldoCuenta;
+
 
     public LoginInfo(){
 
@@ -27,6 +29,18 @@ public class LoginInfo {
         this.imagenPerfil = imagenPerfil;
     }
 
+    public LoginInfo(String dni, String nombre, String apellidos, String correo, String pass, String instituto, Blob imagenPerfil, boolean tipoCuenta, int saldoCuenta){
+        this.dni = dni;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.correo = correo;
+        this.pass = pass;
+        this.instituto = instituto;
+        this.tipoCuenta = tipoCuenta;
+        this.imagenPerfil = imagenPerfil;
+        this.saldoCuenta = saldoCuenta;
+    }
+
     public LoginInfo(String dni, String nombre, String apellidos, String correo, String pass, String instituto, Blob imagenPerfil, boolean tipoCuenta){
         this.dni = dni;
         this.nombre = nombre;
@@ -36,6 +50,7 @@ public class LoginInfo {
         this.instituto = instituto;
         this.tipoCuenta = tipoCuenta;
         this.imagenPerfil = imagenPerfil;
+        this.saldoCuenta = saldoCuenta;
     }
 
     public LoginInfo(String dni, String nombre, String apellidos, String correo, String pass, String instituto, boolean tipoCuenta){
@@ -47,6 +62,12 @@ public class LoginInfo {
         this.instituto = instituto;
         this.tipoCuenta = tipoCuenta;
     }
+
+    public static int getSaldoCuenta() {
+        return saldoCuenta;
+    }
+
+
 
     public Blob getImagenPerfil() {
         return imagenPerfil;
@@ -72,6 +93,8 @@ public class LoginInfo {
     public String getDni() {
         return dni;
     }
+
+    public void setSaldoCuenta(int saldoCuenta){this.saldoCuenta = saldoCuenta;};
 
     public void setDni(String dni) {
         LoginInfo.dni = dni;

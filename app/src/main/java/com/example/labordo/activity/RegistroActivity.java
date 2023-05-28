@@ -2,10 +2,12 @@ package com.example.labordo.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Application;
 import android.app.DatePickerDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -18,21 +20,20 @@ import com.example.labordo.R;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class RegistroActivity extends AppCompatActivity {
 
-    //PARA CONECTARTE A LA BASE DE DATOS
-    private static final String DATABASE_URL = "jdbc:mysql://192.168.1.44:3306/labordo?useUnicode=true&characterEncoding=UTF-8";
+    Send objSend;
 
-    //USUARIO PARA INICIAR SESION EN LA BASE DE DATOS
-    private static final String USER = "root";
+    List<String> listaInstitutos = new ArrayList<>();
+    List<Integer> listaIdInstituto = new ArrayList<>();
 
-    //CONTRASEÑA PARA INICIAR SESION EN EL USUARIO ROOT
-    private static final String PASSWORD = "L4b0rd0#";
-
-    //CREO LAS VARIABLES CON LA QUE VAMOS A RECOGER LOS DATOS DEL LAYOUT
+    int institutoSeleccionado = 1; // 1 por si no seleccionas nada
     Spinner institutos, curso;
     EditText correo, password, dni, nombre, apellido;
     TextView fecha, fechaFinal;
@@ -41,10 +42,25 @@ public class RegistroActivity extends AppCompatActivity {
     //CREO LAS VARIABLES PARA PODER UTILIZARLAS EN EL METODO FECHANACIMIENTO
     int anio = 0, mes = 0, dia = 0;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registro);
+
+        Recieve_Institutos recieve_institutos = new Recieve_Institutos();
+        try {
+            recieve_institutos.execute("").get();
+            // antes de seguir hacia abajo, el .get() lo que hace es esperar hasta que termine
+            // de recoger los datos del Servidor (institutos) y meterlos en el array.
+            // Una vez hecho, continua hacia abajo, rellenando esta vez BIEN el Spinner
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
 
         //BUSCO LOS IDS DENTRO DEL LAYOUT REGISTRO
         nombre = findViewById(R.id.nombre_Usuario);
@@ -55,23 +71,48 @@ public class RegistroActivity extends AppCompatActivity {
         fecha = findViewById(R.id.FechaNacimiento);
         fechaFinal = findViewById(R.id.FechaNacimientoRegistro);
         curso = findViewById(R.id.curso_Usuario);
-        institutos = findViewById(R.id.instituto_spinner);
+        institutos = (Spinner) findViewById(R.id.instituto_spinner);
         crear = findViewById(R.id.crearUsuario);
 
-        //CREO EL ARRAYADAPTER PARA AÑADIR LA LISTA DE INSTITUTOS AL SPINNER
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.institutos_list,
-                android.R.layout.simple_spinner_item);
+
+        // cojo la informacion por el servidor. Me dio problemas, pero funciona (el fondo es blanco, feo)
+        ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_item, listaInstitutos);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Toast.makeText(this, listaInstitutos.size()+"", Toast.LENGTH_LONG).show();
+        institutos.setAdapter(adapter);
+        institutos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String palabra = adapter.getItem(i).toString()+"";
+                Toast.makeText(getApplicationContext(), palabra, Toast.LENGTH_LONG).show();
+                institutos.setSelection(i);
+                institutoSeleccionado = i; // guarda la Posicion que has pulsado
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
+
+        //cojo la info del XML cursos
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this,R.array.cursos,
                 android.R.layout.simple_spinner_item);
-        //AÑADO EL ADAPTER DENTRO DEL SPINNER
-        institutos.setAdapter(adapter);
         curso.setAdapter(adapter2);
+
+
+
+
+
+
 
         //CUANDO DES AL BOTON CREAR SALTARA AL METODO Send()
         crear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Send objSend = new Send();
+                objSend = new Send();
                 objSend.execute("");
                 finish();
             }
@@ -111,6 +152,51 @@ public class RegistroActivity extends AppCompatActivity {
         recogerFecha.show();
     }
 
+
+
+
+    class Recieve_Institutos extends AsyncTask<String, String, String>{
+
+
+        @Override
+        protected String doInBackground(String... strings) {
+            recogerInstitutos();
+            return null;
+        }
+
+
+        protected void recogerInstitutos() {
+            try {
+                Class.forName("com.mysql.jdbc.Driver"); //PILLAMOS LA INFORMACION DEL PAQUETE
+                Connection conn = DriverManager.getConnection(getResources().getString(R.string.DATABASE_URL),
+                        getString(R.string.USER), getString(R.string.PASSWORD)); //NOS CONECTAMOS A LA BASE DE DATOS
+
+                if(conn != null){
+                    String query = "SELECT id, nombre, pais FROM instituto";
+                    PreparedStatement statement = conn.prepareStatement(query);
+                    ResultSet rs = statement.executeQuery();
+
+                    while(rs.next()){
+                        String nombre, pais;
+                        int id;
+                        id = rs.getInt(1);
+                        nombre = rs.getString(2);
+                        pais = rs.getString(3);
+                        listaInstitutos.add(nombre+", "+pais);
+                        listaIdInstituto.add(id);
+                    }
+                }
+
+                conn.close();
+            } catch (ClassNotFoundException | SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
+
+    }
+
     class Send extends AsyncTask<String, String, String>{
 
         //ESTA VARIABLE (MSG) LA UTILIZAMOS PARA EN CASO DE FALLO TE MUESTRE EN EL TOAST EL FALLO QUE DA
@@ -126,11 +212,17 @@ public class RegistroActivity extends AppCompatActivity {
         String dni1 = dni.getText().toString();
         String password1 = password.getText().toString();
 
+        String string_instituto;
+
+
+
+
         @Override
         protected String doInBackground(String... strings) {
             try{
                 Class.forName("com.mysql.jdbc.Driver"); //PILLAMOS LA INFORMACION DEL PAQUETE
-                Connection conn = DriverManager.getConnection(DATABASE_URL,USER, PASSWORD); //NOS CONECTAMOS A LA BASE DE DATOS
+                Connection conn = DriverManager.getConnection(getResources().getString(R.string.DATABASE_URL),
+                        getString(R.string.USER), getString(R.string.PASSWORD)); //NOS CONECTAMOS A LA BASE DE DATOS
                 if(conn == null){
                     //SI NO CONSIGUES CONECTARTE A LA BASE DE DATOS
                     msg = "La conexion va mal";
@@ -140,7 +232,7 @@ public class RegistroActivity extends AppCompatActivity {
                     java.sql.Date fechaNacimientoSQL = new java.sql.Date(date.getTime());
                     //SI CONSIGUE CONECTARSE A LA BASE DE DATOS INTRODUCIRA LOS SIGUIENTES VALORES
                     String query = "INSERT INTO estudiante(nombre, apellidos, correo, dni, contrasenia, fecha_nacimiento," +
-                            " curso) VALUES(?, ?, ?, ?, ?, ?, ?)";
+                            " curso, instituto) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
                     PreparedStatement statement = conn.prepareStatement(query);
                     statement.setString(1, nombre1);
                     statement.setString(2, apellido1);
@@ -149,6 +241,7 @@ public class RegistroActivity extends AppCompatActivity {
                     statement.setString(5, password1);
                     statement.setString(6, String.valueOf(fechaNacimientoSQL));
                     statement.setString(7, curso1);
+                    statement.setString(8, String.valueOf(listaIdInstituto.get(institutoSeleccionado)));
                     //statement.setString(8, instituto1);
                     statement.executeUpdate();
                     msg = "Usuario creado correctamente";

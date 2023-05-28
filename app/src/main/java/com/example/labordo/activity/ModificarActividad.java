@@ -79,7 +79,7 @@ public class ModificarActividad extends AppCompatActivity {
                     }
 
 
-                    if((imageHeight <= 650 || imageHeight >= 150) && (imageWidth <= 650 || imageWidth >= 150)
+                    if(((imageHeight <= 650 || imageHeight >= 150) && (imageWidth <= 650 || imageWidth >= 150))
                             && (descriptorArchivo.getLength()/1024) < 65){
 
                         imagenTarea.setImageURI(uri);
@@ -225,7 +225,7 @@ public class ModificarActividad extends AppCompatActivity {
 
                     Bitmap fotoBitmap = ((BitmapDrawable) imagenTarea.getDrawable()).getBitmap();
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    fotoBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                    fotoBitmap.compress(Bitmap.CompressFormat.JPEG, 50, stream);
                     byte[] byteArray = stream.toByteArray();
 
 

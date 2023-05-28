@@ -172,6 +172,7 @@
             android:autofillHints=""
             android:fontFamily="@font/open_sans"
             android:minHeight="48dp"
+            android:background="@color/white"
             tools:ignore="SpeakableTextPresentCheck" />
 
         <Button
