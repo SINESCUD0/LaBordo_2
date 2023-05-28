@@ -420,11 +420,24 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
                         statement2.setString(6, dni_Profesor);
                         ResultSet rs = statement2.executeQuery();
                         while(rs.next()){
+                            String query = "SELECT dni_estudiante FROM estudiante_labores_asignados WHERE id_labor = ?";
                             //ACTUALIZAMOS LA TAREA A ESTADO TERMINADA
                             String idLabor = rs.getString("id_labor");
+                            PreparedStatement statement = conn.prepareStatement(query);
+                            statement.setString(1, idLabor);
+                            ResultSet rs2 = statement.executeQuery();
                             String query3 = "UPDATE labores SET estado = ? WHERE id_labor = ?";
                             PreparedStatement statement3 = conn.prepareStatement(query3);
                             String confirmada = "RESUELTA";
+                            while(rs2.next()){
+                                String query1 = "UPDATE estudiantes SET saldo += ? WHERE dni_estudiante = ?";
+                                String dniEstudiante = rs2.getString("dni_estudiante");
+                                PreparedStatement statement1 = conn.prepareStatement(query1);
+                                statement1.setString(1, precioT);
+                                statement1.setString(2, dniEstudiante);
+                                statement1.executeUpdate();
+                                statement1.close();
+                            }
                             statement3.setString(1, confirmada);
                             statement3.setString(2, idLabor);
                             statement3.executeUpdate();
