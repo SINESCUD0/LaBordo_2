@@ -332,7 +332,7 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
             protected Void doInBackground(Void... voids) {
                 try{
                     Class.forName("com.mysql.jdbc.Driver"); //PILLAMOS LA INFORMACION DEL PAQUETE
-                    Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.1.43:3306/labordo?useUnicode=true&characterEncoding=utf8",
+                    Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.2.132:3306/labordo?useUnicode=true&characterEncoding=utf8",
                             "root",
                             "L4b0rd0#"); //NOS CONECTAMOS A LA BASE DE DATOS
                     if(conn == null){
@@ -399,7 +399,7 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
             protected Void doInBackground(Void... voids) {
                 try{
                     Class.forName("com.mysql.jdbc.Driver"); //PILLAMOS LA INFORMACION DEL PAQUETE
-                    Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.1.43:3306/labordo?useUnicode=true&characterEncoding=utf8",
+                    Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.2.132:3306/labordo?useUnicode=true&characterEncoding=utf8",
                             "root",
                             "L4b0rd0#"); //NOS CONECTAMOS A LA BASE DE DATOS
                     if(conn == null){
@@ -429,8 +429,12 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
                             String query3 = "UPDATE labores SET estado = ? WHERE id_labor = ?";
                             PreparedStatement statement3 = conn.prepareStatement(query3);
                             String confirmada = "RESUELTA";
+                            statement3.setString(1, confirmada);
+                            statement3.setString(2, idLabor);
+                            statement3.executeUpdate();
+                            statement3.close();
                             while(rs2.next()){
-                                String query1 = "UPDATE estudiantes SET saldo += ? WHERE dni_estudiante = ?";
+                                String query1 = "UPDATE estudiante SET puntos = ? + puntos WHERE dni = ?";
                                 String dniEstudiante = rs2.getString("dni_estudiante");
                                 PreparedStatement statement1 = conn.prepareStatement(query1);
                                 statement1.setString(1, precioT);
@@ -438,10 +442,8 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
                                 statement1.executeUpdate();
                                 statement1.close();
                             }
-                            statement3.setString(1, confirmada);
-                            statement3.setString(2, idLabor);
-                            statement3.executeUpdate();
-                            statement3.close();
+
+
                         }
 
                         msg = "TAREA TERMINADA";
