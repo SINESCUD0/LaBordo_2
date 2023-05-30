@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="400dp"
+        android:layout_marginTop="350dp"
         android:fontFamily="@font/open_sans"
         android:text="@string/tipoCuenta"
         android:textColor="@color/prueba" />
@@ -44,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="400dp"
+        android:layout_marginTop="350dp"
         android:fontFamily="@font/open_sans"
         android:textColor="@color/prueba"
         android:layout_toEndOf="@+id/tipo"/>
@@ -55,7 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="450dp"
+        android:layout_marginTop="400dp"
         android:fontFamily="@font/open_sans"
         android:text="@string/DNI"
         android:textColor="@color/prueba" />
@@ -65,7 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="450dp"
+        android:layout_marginTop="400dp"
         android:fontFamily="@font/open_sans"
         android:textColor="@color/prueba"
         android:layout_toEndOf="@+id/DNI"/>
@@ -75,7 +75,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="500dp"
+        android:layout_marginTop="450dp"
         android:fontFamily="@font/open_sans"
         android:text="@string/correo"
         android:textColor="@color/prueba" />
@@ -85,10 +85,71 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="500dp"
+        android:layout_marginTop="450dp"
         android:fontFamily="@font/open_sans"
         android:textColor="@color/prueba"
         android:layout_toEndOf="@+id/CorreoElectronico"/>
+
+    <TextView
+        android:id="@+id/InstitutoUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="500dp"
+        android:fontFamily="@font/open_sans"
+        android:text="@string/instituto"
+        android:textColor="@color/prueba" />
+
+    <TextView
+        android:id="@+id/InstitutoUsuarioTexto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="500dp"
+        android:fontFamily="@font/open_sans"
+        android:textColor="@color/prueba"
+        android:layout_toEndOf="@+id/InstitutoUsuario"/>
+
+    <TextView
+        android:id="@+id/NombreUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="550dp"
+        android:fontFamily="@font/open_sans"
+        android:text="@string/nombre"
+        android:textColor="@color/prueba" />
+
+    <TextView
+        android:id="@+id/NombreUsuarioTexto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="550dp"
+        android:fontFamily="@font/open_sans"
+        android:textColor="@color/prueba"
+        android:layout_toEndOf="@+id/NombreUsuario"/>
+
+    <TextView
+        android:id="@+id/ApellidosUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="600dp"
+        android:fontFamily="@font/open_sans"
+        android:text="@string/apellidos"
+        android:textColor="@color/prueba" />
+
+    <TextView
+        android:id="@+id/ApellidosUsuarioTexto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="600dp"
+        android:fontFamily="@font/open_sans"
+        android:textColor="@color/prueba"
+        android:layout_toEndOf="@+id/ApellidosUsuario"/>
+
 
     <TextView
         android:id="@+id/tituloPerfil"

@@ -101,5 +101,11 @@ public class LoginInfo {
     }
 
     public String getInstitutoLogin() {return instituto;}
+
+    public static String getNombre() {return nombre;}
+    public static void setNombre(String nombre) {LoginInfo.nombre = nombre;}
+
+    public static String getApellidos2() {return apellidos;}
+    public static void setApellidos2(String apellidos) {LoginInfo.apellidos = apellidos;}
 }
 

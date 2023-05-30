@@ -1,10 +1,12 @@
 package com.example.labordo.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -46,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         iniciar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                closeTeclado();
                 Toast.makeText(LoginActivity.this, "Inciciando sesion ...", Toast.LENGTH_SHORT).show();
                 Handler delay = new Handler();
                 delay.postDelayed(new Runnable() {
@@ -121,7 +124,14 @@ public class LoginActivity extends AppCompatActivity {
                                 String instituto = rs2.getString("instituto");
                                 Blob imagen = rs2.getBlob("fotoPerfil");
                                 boolean tipoCuenta = true;
-                                new LoginInfo(dni, nombre, apellidos, correo, password, instituto, imagen, tipoCuenta);
+                                String query3 = "SELECT nombre FROM instituto WHERE id = ?";
+                                PreparedStatement statement3 = conn.prepareStatement(query3);
+                                statement3.setString(1, instituto);
+                                ResultSet rs3 = statement3.executeQuery();
+                                while(rs3.next()){
+                                    String insti = rs3.getString("nombre");
+                                    new LoginInfo(dni, nombre, apellidos, correo, password, insti, imagen, tipoCuenta);
+                                }
                                 correoUsuario.setText("");
                                 passwordUsuario.setText("");
                             }
@@ -135,7 +145,8 @@ public class LoginActivity extends AppCompatActivity {
                         }
                         //SI EL CORREO INTRODUCIDO ES DE UN ESTUDIANTE HARA LO SIGUIENTE
                         else if (tipo.equals(tipo2)) {
-                            String query2 = "SELECT * FROM estudiante WHERE correo = ? AND contrasenia = ? AND acceso = 0";
+                            //String query2 = "SELECT * FROM estudiante WHERE correo = ? AND contrasenia = ? AND acceso = 0";
+                            String query2 = "SELECT * FROM estudiante WHERE correo = ? AND contrasenia = ?";
                             PreparedStatement statement2 = conn.prepareStatement(query2);
                             statement2.setString(1, correo1);
                             statement2.setString(2, password1);
@@ -161,8 +172,14 @@ public class LoginActivity extends AppCompatActivity {
                                 int saldoCuenta = rs2.getInt("puntos");
                                 Blob imagen = rs2.getBlob("fotoPerfil");
                                 boolean tipoCuenta = false;
-                                new LoginInfo(dni, nombre, apellidos, correo, password, instituto, imagen, tipoCuenta, saldoCuenta);
-
+                                String query3 = "SELECT nombre FROM instituto WHERE id = ?";
+                                PreparedStatement statement3 = conn.prepareStatement(query3);
+                                statement3.setString(1, instituto);
+                                ResultSet rs3 = statement3.executeQuery();
+                                while(rs3.next()){
+                                    String insti = rs3.getString("nombre");
+                                    new LoginInfo(dni, nombre, apellidos, correo, password, insti, imagen, tipoCuenta, saldoCuenta);
+                                }
                                 //color = R.color.prueba;
                                 correoUsuario.setText("");
                                 passwordUsuario.setText("");
@@ -204,5 +221,13 @@ public class LoginActivity extends AppCompatActivity {
     public void registrarse(View view){
         Intent i = new Intent(this, RegistroActivity.class);
         startActivity(i);
+    }
+
+    public void closeTeclado(){
+        View view = this.getCurrentFocus();
+        if(view != null){
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 }

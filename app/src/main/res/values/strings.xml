@@ -58,7 +58,7 @@
     <string name="tipoCuenta">Tipo de cuenta:</string>
     <string name="perfil2">PERFIL</string>
     <string name="saldoCuenta">Saldo: </string>
-    <string name="DATABASE_URL">jdbc:mysql://192.168.2.132:3306/labordo?useUnicode=true&amp;characterEncoding=utf8</string>
+    <string name="DATABASE_URL">jdbc:mysql://192.168.1.36:3306/labordo?useUnicode=true&amp;characterEncoding=utf8</string>
     <string name="USER">root</string>
     <string name="PASSWORD">L4b0rd0#</string>
 

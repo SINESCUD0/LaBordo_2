@@ -2,9 +2,11 @@ package com.example.labordo.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -33,6 +35,7 @@ public class CambiarPassword extends AppCompatActivity {
         findViewById(R.id.botonAceptarPassword).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                closeTeclado();
                 EditText et1 = (EditText)findViewById(R.id.passwordNueva);;
                 EditText et2 = (EditText)findViewById(R.id.passwordNueva2);
 
@@ -96,6 +99,14 @@ public class CambiarPassword extends AppCompatActivity {
             }
 
             return null;
+        }
+    }
+
+    public void closeTeclado(){
+        View view = this.getCurrentFocus();
+        if(view != null){
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
 }

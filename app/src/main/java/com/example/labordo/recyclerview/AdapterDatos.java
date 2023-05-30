@@ -332,7 +332,7 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
             protected Void doInBackground(Void... voids) {
                 try{
                     Class.forName("com.mysql.jdbc.Driver"); //PILLAMOS LA INFORMACION DEL PAQUETE
-                    Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.2.132:3306/labordo?useUnicode=true&characterEncoding=utf8",
+                    Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.1.36:3306/labordo?useUnicode=true&characterEncoding=utf8",
                             "root",
                             "L4b0rd0#"); //NOS CONECTAMOS A LA BASE DE DATOS
                     if(conn == null){
@@ -399,7 +399,7 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
             protected Void doInBackground(Void... voids) {
                 try{
                     Class.forName("com.mysql.jdbc.Driver"); //PILLAMOS LA INFORMACION DEL PAQUETE
-                    Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.2.132:3306/labordo?useUnicode=true&characterEncoding=utf8",
+                    Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.1.36:3306/labordo?useUnicode=true&characterEncoding=utf8",
                             "root",
                             "L4b0rd0#"); //NOS CONECTAMOS A LA BASE DE DATOS
                     if(conn == null){

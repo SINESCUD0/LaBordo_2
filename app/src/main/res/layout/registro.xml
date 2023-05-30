@@ -154,6 +154,7 @@
             android:autofillHints=""
             android:fontFamily="@font/open_sans"
             android:minHeight="48dp"
+            android:background="@color/white2"
             tools:ignore="SpeakableTextPresentCheck" />
 
         <TextView
@@ -172,7 +173,7 @@
             android:autofillHints=""
             android:fontFamily="@font/open_sans"
             android:minHeight="48dp"
-            android:background="@color/white"
+            android:background="@color/white2"
             tools:ignore="SpeakableTextPresentCheck" />
 
         <Button

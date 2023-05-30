@@ -53,7 +53,7 @@ public class Perfil extends AppCompatActivity {
     Button botonFoto;
     ImageView fotoPerfil;
     Uri imagenUri;
-    TextView tipoDeCuenta, dni, correo;
+    TextView tipoDeCuenta, dni, correo, instituto, nombre, apellidos;
 
     LoginInfo logininfo = new LoginInfo();
 
@@ -117,6 +117,9 @@ public class Perfil extends AppCompatActivity {
         tipoDeCuenta = (TextView)findViewById(R.id.tipoDeCuenta);
         dni = (TextView) findViewById(R.id.DNIdelUsuario);
         correo = (TextView) findViewById(R.id.correoDelUsuario);
+        instituto = (TextView) findViewById(R.id.InstitutoUsuarioTexto);
+        nombre = (TextView) findViewById(R.id.NombreUsuarioTexto);
+        apellidos = (TextView) findViewById(R.id.ApellidosUsuarioTexto);
 
 
         if(logininfo.isTipoCuenta()){
@@ -127,6 +130,9 @@ public class Perfil extends AppCompatActivity {
 
         dni.setText(logininfo.getDni());
         correo.setText(logininfo.getCorreo());
+        instituto.setText(logininfo.getInstitutoLogin());
+        nombre.setText(logininfo.getNombre());
+        apellidos.setText(logininfo.getApellidos2());
 
 
         if(logininfo.getImagenPerfil() != null){
