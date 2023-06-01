@@ -140,5 +140,4 @@ public class Tab1Profesor extends Fragment{
             recycler.setAdapter(adapterDatos);
         }
     }
-
 }

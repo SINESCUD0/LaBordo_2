@@ -50,7 +50,6 @@ public class LoginInfo {
         this.instituto = instituto;
         this.tipoCuenta = tipoCuenta;
         this.imagenPerfil = imagenPerfil;
-        this.saldoCuenta = saldoCuenta;
     }
 
     public LoginInfo(String dni, String nombre, String apellidos, String correo, String pass, String instituto, boolean tipoCuenta){
@@ -106,6 +105,5 @@ public class LoginInfo {
     public static void setNombre(String nombre) {LoginInfo.nombre = nombre;}
 
     public static String getApellidos2() {return apellidos;}
-    public static void setApellidos2(String apellidos) {LoginInfo.apellidos = apellidos;}
 }
 

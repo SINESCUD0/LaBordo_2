@@ -78,13 +78,13 @@ public class RegistroActivity extends AppCompatActivity {
         // cojo la informacion por el servidor. Me dio problemas, pero funciona (el fondo es blanco, feo)
         ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_item, listaInstitutos);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        Toast.makeText(this, listaInstitutos.size()+"", Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, listaInstitutos.size()+"", Toast.LENGTH_LONG).show();
         institutos.setAdapter(adapter);
         institutos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String palabra = adapter.getItem(i).toString()+"";
-                Toast.makeText(getApplicationContext(), palabra, Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), palabra, Toast.LENGTH_LONG).show();
                 institutos.setSelection(i);
                 institutoSeleccionado = i; // guarda la Posicion que has pulsado
             }
@@ -119,7 +119,7 @@ public class RegistroActivity extends AppCompatActivity {
         });
 
         //CUANDO DAS CLICK AL TEXTO FECHA NACIMIENTO SALTE EL METODO fechaNacimiento()
-        fecha.setOnClickListener(new View.OnClickListener() {
+        fechaFinal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 fechaNacimiento();

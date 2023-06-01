@@ -109,10 +109,7 @@ public class Tab2Profesor extends Fragment {
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                listDatos.clear();
-                RecibirLabores objSend = new RecibirLabores();
-                objSend.execute();
-                refresh.setRefreshing(false);
+                mostrarInformacionPantalla();
             }
         });
         add.setOnClickListener(new View.OnClickListener() {
@@ -155,6 +152,7 @@ public class Tab2Profesor extends Fragment {
                 if (!nombre.equals("") && !descripcion.equals("") && !precio.equals("") && !fechaElegida.equals("")) {
                     EnvioLabores labores = new EnvioLabores();
                     labores.execute();
+                    mostrarInformacionPantalla();
                 } else if (nombre.equals("") || descripcion.equals("") || precio.equals("") || fechaElegida.equals("")) {
                     Toast.makeText(getContext(), "Introduce todos los datos", Toast.LENGTH_SHORT).show();
                 }
@@ -377,5 +375,12 @@ public class Tab2Profesor extends Fragment {
             AdapterDatosTab2 adapterDatos = new AdapterDatosTab2(listDatos);
             recycler.setAdapter(adapterDatos);
         }
+    }
+
+    public void mostrarInformacionPantalla(){
+        listDatos.clear();
+        RecibirLabores objSend = new RecibirLabores();
+        objSend.execute();
+        refresh.setRefreshing(false);
     }
 }

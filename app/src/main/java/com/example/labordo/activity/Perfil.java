@@ -47,10 +47,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.concurrent.ExecutionException;
 
 public class Perfil extends AppCompatActivity {
 
     Button botonFoto;
+    String insti = "";
     ImageView fotoPerfil;
     Uri imagenUri;
     TextView tipoDeCuenta, dni, correo, instituto, nombre, apellidos;
@@ -130,7 +132,6 @@ public class Perfil extends AppCompatActivity {
 
         dni.setText(logininfo.getDni());
         correo.setText(logininfo.getCorreo());
-        instituto.setText(logininfo.getInstitutoLogin());
         nombre.setText(logininfo.getNombre());
         apellidos.setText(logininfo.getApellidos2());
 
@@ -215,6 +216,42 @@ public class Perfil extends AppCompatActivity {
 
                 }
 
+                conn.close();
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+
+            return null;
+        }
+    }
+
+    class RecibirInstituto extends AsyncTask<Void, Void, Void>{
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection conn = DriverManager.getConnection(getResources().getString(R.string.DATABASE_URL),
+                        getResources().getString(R.string.USER),
+                        getResources().getString(R.string.PASSWORD)); //NOS CONECTAMOS A LA BASE DE DATOS
+
+                if(conn != null){
+                    int instituto2 = Integer.parseInt(logininfo.getInstitutoLogin());
+                    String query = "SELECT nombre FROM instituto WHERE id = ?";
+                    PreparedStatement statement = conn.prepareStatement(query);
+                    statement.setInt(1, instituto2);
+                    ResultSet rs = statement.executeQuery(query);
+                    while (rs.next()){
+                        insti = rs.getString("nombre");
+                        instituto.setText(insti);
+                    }
+                    rs.close();
+                    statement.close();
+                }
                 conn.close();
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);

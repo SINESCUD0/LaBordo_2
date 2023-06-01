@@ -124,14 +124,7 @@ public class LoginActivity extends AppCompatActivity {
                                 String instituto = rs2.getString("instituto");
                                 Blob imagen = rs2.getBlob("fotoPerfil");
                                 boolean tipoCuenta = true;
-                                String query3 = "SELECT nombre FROM instituto WHERE id = ?";
-                                PreparedStatement statement3 = conn.prepareStatement(query3);
-                                statement3.setString(1, instituto);
-                                ResultSet rs3 = statement3.executeQuery();
-                                while(rs3.next()){
-                                    String insti = rs3.getString("nombre");
-                                    new LoginInfo(dni, nombre, apellidos, correo, password, insti, imagen, tipoCuenta);
-                                }
+                                new LoginInfo(dni, nombre, apellidos, correo, password, instituto, imagen, tipoCuenta);
                                 correoUsuario.setText("");
                                 passwordUsuario.setText("");
                             }
@@ -172,14 +165,7 @@ public class LoginActivity extends AppCompatActivity {
                                 int saldoCuenta = rs2.getInt("puntos");
                                 Blob imagen = rs2.getBlob("fotoPerfil");
                                 boolean tipoCuenta = false;
-                                String query3 = "SELECT nombre FROM instituto WHERE id = ?";
-                                PreparedStatement statement3 = conn.prepareStatement(query3);
-                                statement3.setString(1, instituto);
-                                ResultSet rs3 = statement3.executeQuery();
-                                while(rs3.next()){
-                                    String insti = rs3.getString("nombre");
-                                    new LoginInfo(dni, nombre, apellidos, correo, password, insti, imagen, tipoCuenta, saldoCuenta);
-                                }
+                                new LoginInfo(dni, nombre, apellidos, correo, password, instituto, imagen, tipoCuenta, saldoCuenta);
                                 //color = R.color.prueba;
                                 correoUsuario.setText("");
                                 passwordUsuario.setText("");

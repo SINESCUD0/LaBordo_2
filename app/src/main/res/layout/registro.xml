@@ -10,8 +10,8 @@
     <LinearLayout
         android:id="@+id/layout_registro"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -111,6 +111,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="70dp"
+                android:hint="Pulse aqui"
                 android:fontFamily="@font/montserrat_thin"
                 android:textColor="@color/prueba"
                 android:textSize="20sp" />
@@ -154,7 +155,7 @@
             android:autofillHints=""
             android:fontFamily="@font/open_sans"
             android:minHeight="48dp"
-            android:background="@color/white2"
+            android:background="@android:color/transparent"
             tools:ignore="SpeakableTextPresentCheck" />
 
         <TextView
@@ -173,17 +174,18 @@
             android:autofillHints=""
             android:fontFamily="@font/open_sans"
             android:minHeight="48dp"
-            android:background="@color/white2"
+            android:background="@android:color/transparent"
             tools:ignore="SpeakableTextPresentCheck" />
 
-        <Button
-            android:id="@+id/crearUsuario"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans"
-            android:onClick="saveUsuario"
-            android:text="@string/crearUsuario" />
-
     </LinearLayout>
+
+    <Button
+        android:id="@+id/crearUsuario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans"
+        android:onClick="saveUsuario"
+        android:layout_alignParentBottom="true"
+        android:text="@string/crearUsuario" />
 
 </RelativeLayout>
