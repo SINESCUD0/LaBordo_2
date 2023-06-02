@@ -12,6 +12,7 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Objects;
 
 public class Main_Profesorado extends AppCompatActivity {
     TabLayout tabLayout;
@@ -45,6 +47,7 @@ public class Main_Profesorado extends AppCompatActivity {
         setContentView(R.layout.main_profesorado);
 
         verificarPermisos();
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.azulClaro)));
 
         tabLayout = findViewById(R.id.Profesor);
         viewPager2 = findViewById(R.id.Vista_Pagina);
@@ -79,6 +82,7 @@ public class Main_Profesorado extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        setTitle("");
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }

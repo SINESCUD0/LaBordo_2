@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -45,6 +46,7 @@ public class Main_Alumnado extends AppCompatActivity {
         setContentView(R.layout.main_alumnado);
 
         verificarPermisos();
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.azulClaro)));
 
         tabLayout = findViewById(R.id.Alumno);
         viewPager2 = findViewById(R.id.Vista_Pagina);
@@ -80,6 +82,7 @@ public class Main_Alumnado extends AppCompatActivity {
     //PARA CREAR EL MENU
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        setTitle("");
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }

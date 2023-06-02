@@ -3,19 +3,25 @@ package com.example.labordo.activity;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -112,7 +118,9 @@ public class Perfil extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.perfil);
-        this.getSupportActionBar().hide();
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.azulClaro)));
+
+        //this.getSupportActionBar().hide();
 
         botonFoto = findViewById(R.id.botonFoto);
         fotoPerfil = (ImageView) findViewById(R.id.fotoPerfilUsuario);
@@ -160,6 +168,26 @@ public class Perfil extends AppCompatActivity {
                 subirFoto();
             }
         });
+    }
+
+    //PARA CREAR EL MENU
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        setTitle("");
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_resto, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    //PARA ELEGIR LAS OPCIONES DEL MENU
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.back:
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void subirFoto() {

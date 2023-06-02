@@ -1,14 +1,19 @@
 package com.example.labordo.activity;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -36,7 +41,7 @@ public class Setting extends AppCompatActivity {
 
 
         // Te muestra el saldo si eres Estudiante. Si eres profe te pone el "Hola"
-        if(!loginInfo.isTipoCuenta()){
+        if (!loginInfo.isTipoCuenta()) {
             VerSaldoActual vsa = new VerSaldoActual();
 
             vsa.execute();
@@ -46,23 +51,21 @@ public class Setting extends AppCompatActivity {
         }
 
 
-
         LoginInfo loginInfo = new LoginInfo();
         ImageView fotoPerfil = findViewById(R.id.fotoPerfil);
 
-        if(loginInfo.getImagenPerfil() != null){
+        if (loginInfo.getImagenPerfil() != null) {
             byte[] byteArray;
             Bitmap bm;
 
             try {
-                byteArray = loginInfo.getImagenPerfil().getBytes(1, (int)loginInfo.getImagenPerfil().length());
-                bm = BitmapFactory.decodeByteArray(byteArray,0 , byteArray.length);
+                byteArray = loginInfo.getImagenPerfil().getBytes(1, (int) loginInfo.getImagenPerfil().length());
+                bm = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
                 fotoPerfil.setImageBitmap(bm);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }
-
 
 
         findViewById(R.id.perfil).setOnClickListener(new View.OnClickListener() {
@@ -86,20 +89,30 @@ public class Setting extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting);
-        this.getSupportActionBar().hide();
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.azulClaro)));
 
+        //this.getSupportActionBar().hide();
+    }
 
+    //PARA CREAR EL MENU
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        setTitle("");
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_resto, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
+    //PARA ELEGIR LAS OPCIONES DEL MENU
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.back:
+                finish();
+                break;
         }
-
-
-
-
-
-
-
-
-
+        return super.onOptionsItemSelected(item);
+    }
 
     public class VerSaldoActual extends AsyncTask<Void, Void, Void> {
 
@@ -112,7 +125,7 @@ public class Setting extends AppCompatActivity {
                         getResources().getString(R.string.USER),
                         getResources().getString(R.string.PASSWORD)); //NOS CONECTAMOS A LA BASE DE DATOS
 
-                if(conn != null){
+                if (conn != null) {
 
 
                     String query = "SELECT puntos FROM estudiante WHERE dni = ? LIMIT 1";
@@ -122,7 +135,7 @@ public class Setting extends AppCompatActivity {
 
                     ResultSet rs = statement.executeQuery();
                     int saldo = 0;
-                    while(rs.next()){
+                    while (rs.next()) {
                         saldo = rs.getInt(1);
                     }
 
