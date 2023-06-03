@@ -133,7 +133,7 @@ public class LoginActivity extends AppCompatActivity {
                                 passwordUsuario.setText("");
                             }
                             else{
-                                msg = "Contraseña o correo incorrecta";
+                                msg = "No has introducido bien los datos";
                                 //color = 0xfff00000;
                             }
                             statement2.close();
@@ -175,7 +175,7 @@ public class LoginActivity extends AppCompatActivity {
                                 passwordUsuario.setText("");
                             }
                             else{
-                                msg = "Contraseña o correo incorrecta";
+                                msg = "No has introducido bien los datos";
                                 //color = 0xfff00000;
                             }
                             statement2.close();

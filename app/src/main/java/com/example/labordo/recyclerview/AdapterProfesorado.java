@@ -71,12 +71,12 @@ public class AdapterProfesorado extends RecyclerView.Adapter<AdapterProfesorado.
             instituto = itemView.findViewById(R.id.instituto_profesor);
             correo = itemView.findViewById(R.id.correo_profesor);
 
-            itemView.findViewById(R.id.layout_lista_profesorado).setOnClickListener(new View.OnClickListener() {
+            /*itemView.findViewById(R.id.layout_lista_profesorado).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Toast.makeText(itemView.getContext(), "Posicion "+getAdapterPosition(), Toast.LENGTH_SHORT).show();
                 }
-            });
+            });*/
         }
     }
 }

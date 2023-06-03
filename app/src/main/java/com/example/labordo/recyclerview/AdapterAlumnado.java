@@ -70,12 +70,12 @@ public class AdapterAlumnado extends RecyclerView.Adapter<AdapterAlumnado.ViewHo
             puntos = (TextView) itemView.findViewById(R.id.puntos_alumno);
             correo = (TextView) itemView.findViewById(R.id.correo_alumno);
 
-            itemView.findViewById(R.id.layout_lista_alumnado).setOnClickListener(new View.OnClickListener() {
+            /*itemView.findViewById(R.id.layout_lista_alumnado).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Toast.makeText(itemView.getContext(), "Posicion "+getAdapterPosition(), Toast.LENGTH_SHORT).show();
                 }
-            });
+            });*/
         }
     }
 }
