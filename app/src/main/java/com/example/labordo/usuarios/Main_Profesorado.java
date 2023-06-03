@@ -45,7 +45,6 @@ public class Main_Profesorado extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_profesorado);
-
         verificarPermisos();
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.azulClaro)));
 

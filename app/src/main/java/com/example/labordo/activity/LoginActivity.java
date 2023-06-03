@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -23,6 +24,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.concurrent.ExecutionException;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -60,6 +62,7 @@ public class LoginActivity extends AppCompatActivity {
                 }, 2000);
             }
         });
+
     }
 
     class Send extends AsyncTask<Void, Void, Void> {
@@ -124,7 +127,8 @@ public class LoginActivity extends AppCompatActivity {
                                 String instituto = rs2.getString("instituto");
                                 Blob imagen = rs2.getBlob("fotoPerfil");
                                 boolean tipoCuenta = true;
-                                new LoginInfo(dni, nombre, apellidos, correo, password, instituto, imagen, tipoCuenta);
+                                LoginInfo info = new LoginInfo(dni, nombre, apellidos, correo, password, instituto, imagen, tipoCuenta);
+                                Log.e("TAMAÑO: ", info.getInstitutoLogin());
                                 correoUsuario.setText("");
                                 passwordUsuario.setText("");
                             }
@@ -166,7 +170,7 @@ public class LoginActivity extends AppCompatActivity {
                                 Blob imagen = rs2.getBlob("fotoPerfil");
                                 boolean tipoCuenta = false;
                                 new LoginInfo(dni, nombre, apellidos, correo, password, instituto, imagen, tipoCuenta, saldoCuenta);
-                                //color = R.color.prueba;
+
                                 correoUsuario.setText("");
                                 passwordUsuario.setText("");
                             }

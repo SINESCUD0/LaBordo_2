@@ -173,6 +173,7 @@
             android:layout_height="wrap_content"
             android:autofillHints=""
             android:fontFamily="@font/open_sans"
+            android:textColor="@color/prueba"
             android:minHeight="48dp"
             android:background="@android:color/transparent"
             tools:ignore="SpeakableTextPresentCheck" />

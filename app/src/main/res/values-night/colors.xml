@@ -2,5 +2,5 @@
 <resources>
     <color name="prueba">#FFFFFF</color>
     <color name="azulClaro">#740F82</color>
-    <color name="white2">#FF000000</color>
+    <color name="white2">#FFFFFFFF</color>
 </resources>

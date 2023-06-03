@@ -58,7 +58,7 @@ import java.util.concurrent.ExecutionException;
 public class Perfil extends AppCompatActivity {
 
     Button botonFoto;
-    String insti = "";
+    String insti;
     ImageView fotoPerfil;
     Uri imagenUri;
     TextView tipoDeCuenta, dni, correo, instituto, nombre, apellidos;
@@ -138,10 +138,21 @@ public class Perfil extends AppCompatActivity {
             tipoDeCuenta.setText("Alumno");
         }
 
+        RecibirInstituto ri = new RecibirInstituto();
+        ri.execute();
+        try {
+            ri.get();
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        instituto.setText(insti);
         dni.setText(logininfo.getDni());
         correo.setText(logininfo.getCorreo());
         nombre.setText(logininfo.getNombre());
         apellidos.setText(logininfo.getApellidos2());
+        //instituto.setText(logininfo.getInstitutoLogin());
 
 
         if(logininfo.getImagenPerfil() != null){
@@ -168,6 +179,7 @@ public class Perfil extends AppCompatActivity {
                 subirFoto();
             }
         });
+
     }
 
     //PARA CREAR EL MENU
@@ -269,16 +281,19 @@ public class Perfil extends AppCompatActivity {
 
                 if(conn != null){
                     int instituto2 = Integer.parseInt(logininfo.getInstitutoLogin());
-                    String query = "SELECT nombre FROM instituto WHERE id = ?";
+                    String query = "SELECT nombre FROM instituto WHERE id = "+logininfo.getInstitutoLogin();
+                    //String query = "SELECT nombre FROM instituto WHERE id = 1;";
                     PreparedStatement statement = conn.prepareStatement(query);
-                    statement.setInt(1, instituto2);
+                    //statement.setString(1, logininfo.getInstitutoLogin());
+                    //statement.setString(1, logininfo.getInstitutoLogin());
                     ResultSet rs = statement.executeQuery(query);
                     while (rs.next()){
                         insti = rs.getString("nombre");
-                        instituto.setText(insti);
+                        //instituto.setText(insti);
                     }
                     rs.close();
                     statement.close();
+                    Log.e("Bongus: ", logininfo.getInstitutoLogin()+"");
                 }
                 conn.close();
             } catch (ClassNotFoundException e) {
