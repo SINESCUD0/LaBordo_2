@@ -147,7 +147,7 @@ public class AdapterDatosTab2 extends RecyclerView.Adapter<AdapterDatosTab2.View
                 @Override
                 public void onClick(View view) {
                     if(usuario.isTipoCuenta() == true){
-                        Toast.makeText(itemView.getContext(), "PULSACION CORTA", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(itemView.getContext(), "PULSACION CORTA", Toast.LENGTH_SHORT).show();
 
                         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(itemView.getContext());
 
@@ -197,7 +197,7 @@ public class AdapterDatosTab2 extends RecyclerView.Adapter<AdapterDatosTab2.View
                     }
                     if (usuario.isTipoCuenta() == false) {
 
-                        Toast.makeText(itemView.getContext(), "PULSACION CORTA", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(itemView.getContext(), "PULSACION CORTA", Toast.LENGTH_SHORT).show();
 
                         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(itemView.getContext());
 
@@ -253,7 +253,7 @@ public class AdapterDatosTab2 extends RecyclerView.Adapter<AdapterDatosTab2.View
                 @Override
                 public boolean onLongClick(View view) {
                     if(usuario.isTipoCuenta()){
-                        Toast.makeText(itemView.getContext(), "PULSACION LARGA", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(itemView.getContext(), "PULSACION LARGA", Toast.LENGTH_SHORT).show();
 
                         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(itemView.getContext());
 
