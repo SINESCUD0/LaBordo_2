@@ -258,8 +258,6 @@ public class ModificarActividad extends AppCompatActivity {
                     Blob blob = conn.createBlob();
                     blob.setBytes(1, byteArray);
 
-                    logininfo.setImagenPerfil(blob);
-
                     // Estoy buscando por Descripcion... habria que buscar por Clave Primaria
                     String query = "update labores set nombreActividad = ?, precio = ?, descripcion = ?, imagenTarea = ?, fechaLimite = ?  where descripcion = ?";
 
