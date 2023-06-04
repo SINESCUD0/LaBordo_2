@@ -3,6 +3,7 @@ package com.example.labordo.activity;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,9 +12,13 @@ import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -112,6 +117,7 @@ public class ModificarActividad extends AppCompatActivity {
         fecha = ((TextView) findViewById(R.id.modifFecha));
         descripcion = ((EditText) findViewById(R.id.modifDesc));
         boton = ((Button) findViewById(R.id.modifBoton));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.azulClaro)));
 
 
         // Cojo Bytes de la Imagen y los transformo
@@ -189,6 +195,26 @@ public class ModificarActividad extends AppCompatActivity {
             }
         });
 
+    }
+
+    //PARA CREAR EL MENU
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        setTitle("");
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_resto, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    //PARA ELEGIR LAS OPCIONES DEL MENU
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.back:
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 

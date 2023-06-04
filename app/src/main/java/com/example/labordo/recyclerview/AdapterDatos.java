@@ -278,7 +278,7 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
                 @Override
                 public boolean onLongClick(View view) {
                     if(usuario.isTipoCuenta()){
-                        Toast.makeText(itemView.getContext(), "PULSACION LARGA", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(itemView.getContext(), "PULSACION LARGA", Toast.LENGTH_SHORT).show();
 
                         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(itemView.getContext());
 
