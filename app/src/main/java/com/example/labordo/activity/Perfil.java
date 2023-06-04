@@ -169,13 +169,13 @@ public class Perfil extends AppCompatActivity {
         }
 
 
-        Toast.makeText(Perfil.this, "a", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(Perfil.this, "a", Toast.LENGTH_SHORT).show();
 
 
         botonFoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Perfil.this, "Foto", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(Perfil.this, "Foto", Toast.LENGTH_SHORT).show();
                 subirFoto();
             }
         });
